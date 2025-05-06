@@ -5,8 +5,10 @@ import com.adi.gab.domain.types.OrderStatus;
 import com.adi.gab.domain.valueobject.Address;
 import com.adi.gab.domain.valueobject.BookId;
 import com.adi.gab.domain.valueobject.OrderId;
+import com.adi.gab.domain.valueobject.OrderItemId;
 import com.adi.gab.domain.valueobject.UserId;
 import lombok.Getter;
+import lombok.Setter;
 
 import java.math.BigDecimal;
 import java.util.ArrayList;
@@ -14,6 +16,7 @@ import java.util.Collections;
 import java.util.List;
 
 @Getter
+@Setter
 public class Order {
 
     private OrderId id;
@@ -55,7 +58,7 @@ public class Order {
         if (quantity <= 0) throw new IllegalArgumentException("Quantity must be positive");
         if (price.compareTo(BigDecimal.ZERO) <= 0) throw new IllegalArgumentException("Price must be positive");
 
-        orderItems.add(new OrderItem(this.id, bookId, quantity, price));
+        orderItems.add(new OrderItem(OrderItemId.generate(), this.id, bookId, quantity, price));
     }
 
     public void removeItem(BookId bookId) {

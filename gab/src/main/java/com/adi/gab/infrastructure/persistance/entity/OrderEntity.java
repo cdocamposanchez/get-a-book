@@ -42,9 +42,10 @@ public class OrderEntity {
     @AttributeOverrides({
             @AttributeOverride(name = "firstName", column = @Column(name = "shipping_address_firstname")),
             @AttributeOverride(name = "lastName", column = @Column(name = "shipping_address_lastname")),
-            @AttributeOverride(name = "street", column = @Column(name = "shipping_address_street")),
+            @AttributeOverride(name = "addressLine", column = @Column(name = "shipping_address_line")),
+            @AttributeOverride(name = "emailAddress", column = @Column(name = "shipping_email_address")),
             @AttributeOverride(name = "city", column = @Column(name = "shipping_address_city")),
-            @AttributeOverride(name = "postalCode", column = @Column(name = "shipping_address_postal_code")),
+            @AttributeOverride(name = "zipCode", column = @Column(name = "shipping_address_zip_code")),
             @AttributeOverride(name = "country", column = @Column(name = "shipping_address_country"))
     })
     private AddressEmbeddable shippingAddress;
@@ -54,9 +55,10 @@ public class OrderEntity {
     @AttributeOverrides({
             @AttributeOverride(name = "firstName", column = @Column(name = "billing_address_firstname")),
             @AttributeOverride(name = "lastName", column = @Column(name = "billing_address_lastname")),
-            @AttributeOverride(name = "street", column = @Column(name = "billing_address_street")),
+            @AttributeOverride(name = "addressLine", column = @Column(name = "billing_address_line")),
+            @AttributeOverride(name = "emailAddress", column = @Column(name = "billing_email_address")),
             @AttributeOverride(name = "city", column = @Column(name = "billing_address_city")),
-            @AttributeOverride(name = "postalCode", column = @Column(name = "billing_address_postal_code")),
+            @AttributeOverride(name = "zipCode", column = @Column(name = "billing_address_zip_code")),
             @AttributeOverride(name = "country", column = @Column(name = "billing_address_country"))
     })
     private AddressEmbeddable billingAddress;

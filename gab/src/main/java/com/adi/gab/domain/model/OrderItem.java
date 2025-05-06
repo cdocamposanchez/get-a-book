@@ -18,11 +18,11 @@ public class OrderItem {
     private Integer quantity;
     private BigDecimal price;
 
-    public OrderItem(OrderId orderId, BookId bookId, Integer quantity, BigDecimal price) {
+    public OrderItem(OrderItemId id, OrderId orderId, BookId bookId, Integer quantity, BigDecimal price) {
         if (orderId == null) throw new OrderItemExceptions.NullOrderItemArgumentException("OrderId");
         if (bookId == null) throw new OrderItemExceptions.NullOrderItemArgumentException("BookId");
 
-        this.id = OrderItemId.generate();
+        this.id = id;
         this.orderId = orderId;
         this.bookId = bookId;
         this.quantity = quantity;

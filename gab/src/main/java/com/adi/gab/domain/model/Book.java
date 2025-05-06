@@ -18,7 +18,7 @@ public class Book {
     private Double qualification;
     private String categories;
 
-    public Book create(Book book) {
+    public static Book create(Book book) {
         if (book.getId().value() == null) throw new BookExceptions.NullBookArgumentException("Book Id");
         if (book.getTitle().isEmpty()) throw new BookExceptions.NullBookArgumentException("Book Title");
         if (book.getPublisher().isEmpty()) throw new BookExceptions.NullBookArgumentException("Book Publisher");
@@ -40,7 +40,7 @@ public class Book {
                 .build();
     }
 
-    public Book update(Book oldBook, Book newBook) {
+    public static Book update(Book oldBook, Book newBook) {
         return Book.builder()
                 .id(oldBook.getId())
                 .title(

@@ -14,9 +14,10 @@ import lombok.Setter;
 public class AddressEmbeddable {
     private String firstName;
     private String lastName;
-    private String street;
+    private String emailAddress;
+    private String addressLine;
     private String city;
-    private String postalCode;
+    private String zipCode;
     private String country;
 
     protected AddressEmbeddable() {}
