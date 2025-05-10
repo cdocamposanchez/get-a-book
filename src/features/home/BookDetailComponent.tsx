@@ -1,6 +1,6 @@
 import { useParams } from 'react-router-dom';
 
-const BookDetailPage = () => {
+const BookDetailComponent = () => {
     const { id } = useParams();
     return (
         <div>
@@ -10,4 +10,4 @@ const BookDetailPage = () => {
     );
 };
 
-export default BookDetailPage;
+export default BookDetailComponent;

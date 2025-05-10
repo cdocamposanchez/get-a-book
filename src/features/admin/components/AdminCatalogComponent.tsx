@@ -1,4 +1,4 @@
-const AdminCatalogPage = () => {
+const AdminCatalogComponent = () => {
         return (
             <div>
                 <h2>Catálogo Admin</h2>
@@ -7,5 +7,5 @@ const AdminCatalogPage = () => {
         );
     };
 
-    export default AdminCatalogPage;
+    export default AdminCatalogComponent;
 
