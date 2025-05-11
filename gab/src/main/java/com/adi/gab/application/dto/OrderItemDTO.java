@@ -1,4 +1,4 @@
-package com.adi.gab.infrastructure.dto;
+package com.adi.gab.application.dto;
 
 import lombok.Builder;
 import lombok.Getter;
@@ -12,6 +12,7 @@ import java.util.UUID;
 @Builder
 public  class OrderItemDTO {
     private UUID id;
+    private UUID orderId;
     private UUID bookId;
     private Integer quantity;
     private BigDecimal price;

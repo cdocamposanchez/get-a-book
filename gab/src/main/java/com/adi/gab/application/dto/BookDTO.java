@@ -1,4 +1,4 @@
-package com.adi.gab.infrastructure.dto;
+package com.adi.gab.application.dto;
 
 import lombok.Builder;
 import lombok.Getter;

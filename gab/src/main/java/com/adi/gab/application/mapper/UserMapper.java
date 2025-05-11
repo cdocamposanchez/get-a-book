@@ -1,10 +1,8 @@
-package com.adi.gab.infrastructure.mapper;
+package com.adi.gab.application.mapper;
 
 import com.adi.gab.domain.model.User;
 import com.adi.gab.domain.valueobject.UserId;
 import com.adi.gab.infrastructure.persistance.entity.UserEntity;
-
-import java.util.List;
 
 public class UserMapper {
 
@@ -28,17 +26,5 @@ public class UserMapper {
                 .password(entity.getPassword())
                 .role(entity.getRole())
                 .build();
-    }
-
-    public static List<User> toDomainList(List<UserEntity> entities) {
-        return entities.stream()
-                .map(UserMapper::toDomain)
-                .toList();
-    }
-
-    public static List<UserEntity> toEntityList(List<User> users) {
-        return users.stream()
-                .map(UserMapper::toEntity)
-                .toList();
     }
 }

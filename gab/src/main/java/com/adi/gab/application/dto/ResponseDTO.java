@@ -1,4 +1,4 @@
-package com.adi.gab.infrastructure.dto;
+package com.adi.gab.application.dto;
 
 import lombok.Getter;
 import lombok.Setter;
@@ -14,6 +14,11 @@ public class ResponseDTO<T> {
     public ResponseDTO(String message, T data, HttpStatus status) {
         this.message = message;
         this.data = data;
+        this.status = status.value();
+    }
+
+    public ResponseDTO(String message, HttpStatus status) {
+        this.message = message;
         this.status = status.value();
     }
 }

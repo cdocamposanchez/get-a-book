@@ -4,6 +4,7 @@ import com.adi.gab.domain.exception.OrderItemExceptions;
 import com.adi.gab.domain.valueobject.BookId;
 import com.adi.gab.domain.valueobject.OrderId;
 import com.adi.gab.domain.valueobject.OrderItemId;
+import lombok.Builder;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -11,6 +12,7 @@ import java.math.BigDecimal;
 
 @Getter
 @Setter
+@Builder
 public class OrderItem {
     private OrderItemId id;
     private OrderId orderId;

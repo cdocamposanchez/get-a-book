@@ -16,4 +16,10 @@ public class BookExceptions {
             super(ARGUMENT + object + " Does not match the length: " + lenght);
         }
     }
+
+    public static class LogicException extends DomainException {
+        public LogicException(String object) {
+            super("Business exception: " + object);
+        }
+    }
 }

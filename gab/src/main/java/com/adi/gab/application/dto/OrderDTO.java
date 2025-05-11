@@ -1,7 +1,6 @@
-package com.adi.gab.infrastructure.dto;
+package com.adi.gab.application.dto;
 
 import com.adi.gab.domain.types.OrderStatus;
-import com.adi.gab.domain.valueobject.Address;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.Setter;
@@ -17,8 +16,8 @@ public class OrderDTO {
     private UUID id;
     private UUID customerId;
     private String orderName;
-    private Address shippingAddress;
-    private Address billingAddress;
+    private AddressDTO shippingAddress;
+    private AddressDTO billingAddress;
     private OrderStatus status;
     private List<OrderItemDTO> orderItems;
 }

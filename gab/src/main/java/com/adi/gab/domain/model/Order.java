@@ -7,6 +7,7 @@ import com.adi.gab.domain.valueobject.BookId;
 import com.adi.gab.domain.valueobject.OrderId;
 import com.adi.gab.domain.valueobject.OrderItemId;
 import com.adi.gab.domain.valueobject.UserId;
+import lombok.Builder;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -17,6 +18,7 @@ import java.util.List;
 
 @Getter
 @Setter
+@Builder
 public class Order {
 
     private OrderId id;
@@ -28,30 +30,20 @@ public class Order {
 
     private final List<OrderItem> orderItems = new ArrayList<>();
 
-    public Order() {}
+    public static Order create(OrderId id, UserId customerId, String orderName,
+                               Address shippingAddress, Address billingAddress) {
 
-    private Order(OrderId id, UserId customerId, String orderName,
-                  Address shippingAddress, Address billingAddress) {
         if (id == null) throw new OrderExceptions.NullOrderArgumentException("OrderId");
         if (customerId == null) throw new OrderExceptions.NullOrderArgumentException("CustomerId");
 
-        this.id = id;
-        this.customerId = customerId;
-        this.orderName = orderName;
-        this.shippingAddress = shippingAddress;
-        this.billingAddress = billingAddress;
-    }
-
-    public static Order create(OrderId id, UserId customerId, String orderName,
-                               Address shippingAddress, Address billingAddress) {
-        return new Order(id, customerId, orderName, shippingAddress, billingAddress);
-    }
-
-    public void update(String orderName, Address shippingAddress, Address billingAddress, OrderStatus status) {
-        this.orderName = orderName;
-        this.shippingAddress = shippingAddress;
-        this.billingAddress = billingAddress;
-        this.status = status;
+        return Order
+                .builder()
+                .id(id)
+                .customerId(customerId)
+                .orderName(orderName)
+                .shippingAddress(shippingAddress)
+                .billingAddress(billingAddress)
+                .build();
     }
 
     public void addItem(BookId bookId, int quantity, BigDecimal price) {

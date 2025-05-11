@@ -2,11 +2,17 @@ package com.adi.gab.domain.model;
 
 import com.adi.gab.domain.exception.BookExceptions;
 import com.adi.gab.domain.valueobject.BookId;
+import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
+
+import java.time.Year;
 
 @Getter
 @Builder
+@NoArgsConstructor
+@AllArgsConstructor
 public class Book {
     private BookId id;
     private String title;
@@ -26,6 +32,8 @@ public class Book {
         if (book.getYear() <= 0) throw new BookExceptions.NullBookArgumentException("Book Year");
         if (book.getPrice() <= 0) throw new BookExceptions.NullBookArgumentException("Book Price");
 
+        if (book.getYear() > Year.now().getValue()) throw new BookExceptions.LogicException("The year of the book cannot be greater than the actual year");
+
         return Book
                 .builder()
                 .id(book.getId())
@@ -41,7 +49,7 @@ public class Book {
     }
 
     public static Book update(Book oldBook, Book newBook) {
-        return Book.builder()
+        Book updatedBook = Book.builder()
                 .id(oldBook.getId())
                 .title(
                         (newBook.getTitle() != null && !newBook.getTitle().isEmpty() &&
@@ -83,5 +91,7 @@ public class Book {
                                 : oldBook.getCategories()
                 )
                 .build();
+
+        return Book.create(updatedBook);
     }
 }

@@ -1,4 +1,4 @@
-package com.adi.gab.infrastructure.dto;
+package com.adi.gab.application.dto;
 
 import com.adi.gab.domain.types.UserRole;
 import lombok.Builder;

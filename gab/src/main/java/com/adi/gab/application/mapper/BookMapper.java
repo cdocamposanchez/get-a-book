@@ -1,11 +1,9 @@
-package com.adi.gab.infrastructure.mapper;
+package com.adi.gab.application.mapper;
 
 import com.adi.gab.domain.model.Book;
 import com.adi.gab.domain.valueobject.BookId;
-import com.adi.gab.infrastructure.dto.BookDTO;
+import com.adi.gab.application.dto.BookDTO;
 import com.adi.gab.infrastructure.persistance.entity.BookEntity;
-
-import java.util.List;
 
 public class BookMapper {
 
@@ -66,17 +64,5 @@ public class BookMapper {
                 .qualification(book.getQualification())
                 .categories(book.getCategories())
                 .build();
-    }
-
-    public static List<Book> toDomainList(List<BookEntity> entities) {
-        return entities.stream()
-                .map(BookMapper::toDomain)
-                .toList();
-    }
-
-    public static List<BookEntity> toEntityList(List<Book> books) {
-        return books.stream()
-                .map(BookMapper::toEntity)
-                .toList();
     }
 }

@@ -1,7 +1,9 @@
 package com.adi.gab.infrastructure.exception;
 
+import com.adi.gab.application.exception.ApplicationException;
+import com.adi.gab.application.exception.NotFoundException;
 import com.adi.gab.domain.exception.DomainException;
-import com.adi.gab.infrastructure.dto.ResponseDTO;
+import com.adi.gab.application.dto.ResponseDTO;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.MethodArgumentNotValidException;
@@ -51,5 +53,31 @@ public class GlobalExceptionHandler {
         );
 
         return new ResponseEntity<>(response, HttpStatus.INTERNAL_SERVER_ERROR);
+    }
+
+    @ExceptionHandler(NotFoundException.class)
+    public ResponseEntity<ResponseDTO<String>> handleNotFoundException(NotFoundException ex) {
+        String detailedMessage = String.format("Not Found Exception in %s: %s", ex.getOriginClass(), ex.getMessage());
+
+        ResponseDTO<String> response = new ResponseDTO<>(
+                "Not Found",
+                detailedMessage,
+                HttpStatus.NOT_FOUND
+        );
+
+        return ResponseEntity.badRequest().body(response);
+    }
+
+    @ExceptionHandler(ApplicationException.class)
+    public ResponseEntity<ResponseDTO<String>> handleApplicationException(ApplicationException ex) {
+        String detailedMessage = String.format("Application error in %s: %s", ex.getOriginClass(), ex.getMessage());
+
+        ResponseDTO<String> response = new ResponseDTO<>(
+                "Application Error",
+                detailedMessage,
+                HttpStatus.BAD_REQUEST
+        );
+
+        return ResponseEntity.badRequest().body(response);
     }
 }
