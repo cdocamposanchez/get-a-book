@@ -9,6 +9,7 @@ import jakarta.persistence.Table;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import java.math.BigDecimal;
@@ -20,6 +21,7 @@ import java.util.UUID;
 @Setter
 @Builder
 @AllArgsConstructor
+@NoArgsConstructor
 public class OrderItemEntity {
     @Id
     private UUID id;
@@ -34,8 +36,4 @@ public class OrderItemEntity {
     private Integer quantity;
 
     private BigDecimal price;
-
-    protected OrderItemEntity() {
-
-    }
 }

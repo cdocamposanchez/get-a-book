@@ -5,6 +5,7 @@ import com.adi.gab.application.dto.OrderDTO;
 import com.adi.gab.application.usecase.book.GetBooksUseCase;
 import com.adi.gab.application.usecase.book.ReduceStockUseCase;
 import com.adi.gab.domain.model.Order;
+import com.adi.gab.domain.types.OrderStatus;
 import com.adi.gab.domain.valueobject.BookId;
 import com.adi.gab.domain.valueobject.OrderId;
 import com.adi.gab.domain.valueobject.UserId;
@@ -43,13 +44,12 @@ public class CreateOrderUseCase {
                 checkItems(orderDTO);
 
                 Order order = OrderMapper.toDomain(orderDTO, orderId, customerId);
+                order.setOrderStatus(OrderStatus.PENDING);
                 return saveOrder(order);
 
             } catch (DataIntegrityViolationException _) {
                 attempts++;
-                if (attempts >= maxRetries) {
-                    throw new ApplicationException("Failed to create order after multiple retries.", this.getClass().getSimpleName());
-                }
+                if (attempts >= maxRetries) throw new ApplicationException("Failed to create order after multiple retries.", this.getClass().getSimpleName());
             }
         }
     }

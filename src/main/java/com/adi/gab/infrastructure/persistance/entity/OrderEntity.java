@@ -40,6 +40,7 @@ public class OrderEntity {
     private String orderName;
 
     @Enumerated(EnumType.STRING)
+    @Column(name = "order_status")
     private OrderStatus orderStatus;
 
     @SuppressWarnings("squid:S1710")

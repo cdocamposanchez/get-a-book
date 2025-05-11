@@ -16,7 +16,7 @@ public class User {
     private String password;
     private UserRole role;
 
-    public User create(String firstName, String lastName, String email, String password) {
+    public static User create(String firstName, String lastName, String email, String password, UserRole role) {
         if (firstName == null || firstName.isEmpty()) throw new UserExceptions.NullUserArgumentException("FirstName");
         if (lastName == null || lastName.isEmpty()) throw new UserExceptions.NullUserArgumentException("LastName");
         if (email == null || email.isEmpty()) throw new UserExceptions.NullUserArgumentException("Email");
@@ -27,6 +27,7 @@ public class User {
                 .lastNames(lastName)
                 .email(email)
                 .password(password)
+                .role(role)
                 .build();
     }
 

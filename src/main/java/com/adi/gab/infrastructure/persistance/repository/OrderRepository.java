@@ -4,6 +4,8 @@ import com.adi.gab.domain.types.OrderStatus;
 import com.adi.gab.infrastructure.persistance.entity.OrderEntity;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Query;
+import org.springframework.data.repository.query.Param;
 
 import java.util.List;
 import java.util.UUID;
@@ -14,5 +16,8 @@ public interface OrderRepository extends JpaRepository<OrderEntity, UUID> {
     List<OrderEntity> findByOrderNameContainingIgnoreCase(String orderName, Pageable pageable);
 
     List<OrderEntity> findByOrderStatus(OrderStatus status, Pageable pageable);
+
+    @Query("SELECT o FROM OrderEntity o WHERE o.orderStatus = :status")
+    List<OrderEntity> findOrdersByStatus(@Param("status") OrderStatus status, Pageable pageable);
 
 }

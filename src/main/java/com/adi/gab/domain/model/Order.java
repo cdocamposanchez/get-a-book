@@ -26,7 +26,7 @@ public class Order {
     private String orderName;
     private Address shippingAddress;
     private Address billingAddress;
-    private OrderStatus status = OrderStatus.PENDING;
+    private OrderStatus orderStatus;
 
     private final List<OrderItem> orderItems = new ArrayList<>();
 

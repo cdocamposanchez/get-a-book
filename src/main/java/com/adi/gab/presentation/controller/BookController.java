@@ -83,7 +83,7 @@ public class BookController {
         return new ResponseEntity<>(response, HttpStatus.CREATED);
     }
 
-    @GetMapping
+    @GetMapping("/list")
     public ResponseEntity<ResponseDTO<List<BookDTO>>> getAll(
             @RequestParam(defaultValue = "0") int page,
             @RequestParam(defaultValue = "10") int size

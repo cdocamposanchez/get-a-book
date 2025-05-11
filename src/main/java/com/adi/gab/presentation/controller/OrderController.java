@@ -1,6 +1,5 @@
 package com.adi.gab.presentation.controller;
 
-import com.adi.gab.application.dto.BookDTO;
 import com.adi.gab.application.dto.OrderDTO;
 import com.adi.gab.application.dto.PaginationRequest;
 import com.adi.gab.application.dto.ResponseDTO;
@@ -96,14 +95,14 @@ public class OrderController {
 
     @GetMapping("/status")
     public ResponseEntity<ResponseDTO<List<OrderDTO>>> getByStatus(
-            @RequestParam OrderStatus status,
+            @RequestParam String status,
             @RequestParam(defaultValue = "0") int page,
             @RequestParam(defaultValue = "10") int size
     ) {
         PaginationRequest pagination = new PaginationRequest(page, size);
-        List<OrderDTO> orders = getOrdersUseCase.getByOrderStatus(status, pagination);
+        List<OrderDTO> orders = getOrdersUseCase.getByOrderStatus(OrderStatus.fromStringIgnoreCase(status), pagination);
         ResponseDTO<List<OrderDTO>> response = new ResponseDTO<>(
-                "Orders retrieved by status successfully",
+                "Orders retrieved by status " + status + " successfully",
                 orders,
                 HttpStatus.OK
         );
@@ -114,7 +113,7 @@ public class OrderController {
     public ResponseEntity<ResponseDTO<OrderDTO>> getById(@PathVariable UUID id) {
         OrderDTO order = getOrdersUseCase.getById(OrderId.of(id));
         ResponseDTO<OrderDTO> response = new ResponseDTO<>(
-                "Order retrieved successfully",
+                "Order retrieved with ID: "+ id +" successfully",
                 order,
                 HttpStatus.OK
         );
@@ -130,7 +129,7 @@ public class OrderController {
         PaginationRequest pagination = new PaginationRequest(page, size);
         List<OrderDTO> orders = getOrdersUseCase.getByCustomerId(customerId, pagination);
         ResponseDTO<List<OrderDTO>> response = new ResponseDTO<>(
-                "Orders retrieved by customer ID successfully",
+                "Orders retrieved by customer ID: "+ customerId +" successfully",
                 orders,
                 HttpStatus.OK
         );
@@ -146,7 +145,7 @@ public class OrderController {
         PaginationRequest pagination = new PaginationRequest(page, size);
         List<OrderDTO> orders = getOrdersUseCase.getByOrderName(orderName, pagination);
         ResponseDTO<List<OrderDTO>> response = new ResponseDTO<>(
-                "Orders retrieved by name successfully",
+                "Orders retrieved by name: "+ orderName +" successfully",
                 orders,
                 HttpStatus.OK
         );

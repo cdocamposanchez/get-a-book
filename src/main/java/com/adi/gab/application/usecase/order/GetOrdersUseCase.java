@@ -54,7 +54,7 @@ public class GetOrdersUseCase {
     }
 
     public List<OrderDTO> getByOrderStatus(OrderStatus status, PaginationRequest pagination) {
-        return orderRepository.findByOrderStatus(status, PageRequest.of(pagination.getPage(), pagination.getSize()))
+        return orderRepository.findOrdersByStatus(status, PageRequest.of(pagination.getPage(), pagination.getSize()))
                 .stream()
                 .map(OrderMapper::toDomain)
                 .map(OrderMapper::toDto)

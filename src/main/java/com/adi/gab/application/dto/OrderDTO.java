@@ -18,6 +18,6 @@ public class OrderDTO {
     private String orderName;
     private AddressDTO shippingAddress;
     private AddressDTO billingAddress;
-    private OrderStatus status;
+    private OrderStatus orderStatus;
     private List<OrderItemDTO> orderItems;
 }

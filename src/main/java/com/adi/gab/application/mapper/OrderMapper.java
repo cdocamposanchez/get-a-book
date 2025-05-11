@@ -10,8 +10,6 @@ import com.adi.gab.domain.valueobject.UserId;
 import com.adi.gab.infrastructure.persistance.entity.OrderEntity;
 import com.adi.gab.infrastructure.persistance.embeddable.AddressEmbeddable;
 
-import java.util.UUID;
-
 public class OrderMapper {
     private OrderMapper(){}
 
@@ -21,7 +19,7 @@ public class OrderMapper {
                 .id(order.getId().value())
                 .customerId(order.getCustomerId().value())
                 .orderName(order.getOrderName())
-                .orderStatus(order.getStatus())
+                .orderStatus(order.getOrderStatus())
                 .shippingAddress(AddressEmbeddable.builder()
                         .firstName(order.getShippingAddress().getFirstName())
                         .lastName(order.getShippingAddress().getLastName())
@@ -56,7 +54,7 @@ public class OrderMapper {
         Address billing = AddressMapper.toDomain(entity.getBillingAddress());
 
         Order order = createOrderBase(OrderId.of(entity.getId()), UserId.of(entity.getCustomerId()), entity.getOrderName(), shipping, billing);
-        order.setStatus(entity.getOrderStatus());
+        order.setOrderStatus(entity.getOrderStatus());
 
         entity.getItems().forEach(itemEntity ->
                 order.addItem(BookId.of(itemEntity.getBookId()), itemEntity.getQuantity(), itemEntity.getPrice()));
@@ -69,7 +67,7 @@ public class OrderMapper {
         Address billing = AddressMapper.toDomain(dto.getBillingAddress());
 
         Order order = createOrderBase(orderId, customerId, dto.getOrderName(), shipping, billing);
-        order.setStatus(dto.getStatus());
+        order.setOrderStatus(dto.getOrderStatus());
 
         dto.getOrderItems().forEach(item ->
                 order.addItem(BookId.of(item.getBookId()), item.getQuantity(), item.getPrice()));
@@ -84,7 +82,7 @@ public class OrderMapper {
                 .orderName(order.getOrderName())
                 .shippingAddress(AddressMapper.toDTO(order.getShippingAddress()))
                 .billingAddress(AddressMapper.toDTO(order.getBillingAddress()))
-                .status(order.getStatus())
+                .orderStatus(order.getOrderStatus())
                 .orderItems(order.getOrderItems().stream()
                         .map(item -> OrderItemDTO.builder()
                                 .id(item.getId().value())

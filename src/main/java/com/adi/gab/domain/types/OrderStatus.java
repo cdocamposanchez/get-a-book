@@ -5,5 +5,14 @@ public enum OrderStatus {
     PAID,
     SHIPPED,
     COMPLETED,
-    RETURNED
+    RETURNED;
+
+    public static OrderStatus fromStringIgnoreCase(String value) {
+        for (OrderStatus status : OrderStatus.values()) {
+            if (status.name().equalsIgnoreCase(value)) {
+                return status;
+            }
+        }
+        throw new IllegalArgumentException("No enum constant for value: " + value);
+    }
 }
