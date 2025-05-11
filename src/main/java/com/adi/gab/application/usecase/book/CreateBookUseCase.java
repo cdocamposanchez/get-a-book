@@ -1,0 +1,71 @@
+package com.adi.gab.application.usecase.book;
+
+import com.adi.gab.application.exception.ApplicationException;
+import com.adi.gab.domain.model.Book;
+import com.adi.gab.domain.valueobject.BookId;
+import com.adi.gab.application.dto.BookDTO;
+import com.adi.gab.application.mapper.BookMapper;
+import com.adi.gab.infrastructure.persistance.repository.BookRepository;
+import org.springframework.dao.DataIntegrityViolationException;
+import org.springframework.stereotype.Service;
+
+@Service
+public class CreateBookUseCase {
+    private final BookRepository bookRepository;
+
+    public CreateBookUseCase(BookRepository bookRepository) {
+        this.bookRepository = bookRepository;
+    }
+
+    public BookDTO execute(BookDTO bookDto) {
+        if (Boolean.TRUE.equals(bookRepository.existsByTitleIgnoreCase(bookDto.getTitle()))) {
+            throw new ApplicationException(
+                    "A book with this title already exists: " + bookDto.getTitle(),
+                    this.getClass().getSimpleName()
+            );
+        }
+
+        int maxRetries = 3;
+        int attempts = 0;
+
+        while (true) {
+            try {
+                Book newBook = buildBookFromDto(bookDto);
+                return saveBook(newBook);
+            } catch (DataIntegrityViolationException _) {
+                attempts++;
+                if (attempts >= maxRetries) {
+                    throw new ApplicationException(
+                            "Failed to create Book due to ID collision after multiple attempts.",
+                            this.getClass().getSimpleName()
+                    );
+                }
+            }
+        }
+    }
+
+    private Book buildBookFromDto(BookDTO bookDto) {
+        return Book.create(
+                Book.builder()
+                        .id(BookId.generate())
+                        .title(bookDto.getTitle())
+                        .description(bookDto.getDescription())
+                        .publisher(bookDto.getPublisher())
+                        .qualification(bookDto.getQualification())
+                        .categories(bookDto.getCategories())
+                        .quantity(bookDto.getQuantity())
+                        .price(bookDto.getPrice())
+                        .year(bookDto.getYear())
+                        .build()
+        );
+    }
+
+    private BookDTO saveBook(Book book) {
+        try {
+            Book savedDomain = BookMapper.toDomain(bookRepository.save(BookMapper.toEntity(book)));
+            return BookMapper.toDto(savedDomain);
+        } catch (Exception e) {
+            throw new ApplicationException("Error saving book: " + e.getMessage(), this.getClass().getSimpleName());
+        }
+    }
+}
