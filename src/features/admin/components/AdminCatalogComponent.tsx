@@ -1,5 +1,4 @@
 import React from 'react';
-import ProductCardComponent from './ProductCardComponent';
 
 const mockProducts = [
     {
@@ -16,11 +15,24 @@ const mockProducts = [
     },
 ];
 
+interface ProductCardComponentProps {
+    product?: { id: number; title: string; author: string; image: string } | {
+        id: number;
+        title: string;
+        author: string;
+        image: string
+    }
+}
+
+function ProductCardComponent({}: ProductCardComponentProps) {
+    return null;
+}
+
 const AdminCatalogComponent: React.FC = () => {
     return (
         <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6">
             {mockProducts.map((product) => (
-                <ProductCardComponent key={product.id} product={product} />
+                <ProductCardComponent key={product.id} product={product}/>
             ))}
         </div>
     );

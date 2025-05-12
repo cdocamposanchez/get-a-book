@@ -1,40 +1,56 @@
-import React from 'react';
-import { Routes, Route, Link } from 'react-router-dom';
-import AdminCatalogComponent from '../components/AdminCatalogComponent';
-import CreateProductComponent from '../components/CreateProductComponent';
-import EditProductComponent from '../components/EditProductComponent';
+import { useAdminProducts } from '../hooks/useAdminProducts';
+import { useNavigate } from 'react-router-dom';
 
-const dummyProduct = {
-    title: 'Libro de Ejemplo',
-    author: 'Autor Ejemplo',
-    image: 'https://via.placeholder.com/150',
-    description: 'Descripción de prueba para el libro.',
-};
+export const AdminCatalogPage = () => {
+    const { products, loading, handleDelete } = useAdminProducts();
+    const navigate = useNavigate();
 
-const AdminPage: React.FC = () => {
+    if (loading) return <p className="text-center mt-10">Cargando productos...</p>;
+
     return (
-        <div className="p-6 bg-[#F5F5F5] min-h-screen">
-            <h1 className="text-3xl font-bold text-[#6A0DAD] mb-6">Panel de Administración</h1>
+        <div className="p-6">
+            <div className="flex justify-between items-center mb-6">
+                <h1 className="text-3xl font-bold">Catálogo de Productos</h1>
+                <button
+                    className="bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700"
+                    onClick={() => navigate('/admin/create-product')}
+                >
+                    + Nuevo producto
+                </button>
+            </div>
 
-            <nav className="flex gap-4 mb-6">
-                <Link to="/admin/catalogo" className="text-[#6A0DAD] underline">
-                    Catálogo
-                </Link>
-                <Link to="/admin/crear" className="text-[#6A0DAD] underline">
-                    Crear Producto
-                </Link>
-            </nav>
-
-            <Routes>
-                <Route path="catalogo" element={<AdminCatalogComponent />} />
-                <Route path="crear" element={<CreateProductComponent />} />
-                <Route path="editar/:id" element={<EditProductComponent existingProduct={dummyProduct} />} />
-                {/* Nota: En una app real, `existingProduct` se cargaría dinámicamente por ID */}
-            </Routes>
+            <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6">
+                {products.map(product => (
+                    <div key={product.id} className="bg-white shadow-lg rounded-lg p-4 flex flex-col justify-between">
+                        <img
+                            src={product.imageUrl || 'https://via.placeholder.com/150'}
+                            alt={product.title}
+                            className="h-48 w-full object-cover rounded-md mb-4"
+                        />
+                        <h2 className="text-xl font-semibold mb-2">{product.title}</h2>
+                        <p className="text-gray-700 mb-2">{product.description}</p>
+                        <p className="text-sm text-gray-500 mb-4">Precio: ${product.price}</p>
+                        <div className="flex justify-between">
+                            <button
+                                className="text-white bg-green-600 px-3 py-1 rounded hover:bg-green-700"
+                                onClick={() => navigate(`/admin/edit-product/${product.id}`)}
+                            >
+                                Editar
+                            </button>
+                            <button
+                                className="text-white bg-red-600 px-3 py-1 rounded hover:bg-red-700"
+                                onClick={() => handleDelete(product.id)}
+                            >
+                                Eliminar
+                            </button>
+                        </div>
+                    </div>
+                ))}
+            </div>
         </div>
     );
 };
 
-export default AdminPage;
 
-
+export default class AdminPage {
+}

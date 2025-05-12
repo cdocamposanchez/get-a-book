@@ -1,19 +1,35 @@
-//import { Routes, Route } from 'react-router-dom';
-import HomePage from '../pages/HomePage';
-import LoginComponent from '../features/auth/LoginComponent';
-import RegisterComponent from '../features/auth/RegisterComponent';
-import AdminPage from '../features/admin/pages/AdminPage';
+import { Routes, Route, Navigate } from 'react-router-dom';
+import ProfilePage from './pages/ProfilePage';
+import LoginPage from "./pages/LoginPage";
+import type {JSX} from "react";
 
 const AppRoutes = (): JSX.Element => {
-        return (
-            <Routes>
-                    <Route path="/" element={<HomePage />} />
-                    <Route path="/login" element={<LoginComponent />} />
-                    <Route path="/register" element={<RegisterComponent />} />
-                    <Route path="/admin/*" element={<AdminPage />} />
-            </Routes>
-        );
+    const isAuthenticated = localStorage.getItem('authToken');
+
+    return (
+        <Routes>
+            {/* Ruta pública */}
+            <Route path="/login" element={<LoginPage />} />
+
+            {/* Ruta protegida */}
+            <Route
+                path="/profile"
+                element={
+                    isAuthenticated ? (
+                        <ProfilePage />
+                    ) : (
+                        <Navigate to="/login" />
+                    )
+                }
+            />
+
+            {/* Agregar rutas */}
+        </Routes>
+    );
 };
 
 export default AppRoutes;
+
+
+
 
