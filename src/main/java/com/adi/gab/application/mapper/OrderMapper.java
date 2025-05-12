@@ -3,9 +3,11 @@ package com.adi.gab.application.mapper;
 import com.adi.gab.application.dto.OrderDTO;
 import com.adi.gab.application.dto.OrderItemDTO;
 import com.adi.gab.domain.model.Order;
+import com.adi.gab.domain.types.OrderStatus;
 import com.adi.gab.domain.valueobject.Address;
 import com.adi.gab.domain.valueobject.BookId;
 import com.adi.gab.domain.valueobject.OrderId;
+import com.adi.gab.domain.valueobject.OrderItemId;
 import com.adi.gab.domain.valueobject.UserId;
 import com.adi.gab.infrastructure.persistance.entity.OrderEntity;
 import com.adi.gab.infrastructure.persistance.embeddable.AddressEmbeddable;
@@ -19,7 +21,7 @@ public class OrderMapper {
                 .id(order.getId().value())
                 .customerId(order.getCustomerId().value())
                 .orderName(order.getOrderName())
-                .orderStatus(order.getOrderStatus())
+                .orderStatus(order.getOrderStatus().toString())
                 .shippingAddress(AddressEmbeddable.builder()
                         .firstName(order.getShippingAddress().getFirstName())
                         .lastName(order.getShippingAddress().getLastName())
@@ -54,10 +56,10 @@ public class OrderMapper {
         Address billing = AddressMapper.toDomain(entity.getBillingAddress());
 
         Order order = createOrderBase(OrderId.of(entity.getId()), UserId.of(entity.getCustomerId()), entity.getOrderName(), shipping, billing);
-        order.setOrderStatus(entity.getOrderStatus());
+        order.setOrderStatus(OrderStatus.fromStringIgnoreCase(entity.getOrderStatus()));
 
         entity.getItems().forEach(itemEntity ->
-                order.addItem(BookId.of(itemEntity.getBookId()), itemEntity.getQuantity(), itemEntity.getPrice()));
+                order.addItem(OrderItemId.of(itemEntity.getId()), BookId.of(itemEntity.getBookId()), itemEntity.getQuantity(), itemEntity.getPrice()));
 
         return order;
     }
@@ -70,7 +72,7 @@ public class OrderMapper {
         order.setOrderStatus(dto.getOrderStatus());
 
         dto.getOrderItems().forEach(item ->
-                order.addItem(BookId.of(item.getBookId()), item.getQuantity(), item.getPrice()));
+                order.addItem(OrderItemId.of(item.getId()), BookId.of(item.getBookId()), item.getQuantity(), item.getPrice()));
 
         return order;
     }
@@ -93,6 +95,26 @@ public class OrderMapper {
                                 .build())
                         .toList()
                 )
+                .build();
+    }
+
+    public static OrderDTO toDto(OrderEntity orderEntity) {
+        return OrderDTO.builder()
+                .id(orderEntity.getId())
+                .customerId(orderEntity.getCustomerId())
+                .orderName(orderEntity.getOrderName())
+                .shippingAddress(AddressMapper.toDto(orderEntity.getShippingAddress()))
+                .billingAddress(AddressMapper.toDto(orderEntity.getBillingAddress()))
+                .orderStatus(OrderStatus.fromStringIgnoreCase(orderEntity.getOrderStatus()))
+                .orderItems(orderEntity.getItems().stream()
+                        .map(item -> OrderItemDTO.builder()
+                                .id(item.getId())
+                                .bookId(item.getBookId())
+                                .orderId(item.getOrder().getId())
+                                .quantity(item.getQuantity())
+                                .price(item.getPrice())
+                                .build())
+                        .toList())
                 .build();
     }
 

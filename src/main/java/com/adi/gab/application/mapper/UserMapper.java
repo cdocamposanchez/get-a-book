@@ -1,5 +1,6 @@
 package com.adi.gab.application.mapper;
 
+import com.adi.gab.application.dto.UserDTO;
 import com.adi.gab.domain.model.User;
 import com.adi.gab.domain.valueobject.UserId;
 import com.adi.gab.infrastructure.persistance.entity.UserEntity;
@@ -14,17 +15,46 @@ public class UserMapper {
                 .email(user.getEmail())
                 .password(user.getPassword())
                 .role(user.getRole())
+                .favorites(UserFavoritesMapper.toEntity(user.getFavorites()))
                 .build();
     }
 
     public static User toDomain(UserEntity entity) {
         return User.builder()
-                .id(new UserId(entity.getId()))
+                .id(UserId.of(entity.getId()))
                 .firstName(entity.getFirstName())
                 .lastNames(entity.getLastNames())
                 .email(entity.getEmail())
                 .password(entity.getPassword())
                 .role(entity.getRole())
+                .favorites(UserFavoritesMapper.toDomain(entity.getFavorites()))
                 .build();
     }
+
+    public static User toDomain(UserDTO dto) {
+        return User.builder()
+                .id(UserId.of(dto.getId()))
+                .firstName(dto.getFirstName())
+                .lastNames(dto.getLastNames())
+                .email(dto.getEmail())
+                .password(dto.getPassword())
+                .role(dto.getRole())
+                .favorites(UserFavoritesMapper.toDomain(dto.getFavorites()))
+                .build();
+    }
+
+    public static UserDTO toDTO(User user) {
+        return UserDTO
+                .builder()
+                .id(user.getId().value())
+                .firstName(user.getFirstName())
+                .lastNames(user.getLastNames())
+                .email(user.getEmail())
+                .password(user.getPassword())
+                .role(user.getRole())
+                .favorites(UserFavoritesMapper.toEntity(user.getFavorites()))
+                .build();
+    }
+
+    private UserMapper() {}
 }

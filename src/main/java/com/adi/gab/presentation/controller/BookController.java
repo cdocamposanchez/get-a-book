@@ -6,6 +6,7 @@ import com.adi.gab.application.usecase.book.DeleteBookUseCase;
 import com.adi.gab.application.usecase.book.GetBooksUseCase;
 import com.adi.gab.application.dto.BookDTO;
 import com.adi.gab.application.dto.ResponseDTO;
+import com.adi.gab.application.usecase.book.GetFavoritesUseCase;
 import com.adi.gab.application.usecase.book.UpdateBookUseCase;
 import com.adi.gab.domain.valueobject.BookId;
 import org.springframework.http.HttpStatus;
@@ -31,14 +32,16 @@ public class BookController {
     private final GetBooksUseCase getBooksUseCase;
     private final UpdateBookUseCase updateBookUseCase;
     private final DeleteBookUseCase deleteBookUseCase;
+    private final GetFavoritesUseCase getFavoritesUseCase;
 
 
     public BookController(CreateBookUseCase createBookUseCase,
-                          GetBooksUseCase getBooksUseCase, UpdateBookUseCase updateBookUseCase, DeleteBookUseCase deleteBookUseCase) {
+                          GetBooksUseCase getBooksUseCase, UpdateBookUseCase updateBookUseCase, DeleteBookUseCase deleteBookUseCase, GetFavoritesUseCase getFavoritesUseCase) {
         this.createBookUseCase = createBookUseCase;
         this.getBooksUseCase = getBooksUseCase;
         this.updateBookUseCase = updateBookUseCase;
         this.deleteBookUseCase = deleteBookUseCase;
+        this.getFavoritesUseCase = getFavoritesUseCase;
     }
 
     @PostMapping
@@ -186,6 +189,20 @@ public class BookController {
                 book,
                 HttpStatus.OK
         );
+        return new ResponseEntity<>(response, HttpStatus.OK);
+    }
+
+    @GetMapping("/favorites")
+    public ResponseEntity<ResponseDTO<List<BookDTO>>> searchBooks(
+    ) {
+        List<BookDTO> books = getFavoritesUseCase.execute();
+
+        ResponseDTO<List<BookDTO>> response = new ResponseDTO<>(
+                "Books retrieved by search successfully",
+                books,
+                HttpStatus.OK
+        );
+
         return new ResponseEntity<>(response, HttpStatus.OK);
     }
 }

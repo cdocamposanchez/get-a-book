@@ -9,6 +9,7 @@ import com.adi.gab.application.usecase.order.GetOrdersUseCase;
 import com.adi.gab.application.usecase.order.UpdateOrderStatusUseCase;
 import com.adi.gab.domain.types.OrderStatus;
 import com.adi.gab.domain.valueobject.OrderId;
+import com.adi.gab.domain.valueobject.UserId;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -70,7 +71,7 @@ public class OrderController {
 
     @DeleteMapping
     public ResponseEntity<ResponseDTO<OrderDTO>> delete(@RequestParam UUID orderId) {
-        deleteOrderUseCase.execute(orderId);
+        deleteOrderUseCase.execute(OrderId.of(orderId));
         ResponseDTO<OrderDTO> response = new ResponseDTO<>(
                 "Order successfully deleted with id: " + orderId,
                 HttpStatus.OK
@@ -127,7 +128,7 @@ public class OrderController {
             @RequestParam(defaultValue = "10") int size
     ) {
         PaginationRequest pagination = new PaginationRequest(page, size);
-        List<OrderDTO> orders = getOrdersUseCase.getByCustomerId(customerId, pagination);
+        List<OrderDTO> orders = getOrdersUseCase.getByCustomerId(UserId.of(customerId), pagination);
         ResponseDTO<List<OrderDTO>> response = new ResponseDTO<>(
                 "Orders retrieved by customer ID: "+ customerId +" successfully",
                 orders,

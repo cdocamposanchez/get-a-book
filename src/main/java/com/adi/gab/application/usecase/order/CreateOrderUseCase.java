@@ -12,11 +12,14 @@ import com.adi.gab.domain.valueobject.UserId;
 import com.adi.gab.application.mapper.OrderMapper;
 import com.adi.gab.infrastructure.persistance.entity.OrderEntity;
 import com.adi.gab.infrastructure.persistance.repository.OrderRepository;
+import com.adi.gab.infrastructure.security.AuthenticatedUserProvider;
 import org.springframework.stereotype.Service;
 
 import com.adi.gab.application.exception.ApplicationException;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.transaction.annotation.Transactional;
+
+import java.util.UUID;
 
 @Service
 public class CreateOrderUseCase {
@@ -24,11 +27,13 @@ public class CreateOrderUseCase {
     private final OrderRepository orderRepository;
     private final GetBooksUseCase getBooksUseCase;
     private final ReduceStockUseCase reduceStockUseCase;
+    private final AuthenticatedUserProvider authenticatedUserProvider;
 
-    public CreateOrderUseCase(OrderRepository orderRepository, GetBooksUseCase getBooksUseCase, ReduceStockUseCase reduceStockUseCase) {
+    public CreateOrderUseCase(OrderRepository orderRepository, GetBooksUseCase getBooksUseCase, ReduceStockUseCase reduceStockUseCase, AuthenticatedUserProvider authenticatedUserProvider) {
         this.orderRepository = orderRepository;
         this.getBooksUseCase = getBooksUseCase;
         this.reduceStockUseCase = reduceStockUseCase;
+        this.authenticatedUserProvider = authenticatedUserProvider;
     }
 
     @Transactional
@@ -39,7 +44,7 @@ public class CreateOrderUseCase {
         while (true) {
             try {
                 OrderId orderId = OrderId.generate();
-                UserId customerId = UserId.of(orderDTO.getCustomerId());
+                UserId customerId = authenticatedUserProvider.getAuthenticatedUserId();
 
                 checkItems(orderDTO);
 
@@ -78,6 +83,8 @@ public class CreateOrderUseCase {
             if (book.getQuantity() < item.getQuantity()) throw new ApplicationException(
                     "Not enough items in book with ID: " + book.getId() + " available: " + book.getQuantity(),
                     this.getClass().getSimpleName());
+
+            item.setId(UUID.randomUUID());
         });
     }
 }

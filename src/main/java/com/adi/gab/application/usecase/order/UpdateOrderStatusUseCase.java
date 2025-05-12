@@ -29,7 +29,7 @@ public class UpdateOrderStatusUseCase {
                 "Order Status cannot be null",
                 this.getClass().getSimpleName());
 
-        existingEntity.setOrderStatus(orderStatus);
+        existingEntity.setOrderStatus(orderStatus.toString());
         Order savedOrder = OrderMapper.toDomain(orderRepository.save(existingEntity));
         return OrderMapper.toDto(savedOrder);
     }

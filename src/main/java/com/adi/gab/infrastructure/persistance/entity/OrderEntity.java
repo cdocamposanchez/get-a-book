@@ -1,6 +1,5 @@
 package com.adi.gab.infrastructure.persistance.entity;
 
-import com.adi.gab.domain.types.OrderStatus;
 import com.adi.gab.infrastructure.persistance.embeddable.AddressEmbeddable;
 import jakarta.persistence.AttributeOverride;
 import jakarta.persistence.AttributeOverrides;
@@ -8,8 +7,6 @@ import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Embedded;
 import jakarta.persistence.Entity;
-import jakarta.persistence.EnumType;
-import jakarta.persistence.Enumerated;
 import jakarta.persistence.Id;
 import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
@@ -39,9 +36,7 @@ public class OrderEntity {
     @Column(name = "order_name")
     private String orderName;
 
-    @Enumerated(EnumType.STRING)
-    @Column(name = "order_status")
-    private OrderStatus orderStatus;
+    private String orderStatus;
 
     @SuppressWarnings("squid:S1710")
     @Embedded

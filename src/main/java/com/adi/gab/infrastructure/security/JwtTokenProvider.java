@@ -1,5 +1,6 @@
 package com.adi.gab.infrastructure.security;
 
+import com.adi.gab.domain.valueobject.UserId;
 import io.jsonwebtoken.JwtException;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.security.Keys;
@@ -10,6 +11,7 @@ import org.springframework.stereotype.Component;
 import javax.crypto.SecretKey;
 import java.nio.charset.StandardCharsets;
 import java.util.Date;
+import java.util.UUID;
 
 @Component
 public class JwtTokenProvider {
@@ -25,11 +27,12 @@ public class JwtTokenProvider {
         this.expiration = expiration;
     }
 
-    public String generateToken(UserDetails userDetails) {
+    public String generateToken(CustomUserDetails userDetails) {
         long now = System.currentTimeMillis();
 
         return Jwts.builder()
                 .subject(userDetails.getUsername())
+                .claim("UserId", userDetails.getId())
                 .issuedAt(new Date(now))
                 .expiration(new Date(now + expiration))
                 .signWith(secretKey, Jwts.SIG.HS256)
@@ -43,6 +46,17 @@ public class JwtTokenProvider {
                 .parseSignedClaims(token)
                 .getPayload()
                 .getSubject();
+    }
+
+    public UserId extractUserId(String token) {
+        String userId = Jwts.parser()
+                .verifyWith(secretKey)
+                .build()
+                .parseSignedClaims(token)
+                .getPayload()
+                .get("userId", String.class);
+
+        return UserId.of(UUID.fromString(userId));
     }
 
     public boolean isValid(String token) {

@@ -65,4 +65,19 @@ public class BookMapper {
                 .categories(book.getCategories())
                 .build();
     }
+
+    public static BookDTO toDto(BookEntity book) {
+        return BookDTO
+                .builder()
+                .id(book.getId())
+                .title(book.getTitle())
+                .publisher(book.getPublisher())
+                .description(book.getDescription())
+                .year(book.getYear())
+                .quantity(book.getQuantity())
+                .price(book.getPrice())
+                .qualification(book.getQualification())
+                .categories(book.getCategories())
+                .build();
+    }
 }

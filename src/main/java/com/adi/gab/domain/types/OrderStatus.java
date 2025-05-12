@@ -13,6 +13,6 @@ public enum OrderStatus {
                 return status;
             }
         }
-        throw new IllegalArgumentException("No enum constant for value: " + value);
+        throw new IllegalArgumentException("No such a OrderStatus registered with value: " + value);
     }
 }

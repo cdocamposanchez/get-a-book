@@ -4,14 +4,16 @@ import com.adi.gab.application.dto.OrderDTO;
 import com.adi.gab.application.dto.PaginationRequest;
 import com.adi.gab.application.exception.NotFoundException;
 import com.adi.gab.application.mapper.OrderMapper;
+import com.adi.gab.domain.model.Order;
 import com.adi.gab.domain.types.OrderStatus;
 import com.adi.gab.domain.valueobject.OrderId;
+import com.adi.gab.domain.valueobject.UserId;
 import com.adi.gab.infrastructure.persistance.repository.OrderRepository;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
-import java.util.UUID;
 
 @Service
 public class GetOrdersUseCase {
@@ -37,8 +39,8 @@ public class GetOrdersUseCase {
                 .orElseThrow(() -> new NotFoundException("Order not found with ID: " + orderId.value(), this.getClass().getSimpleName()));
     }
 
-    public List<OrderDTO> getByCustomerId(UUID customerId, PaginationRequest pagination) {
-        return orderRepository.findByCustomerId(customerId, PageRequest.of(pagination.getPage(), pagination.getSize()))
+    public List<OrderDTO> getByCustomerId(UserId customerId, PaginationRequest pagination) {
+        return orderRepository.findByCustomerId(customerId.value(), PageRequest.of(pagination.getPage(), pagination.getSize()))
                 .stream()
                 .map(OrderMapper::toDomain)
                 .map(OrderMapper::toDto)
@@ -53,8 +55,9 @@ public class GetOrdersUseCase {
                 .toList();
     }
 
+    @Transactional
     public List<OrderDTO> getByOrderStatus(OrderStatus status, PaginationRequest pagination) {
-        return orderRepository.findOrdersByStatus(status, PageRequest.of(pagination.getPage(), pagination.getSize()))
+        return orderRepository.findByOrderStatus(status.toString(), PageRequest.of(pagination.getPage(), pagination.getSize()))
                 .stream()
                 .map(OrderMapper::toDomain)
                 .map(OrderMapper::toDto)

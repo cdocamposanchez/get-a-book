@@ -2,9 +2,13 @@ package com.adi.gab.domain.model;
 
 import com.adi.gab.domain.exception.UserExceptions;
 import com.adi.gab.domain.types.UserRole;
+import com.adi.gab.domain.valueobject.BookId;
 import com.adi.gab.domain.valueobject.UserId;
 import lombok.Builder;
 import lombok.Getter;
+
+import java.util.ArrayList;
+import java.util.List;
 
 @Getter
 @Builder
@@ -15,6 +19,7 @@ public class User {
     private String email;
     private String password;
     private UserRole role;
+    private List<BookId> favorites;
 
     public static User create(String firstName, String lastName, String email, String password, UserRole role) {
         if (firstName == null || firstName.isEmpty()) throw new UserExceptions.NullUserArgumentException("FirstName");
@@ -28,10 +33,11 @@ public class User {
                 .email(email)
                 .password(password)
                 .role(role)
+                .favorites(new ArrayList<>())
                 .build();
     }
 
-    public User update(User oldUser, User newUser) {
+    public static User update(User oldUser, User newUser) {
         return User.builder()
                 .id(oldUser.getId())
                 .firstName(
@@ -57,6 +63,12 @@ public class User {
                                 !newUser.getPassword().equals(oldUser.getPassword()))
                                 ? newUser.getPassword()
                                 : oldUser.getPassword()
+                )
+                .favorites(
+                        (newUser.getFavorites() != null && !newUser.getFavorites().isEmpty() &&
+                                !newUser.getFavorites().equals(oldUser.getFavorites()))
+                                ? new ArrayList<>(newUser.getFavorites())
+                                : oldUser.getFavorites()
                 )
                 .build();
     }

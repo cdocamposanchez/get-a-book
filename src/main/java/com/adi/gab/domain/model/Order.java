@@ -46,11 +46,11 @@ public class Order {
                 .build();
     }
 
-    public void addItem(BookId bookId, int quantity, BigDecimal price) {
+    public void addItem(OrderItemId orderItemId, BookId bookId, int quantity, BigDecimal price) {
         if (quantity <= 0) throw new IllegalArgumentException("Quantity must be positive");
         if (price.compareTo(BigDecimal.ZERO) <= 0) throw new IllegalArgumentException("Price must be positive");
 
-        orderItems.add(new OrderItem(OrderItemId.generate(), this.id, bookId, quantity, price));
+        orderItems.add(new OrderItem(orderItemId, this.id, bookId, quantity, price));
     }
 
     public void removeItem(BookId bookId) {

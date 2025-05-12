@@ -42,5 +42,17 @@ public class AddressMapper {
                 .build();
     }
 
+    public static AddressDTO toDto(AddressEmbeddable addressEmbeddable) {
+        return AddressDTO.builder()
+                .firstName(addressEmbeddable.getFirstName())
+                .lastName(addressEmbeddable.getLastName())
+                .emailAddress(addressEmbeddable.getEmailAddress())
+                .addressLine(addressEmbeddable.getAddressLine())
+                .city(addressEmbeddable.getCity())
+                .country(addressEmbeddable.getCountry())
+                .zipCode(addressEmbeddable.getZipCode())
+                .build();
+    }
+
     private AddressMapper() {}
 }
