@@ -1,4 +1,4 @@
-package com.adi.gab.infrastructure.stripe;
+package com.adi.gab.infrastructure.config.stripe;
 
 import com.adi.gab.application.dto.OrderItemDTO;
 import com.adi.gab.application.exception.ApplicationException;

@@ -5,6 +5,7 @@ import com.adi.gab.domain.model.Book;
 import com.adi.gab.domain.valueobject.BookId;
 import com.adi.gab.application.dto.BookDTO;
 import com.adi.gab.application.mapper.BookMapper;
+import com.adi.gab.infrastructure.config.cloudinary.CloudinaryService;
 import com.adi.gab.infrastructure.persistance.repository.BookRepository;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.stereotype.Service;
@@ -12,9 +13,11 @@ import org.springframework.stereotype.Service;
 @Service
 public class CreateBookUseCase {
     private final BookRepository bookRepository;
+    private final CloudinaryService cloudinaryService;
 
-    public CreateBookUseCase(BookRepository bookRepository) {
+    public CreateBookUseCase(BookRepository bookRepository, CloudinaryService cloudinaryService) {
         this.bookRepository = bookRepository;
+        this.cloudinaryService = cloudinaryService;
     }
 
     public BookDTO execute(BookDTO bookDto) {
@@ -30,7 +33,8 @@ public class CreateBookUseCase {
 
         while (true) {
             try {
-                Book newBook = buildBookFromDto(bookDto);
+                String imageUrl = cloudinaryService.uploadImage(bookDto.getImage());
+                Book newBook = buildBookFromDto(bookDto, imageUrl);
                 return saveBook(newBook);
             } catch (DataIntegrityViolationException _) {
                 attempts++;
@@ -44,7 +48,7 @@ public class CreateBookUseCase {
         }
     }
 
-    private Book buildBookFromDto(BookDTO bookDto) {
+    private Book buildBookFromDto(BookDTO bookDto, String imageUrl) {
         return Book.create(
                 Book.builder()
                         .id(BookId.generate())
@@ -55,6 +59,7 @@ public class CreateBookUseCase {
                         .categories(bookDto.getCategories())
                         .quantity(bookDto.getQuantity())
                         .price(bookDto.getPrice())
+                        .imageUrl(imageUrl)
                         .year(bookDto.getYear())
                         .build()
         );

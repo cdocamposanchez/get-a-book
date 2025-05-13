@@ -20,5 +20,9 @@ public class DotenvLoader {
         System.setProperty("STRIPE_SECRET_KEY", Objects.requireNonNull(dotenv.get("STRIPE_SECRET_KEY")));
         System.setProperty("STRIPE_FRONTEND_SUCCESS", Objects.requireNonNull(dotenv.get("STRIPE_FRONTEND_SUCCESS")));
         System.setProperty("STRIPE_FRONTEND_CANCEL", Objects.requireNonNull(dotenv.get("STRIPE_FRONTEND_CANCEL")));
+
+        System.setProperty("CLOUDINARY_CLOUD_NAME", Objects.requireNonNull(dotenv.get("CLOUDINARY_CLOUD_NAME")));
+        System.setProperty("CLOUDINARY_API_KEY", Objects.requireNonNull(dotenv.get("CLOUDINARY_API_KEY")));
+        System.setProperty("CLOUDINARY_API_SECRET", Objects.requireNonNull(dotenv.get("CLOUDINARY_API_SECRET")));
     }
 }

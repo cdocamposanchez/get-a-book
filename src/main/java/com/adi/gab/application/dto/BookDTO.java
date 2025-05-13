@@ -2,7 +2,9 @@ package com.adi.gab.application.dto;
 
 import lombok.Builder;
 import lombok.Getter;
+import org.springframework.web.multipart.MultipartFile;
 
+import java.math.BigDecimal;
 import java.util.UUID;
 
 @Getter
@@ -15,7 +17,8 @@ public class BookDTO {
     private String imageUrl;
     private Integer year;
     private Integer quantity;
-    private Double price;
+    private BigDecimal price;
     private Double qualification;
     private String categories;
+    private MultipartFile image;
 }

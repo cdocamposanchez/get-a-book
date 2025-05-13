@@ -7,6 +7,7 @@ import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
+import java.math.BigDecimal;
 import java.time.Year;
 
 @Getter
@@ -21,7 +22,7 @@ public class Book {
     private String imageUrl;
     private Integer year;
     private Integer quantity;
-    private Double price;
+    private BigDecimal price;
     private Double qualification;
     private String categories;
 
@@ -31,7 +32,7 @@ public class Book {
         if (book.getPublisher().isEmpty()) throw new BookExceptions.NullBookArgumentException("Book Publisher");
         if (book.getDescription().isEmpty()) throw new BookExceptions.NullBookArgumentException("Book Description");
         if (book.getYear() <= 0) throw new BookExceptions.NullBookArgumentException("Book Year");
-        if (book.getPrice() <= 0) throw new BookExceptions.NullBookArgumentException("Book Price");
+        if (book.getPrice().doubleValue() <= 0) throw new BookExceptions.NullBookArgumentException("Book Price");
 
         if (book.getYear() > Year.now().getValue()) throw new BookExceptions.LogicException("The year of the book cannot be greater than the actual year");
 

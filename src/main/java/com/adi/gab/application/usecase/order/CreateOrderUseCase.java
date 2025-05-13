@@ -15,7 +15,7 @@ import com.adi.gab.infrastructure.persistance.repository.OrderRepository;
 import com.adi.gab.infrastructure.security.AuthenticatedUserProvider;
 import com.adi.gab.application.exception.ApplicationException;
 
-import com.adi.gab.infrastructure.stripe.StripeService;
+import com.adi.gab.infrastructure.config.stripe.StripeService;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -96,6 +96,7 @@ public class CreateOrderUseCase {
             }
             item.setId(UUID.randomUUID());
             item.setTitle(book.getTitle());
+            item.setPrice(book.getPrice());
         });
     }
 }

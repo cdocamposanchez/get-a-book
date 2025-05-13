@@ -1,4 +1,4 @@
-package com.adi.gab.application;
+package com.adi.gab;
 
 import com.adi.gab.infrastructure.config.DotenvLoader;
 import org.jetbrains.annotations.NotNull;

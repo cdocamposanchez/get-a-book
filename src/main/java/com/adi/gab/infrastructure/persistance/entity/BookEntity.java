@@ -10,6 +10,7 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
+import java.math.BigDecimal;
 import java.util.UUID;
 
 @Entity
@@ -39,7 +40,7 @@ public class BookEntity {
 
     private Integer quantity;
 
-    private Double price;
+    private BigDecimal price;
 
     private Double qualification;
 

@@ -1,4 +1,4 @@
-package com.adi.gab.infrastructure.stripe;
+package com.adi.gab.infrastructure.config.stripe;
 
 import lombok.Getter;
 import lombok.Setter;

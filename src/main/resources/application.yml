@@ -26,3 +26,8 @@ stripe:
   secret-key: ${STRIPE_SECRET_KEY}
   success-url: ${STRIPE_FRONTEND_SUCCESS}
   cancel-url: ${STRIPE_FRONTEND_CANCEL}
+
+cloudinary:
+  cloud-name: ${CLOUDINARY_CLOUD_NAME}
+  api-key: ${CLOUDINARY_API_KEY}
+  api-secret: ${CLOUDINARY_API_SECRET}

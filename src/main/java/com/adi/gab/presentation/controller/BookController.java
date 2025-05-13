@@ -10,9 +10,11 @@ import com.adi.gab.application.usecase.book.GetFavoritesUseCase;
 import com.adi.gab.application.usecase.book.UpdateBookUseCase;
 import com.adi.gab.domain.valueobject.BookId;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
@@ -44,9 +46,8 @@ public class BookController {
         this.getFavoritesUseCase = getFavoritesUseCase;
     }
 
-    @PostMapping
-    public ResponseEntity<ResponseDTO<BookDTO>> create(@RequestBody BookDTO bookDTO) {
-
+    @PostMapping(consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
+    public ResponseEntity<ResponseDTO<BookDTO>> create(@ModelAttribute BookDTO bookDTO) {
         BookDTO createdDTO = createBookUseCase.execute(bookDTO);
 
         ResponseDTO<BookDTO> response = new ResponseDTO<>(
@@ -57,6 +58,7 @@ public class BookController {
 
         return new ResponseEntity<>(response, HttpStatus.CREATED);
     }
+
 
     @PutMapping
     public ResponseEntity<ResponseDTO<BookDTO>> update(@RequestBody BookDTO bookDTO) {
