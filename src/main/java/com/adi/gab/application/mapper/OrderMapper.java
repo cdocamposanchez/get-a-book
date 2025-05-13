@@ -59,7 +59,7 @@ public class OrderMapper {
         order.setOrderStatus(OrderStatus.fromStringIgnoreCase(entity.getOrderStatus()));
 
         entity.getItems().forEach(itemEntity ->
-                order.addItem(OrderItemId.of(itemEntity.getId()), BookId.of(itemEntity.getBookId()), itemEntity.getQuantity(), itemEntity.getPrice()));
+                order.addItem(OrderItemId.of(itemEntity.getId()), BookId.of(itemEntity.getBookId()), itemEntity.getTitle(), itemEntity.getQuantity(), itemEntity.getPrice()));
 
         return order;
     }
@@ -72,7 +72,7 @@ public class OrderMapper {
         order.setOrderStatus(dto.getOrderStatus());
 
         dto.getOrderItems().forEach(item ->
-                order.addItem(OrderItemId.of(item.getId()), BookId.of(item.getBookId()), item.getQuantity(), item.getPrice()));
+                order.addItem(OrderItemId.of(item.getId()), BookId.of(item.getBookId()), item.getTitle(), item.getQuantity(), item.getPrice()));
 
         return order;
     }

@@ -14,6 +14,7 @@ public  class OrderItemDTO {
     private UUID id;
     private UUID orderId;
     private UUID bookId;
+    private String title;
     private Integer quantity;
     private BigDecimal price;
 }

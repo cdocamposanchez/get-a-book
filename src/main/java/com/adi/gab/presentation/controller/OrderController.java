@@ -44,9 +44,20 @@ public class OrderController {
         this.getOrdersUseCase = getOrdersUseCase;
     }
 
-    @PostMapping
-    public ResponseEntity<ResponseDTO<OrderDTO>> create(@RequestBody OrderDTO orderDTO) {
-        OrderDTO createdDTO = createOrderUseCase.execute(orderDTO);
+    @PostMapping("/order-session")
+    public ResponseEntity<ResponseDTO<String>> createStripeSession(@RequestBody OrderDTO orderDTO) {
+        String stripeSession = createOrderUseCase.createStripeSession(orderDTO);
+        ResponseDTO<String> response = new ResponseDTO<>(
+                "Order successfully created",
+                stripeSession,
+                HttpStatus.CREATED
+        );
+        return new ResponseEntity<>(response, HttpStatus.CREATED);
+    }
+
+    @PostMapping("/confirm-order")
+    public ResponseEntity<ResponseDTO<OrderDTO>> confirmOrder(@RequestBody OrderDTO orderDTO) {
+        OrderDTO createdDTO = createOrderUseCase.confirmOrder(orderDTO);
         ResponseDTO<OrderDTO> response = new ResponseDTO<>(
                 "Order successfully created",
                 createdDTO,

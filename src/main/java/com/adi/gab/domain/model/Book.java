@@ -18,6 +18,7 @@ public class Book {
     private String title;
     private String publisher;
     private String description;
+    private String imageUrl;
     private Integer year;
     private Integer quantity;
     private Double price;
@@ -40,6 +41,7 @@ public class Book {
                 .title(book.getTitle())
                 .publisher(book.getPublisher())
                 .description(book.getDescription())
+                .imageUrl(book.getImageUrl())
                 .year(book.getYear())
                 .quantity(book.getQuantity())
                 .price(book.getPrice())
@@ -48,6 +50,7 @@ public class Book {
                 .build();
     }
 
+    @SuppressWarnings("squid:S3776")
     public static Book update(Book oldBook, Book newBook) {
         Book updatedBook = Book.builder()
                 .id(oldBook.getId())
@@ -68,6 +71,12 @@ public class Book {
                                 !newBook.getDescription().equals(oldBook.getDescription()))
                                 ? newBook.getDescription()
                                 : oldBook.getDescription()
+                )
+                .imageUrl(
+                        (newBook.getImageUrl() != null && !newBook.getImageUrl().isEmpty() &&
+                                !newBook.getImageUrl().equals(oldBook.getImageUrl()))
+                                ? newBook.getImageUrl()
+                                : oldBook.getImageUrl()
                 )
                 .year(
                         (newBook.getYear() != null && !newBook.getYear().equals(oldBook.getYear()))

@@ -33,6 +33,8 @@ public class OrderItemEntity {
     @Column(name = "book_id", nullable = false)
     private UUID bookId;
 
+    private String title;
+
     private Integer quantity;
 
     private BigDecimal price;

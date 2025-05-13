@@ -12,6 +12,7 @@ public class BookDTO {
     private String title;
     private String publisher;
     private String description;
+    private String imageUrl;
     private Integer year;
     private Integer quantity;
     private Double price;

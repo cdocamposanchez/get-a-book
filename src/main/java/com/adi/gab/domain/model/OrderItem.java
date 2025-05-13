@@ -17,16 +17,18 @@ public class OrderItem {
     private OrderItemId id;
     private OrderId orderId;
     private BookId bookId;
+    private String title;
     private Integer quantity;
     private BigDecimal price;
 
-    public OrderItem(OrderItemId id, OrderId orderId, BookId bookId, Integer quantity, BigDecimal price) {
+    public OrderItem(OrderItemId id, OrderId orderId, BookId bookId, String title, Integer quantity, BigDecimal price) {
         if (orderId == null) throw new OrderItemExceptions.NullOrderItemArgumentException("OrderId");
         if (bookId == null) throw new OrderItemExceptions.NullOrderItemArgumentException("BookId");
 
         this.id = id;
         this.orderId = orderId;
         this.bookId = bookId;
+        this.title = title;
         this.quantity = quantity;
         this.price = price;
     }

@@ -33,6 +33,8 @@ public class BookEntity {
     @Column(nullable = false, length = 2048)
     private String description;
 
+    private String imageUrl;
+
     private Integer year;
 
     private Integer quantity;

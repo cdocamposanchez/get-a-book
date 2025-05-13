@@ -19,6 +19,7 @@ public class OrderItemMapper {
                 .id(OrderItemId.of(orderItemEntity.getId()))
                 .orderId(OrderId.of(orderItemEntity.getOrder().getId()))
                 .bookId(BookId.of(orderItemEntity.getBookId()))
+                .title(orderItemEntity.getTitle())
                 .quantity(orderItemEntity.getQuantity())
                 .price(orderItemEntity.getPrice())
                 .build();
@@ -34,6 +35,7 @@ public class OrderItemMapper {
                 .id(orderItem.getId().value())
                 .order(orderEntity)
                 .bookId(orderItem.getBookId().value())
+                .title(orderItem.getTitle())
                 .quantity(orderItem.getQuantity())
                 .price(orderItem.getPrice())
                 .build();

@@ -16,5 +16,9 @@ public class DotenvLoader {
         System.setProperty("DB_PASSWORD", Objects.requireNonNull(dotenv.get("DB_PASSWORD")));
         System.setProperty("JWT_SECRET", Objects.requireNonNull(dotenv.get("JWT_SECRET")));
         System.setProperty("JWT_EXPIRATION", Objects.requireNonNull(dotenv.get("JWT_EXPIRATION")));
+
+        System.setProperty("STRIPE_SECRET_KEY", Objects.requireNonNull(dotenv.get("STRIPE_SECRET_KEY")));
+        System.setProperty("STRIPE_FRONTEND_SUCCESS", Objects.requireNonNull(dotenv.get("STRIPE_FRONTEND_SUCCESS")));
+        System.setProperty("STRIPE_FRONTEND_CANCEL", Objects.requireNonNull(dotenv.get("STRIPE_FRONTEND_CANCEL")));
     }
 }
