@@ -1,0 +1,37 @@
+.tracking-container {
+  padding: 2rem;
+  text-align: center;
+  font-family: Arial, sans-serif;
+}
+
+.tracking-container h1 {
+  font-size: 1.8rem;
+  margin-bottom: 2rem;
+}
+
+.tracking-steps {
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+  margin-top: 2rem;
+}
+
+.step {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  color: #aaa;
+}
+
+.step .icon {
+  font-size: 2rem;
+  margin-bottom: 0.5rem;
+}
+
+.step.active {
+  color: #2a9d8f;
+}
+
+.step.active .icon {
+  color: #2a9d8f;
+}

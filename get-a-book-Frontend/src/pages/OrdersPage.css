@@ -1,0 +1,69 @@
+/* Fondo general */
+.orders-container {
+  background-color: #6e9c9f; /* azul verdoso mockup */
+  min-height: 100vh;
+  padding: 20px 40px;
+  font-family: Arial, sans-serif;
+}
+
+/* Título principal */
+.orders-title {
+  font-size: 24px;
+  font-weight: bold;
+  color: #000;
+  margin-bottom: 30px;
+}
+
+/* Estructura de columnas */
+.order-columns {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+}
+
+/* Columna individual (En Camino, Pendientes, etc.) */
+.order-column {
+  flex: 0 1 45%;
+  margin-bottom: 40px;
+}
+
+/* Título de columna */
+.order-column h3 {
+  font-size: 20px;
+  margin-bottom: 15px;
+  color: #000;
+}
+
+/* Tarjeta de orden */
+.order-card {
+  background-color: #f2f2f2;
+  border-radius: 12px;
+  padding: 15px 20px;
+  margin-bottom: 20px;
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+}
+
+/* Info de la orden */
+.order-info p {
+  margin: 4px 0;
+  font-size: 14px;
+  color: #333;
+}
+
+/* Botón de detalles */
+.details-button {
+  background-color: #e0e0e0;
+  border: none;
+  border-radius: 8px;
+  padding: 8px 14px;
+  font-weight: bold;
+  cursor: pointer;
+  transition: background-color 0.2s ease;
+}
+
+.details-button:hover {
+  background-color: #d6d6d6;
+}
