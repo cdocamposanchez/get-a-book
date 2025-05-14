@@ -20,5 +20,5 @@ public class AddressEmbeddable {
     private String zipCode;
     private String country;
 
-    protected AddressEmbeddable() {}
+    public AddressEmbeddable() {}
 }

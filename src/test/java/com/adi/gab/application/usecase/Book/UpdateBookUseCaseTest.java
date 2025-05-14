@@ -116,7 +116,7 @@ class UpdateBookUseCaseTest {
                 .quantity(5)
                 .qualification(4.5)
                 .categories("Fiction")
-                .image(null) // porque no se usa en update
+                .image(null)
                 .build();
     }
 }
