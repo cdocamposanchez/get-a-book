@@ -1,61 +1,46 @@
-import { useState } from 'react';
 import { BrowserRouter as Router, Routes, Route, Navigate } from 'react-router-dom';
-import reactLogo from './assets/react.svg';
-import viteLogo from "../../../../../../../../../../../vite.svg";
+
 import './App.css';
 
 import ProfilePage from './pages/ProfilePage';
 import LoginPage from './pages/LoginPage';
+import RegisterPage from './pages/RegisterPage';
+import Orders from './pages/OrdersPage';
+import Tracking from './pages/Tracking';
+import Cart from './pages/Cart';
+import Favorites from './pages/Favorites';
+import Returns from './pages/Returns';
+import Navbar from './components/Navbar';
+import HomePage from './pages/HomePage';
 
 function App() {
-    const [count, setCount] = useState(0);
+  const isAuthenticated = localStorage.getItem('authToken');
 
-    const isAuthenticated = localStorage.getItem('authToken');
+  return (
+    <Router>
+      <div>
+        <Navbar />
+        <Routes>
+          {/* Redirige siempre a /home sin validar authToken */}
+          <Route path="/" element={<Navigate to="/home" />} />
 
-    // @ts-ignore
-    // @ts-ignore
-    // @ts-ignore
-    // @ts-ignore
-    return (
-        <Router>
-            <div>
-                <a href="https://vite.dev" target="_blank">
-                    <img src={viteLogo} className="logo" alt="Vite logo" />
-                </a>
-                <a href="https://react.dev" target="_blank">
-                    <img src={reactLogo} className="logo react" alt="React logo" />
-                </a>
-            </div>
-            <h1>Vite + React</h1>
+          {/* Rutas normales */}
+          <Route path="/home" element={<HomePage />} />
+          <Route path="/login" element={<LoginPage />} />
+          <Route path="/register" element={<RegisterPage />} />
+          <Route path="/profile" element={<ProfilePage />} />
+          <Route path="/orders" element={<Orders />} />
+          <Route path="/tracking" element={<Tracking />} />
+          <Route path="/cart" element={<Cart />} />
+          <Route path="/favorites" element={<Favorites />} />
+          <Route path="/returns" element={<Returns />} />
 
-            {}
-            <Routes>
-                {}
-                <Route path="/login" element={<LoginPage />} />
-
-                {}
-                <Route
-                    path="/profile"
-                    element={isAuthenticated ? <ProfilePage></ProfilePage> : <Navigate to="/login" />}
-                />
-
-                {}
-            </Routes>
-
-            <div className="card">
-                <button onClick={() => setCount((count) => count + 1)}>
-                    count is {count}
-                </button>
-                <p>
-                    Edit <code>src/App.tsx</code> and save to test HMR
-                </p>
-            </div>
-            <p className="read-the-docs">
-                Click on the Vite and React logos to learn more
-            </p>
-        </Router>
-    );
+          {/* Catch-all: redirige a / */}
+          <Route path="*" element={<Navigate to="/" />} />
+        </Routes>
+      </div>
+    </Router>
+  );
 }
 
 export default App;
-
