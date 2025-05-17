@@ -34,3 +34,5 @@ build/
 
 .env
 .venv
+src/test/performance/.venv
+src/test/performance/__pycache__
