@@ -4,7 +4,7 @@ import com.adi.gab.application.dto.PaginationRequest;
 import com.adi.gab.application.dto.UserDTO;
 import com.adi.gab.application.dto.request.LoginRequest;
 import com.adi.gab.application.dto.ResponseDTO;
-import com.adi.gab.application.dto.TokenDTO;
+import com.adi.gab.application.dto.AuthDTO;
 import com.adi.gab.application.dto.request.RegisterRequest;
 import com.adi.gab.application.usecase.user.DeleteUserUseCase;
 import com.adi.gab.application.usecase.user.GetUsersUseCase;
@@ -55,10 +55,10 @@ public class UserController {
     }
 
     @PostMapping("/auth/login")
-    public ResponseEntity<ResponseDTO<TokenDTO>> login(@RequestBody LoginRequest request) {
-        TokenDTO token = loginUseCase.execute(request);
+    public ResponseEntity<ResponseDTO<AuthDTO>> login(@RequestBody LoginRequest request) {
+        AuthDTO token = loginUseCase.execute(request);
 
-        ResponseDTO<TokenDTO> response = new ResponseDTO<>(
+        ResponseDTO<AuthDTO> response = new ResponseDTO<>(
                 "User logged in successfully",
                 token,
                 HttpStatus.OK
@@ -68,10 +68,10 @@ public class UserController {
     }
 
     @PostMapping("/auth/register")
-    public ResponseEntity<ResponseDTO<TokenDTO>> register(@RequestBody RegisterRequest request) {
-        TokenDTO token = registerUseCase.execute(request);
+    public ResponseEntity<ResponseDTO<AuthDTO>> register(@RequestBody RegisterRequest request) {
+        AuthDTO token = registerUseCase.execute(request);
 
-        ResponseDTO<TokenDTO> response = new ResponseDTO<>(
+        ResponseDTO<AuthDTO> response = new ResponseDTO<>(
                 "User registered in successfully",
                 token,
                 HttpStatus.OK

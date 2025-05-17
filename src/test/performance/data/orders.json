@@ -1,0 +1,35 @@
+[
+  {
+    "customerId": "da7d0221-7f36-4bd5-93fd-e86211756347",
+    "orderName": "Order_001",
+    "shippingAddress": {
+      "firstName": "Alice",
+      "lastName": "Johnson",
+      "emailAddress": "alice.johnson@example.com",
+      "addressLine": "123 Main St",
+      "country": "USA",
+      "city": "New York",
+      "zipCode": "10001"
+    },
+    "billingAddress": {
+      "firstName": "Alice",
+      "lastName": "Johnson",
+      "emailAddress": "alice.johnson@example.com",
+      "addressLine": "123 Main St",
+      "country": "USA",
+      "city": "New York",
+      "zipCode": "10001"
+    },
+    "orderStatus": "PENDING",
+    "orderItems": [
+      {
+        "bookId": "065712ba-c07c-48ca-82b8-692273e470d1",
+        "quantity": 2
+      },
+      {
+        "bookId": "065712ba-c07c-48ca-82b8-692273e470d1",
+        "quantity": 1
+      }
+    ]
+  }
+]

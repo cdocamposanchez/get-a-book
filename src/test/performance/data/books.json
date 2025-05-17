@@ -1,0 +1,24 @@
+[
+  {
+    "title": "Effective Java",
+    "publisher": "Addison-Wesley",
+    "description": "Comprehensive guide to best practices in Java.",
+    "imageUrl": "https://dummyimage.com/600x400/000/fff",
+    "year": 2018,
+    "quantity": 20,
+    "price": 49.99,
+    "qualification": 4.7,
+    "categories": "Programming,Java"
+  },
+  {
+    "title": "Clean Code",
+    "publisher": "Prentice Hall",
+    "description": "A Handbook of Agile Software Craftsmanship.",
+    "imageUrl": "https://dummyimage.com/600x400/000/fff",
+    "year": 2008,
+    "quantity": 15,
+    "price": 42.50,
+    "qualification": 4.8,
+    "categories": "Software,Agile,Programming"
+  }
+]

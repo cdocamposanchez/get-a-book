@@ -1,6 +1,6 @@
 package com.adi.gab.application.usecase.user;
 
-import com.adi.gab.application.dto.TokenDTO;
+import com.adi.gab.application.dto.AuthDTO;
 import com.adi.gab.application.dto.request.RegisterRequest;
 import com.adi.gab.application.exception.ApplicationException;
 import com.adi.gab.application.mapper.UserMapper;
@@ -26,7 +26,7 @@ public class RegisterUseCase {
         this.tokenProvider = tokenProvider;
     }
 
-    public TokenDTO execute(RegisterRequest request) {
+    public AuthDTO execute(RegisterRequest request) {
         if (Boolean.TRUE.equals(userRepository.existsByEmail(request.getEmail()))) throw new ApplicationException(
                 "There is already a user registered with the email: " + request.getEmail(),
                 this.getClass().getSimpleName());
@@ -38,6 +38,6 @@ public class RegisterUseCase {
 
         CustomUserDetails userDetails = new CustomUserDetails(userEntity);
         String token = tokenProvider.generateToken(userDetails);
-        return TokenDTO.builder().token(token).build();
+        return AuthDTO.builder().token(token).userId(userEntity.getId()).build();
     }
 }

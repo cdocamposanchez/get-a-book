@@ -70,6 +70,12 @@ public class User {
                                 ? new ArrayList<>(newUser.getFavorites())
                                 : oldUser.getFavorites()
                 )
+                .role(
+                        (newUser.getRole() != null && !newUser.getRole().toString().isEmpty() &&
+                                !newUser.getRole().equals(oldUser.getRole()))
+                                ? newUser.getRole()
+                                : oldUser.getRole()
+                )
                 .build();
     }
 }

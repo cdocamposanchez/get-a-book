@@ -33,7 +33,11 @@ public class CreateBookUseCase {
 
         while (true) {
             try {
-                String imageUrl = cloudinaryService.uploadImage(bookDto.getImage());
+                String imageUrl = "";
+                if (!bookDto.getImage().isEmpty()) {
+                   imageUrl = cloudinaryService.uploadImage(bookDto.getImage());
+                }
+
                 Book newBook = buildBookFromDto(bookDto, imageUrl);
                 return saveBook(newBook);
             } catch (DataIntegrityViolationException _) {
