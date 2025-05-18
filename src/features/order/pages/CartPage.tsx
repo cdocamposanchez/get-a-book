@@ -1,7 +1,7 @@
 import React from 'react';
-import './Cart.css';
+import '../styles/CartPage.css';
 
-const Cart = () => {
+const CartPage = () => {
   const items = [
     {
       id: 1,
@@ -45,4 +45,4 @@ const Cart = () => {
   );
 };
 
-export default Cart;
+export default CartPage;

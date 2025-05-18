@@ -1,7 +1,7 @@
 import React from 'react';
-import './OrdersPage.css';
+import '../styles/OrderPage.css';
 
-const OrdersPage = () => {
+const OrderPage = () => {
   const orders = [
     {
       id: '123456',
@@ -60,4 +60,4 @@ const OrdersPage = () => {
   );
 };
 
-export default OrdersPage;
+export default OrderPage;

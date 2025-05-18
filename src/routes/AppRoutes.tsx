@@ -5,7 +5,7 @@ import LoginPage from "../pages/LoginPage.tsx";
 import RegisterPage from "../pages/RegisterPage.tsx";
 import ProfilePage from "../pages/ProfilePage.tsx";
 import Tracking from "../pages/Tracking.tsx";
-import Cart from "../pages/Cart.tsx";
+import CartPage from "../features/order/pages/CartPage.tsx";
 import Favorites from "../pages/Favorites.tsx";
 import Returns from "../pages/Returns.tsx";
 
@@ -23,7 +23,7 @@ const AppRoutes = (): JSX.Element => {
             <Route path="/register" element={<RegisterPage />} />
             <Route path="/profile" element={<ProfilePage />} />
             <Route path="/tracking" element={<Tracking />} />
-            <Route path="/cart" element={<Cart />} />
+            <Route path="/cart" element={<CartPage />} />
             <Route path="/favorites" element={<Favorites />} />
             <Route path="/returns" element={<Returns />} />
 
