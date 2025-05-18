@@ -38,6 +38,9 @@ public class RegisterUseCase {
 
         CustomUserDetails userDetails = new CustomUserDetails(userEntity);
         String token = tokenProvider.generateToken(userDetails);
-        return AuthDTO.builder().token(token).userId(userEntity.getId()).build();
+        return AuthDTO.builder()
+                .token(token)
+                .userRole(UserRole.fromStringIgnoreCase(userDetails.getRole()))
+                .userId(userEntity.getId()).build();
     }
 }

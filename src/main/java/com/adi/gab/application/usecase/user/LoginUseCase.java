@@ -2,11 +2,14 @@ package com.adi.gab.application.usecase.user;
 
 import com.adi.gab.application.dto.request.LoginRequest;
 import com.adi.gab.application.dto.AuthDTO;
+import com.adi.gab.domain.types.UserRole;
 import com.adi.gab.infrastructure.security.CustomUserDetails;
 import com.adi.gab.infrastructure.security.JwtTokenProvider;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.stereotype.Service;
+
+import java.util.UUID;
 
 @Service
 public class LoginUseCase {
@@ -25,6 +28,9 @@ public class LoginUseCase {
 
         var userDetails = (CustomUserDetails) auth.getPrincipal();
         String token = tokenProvider.generateToken(userDetails);
-        return AuthDTO.builder().token(token).build();
+        return AuthDTO.builder()
+                .token(token)
+                .userRole(UserRole.fromStringIgnoreCase(userDetails.getRole()))
+                .userId(UUID.fromString(userDetails.getId())).build();
     }
 }
