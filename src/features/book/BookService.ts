@@ -6,14 +6,17 @@ const BOOK_BASE = '/books';
 
 export const createBook = async (book: Book): Promise<Book> => {
     const formData = new FormData();
+
     Object.entries(book).forEach(([key, value]) => {
-        if (value !== null) formData.append(key, value as string | Blob);
+        if (value !== null && value !== undefined) {
+            const val = typeof value === 'object' && value instanceof File
+                ? value
+                : String(value);
+            formData.append(key, val);
+        }
     });
 
-    const response = await axiosInstance.post<Response<Book>>(`${BOOK_BASE}`, formData, {
-        headers: { 'Content-Type': 'multipart/form-data' },
-    });
-
+    const response = await axiosInstance.post<Response<Book>>('/books', formData);
     return response.data.data;
 };
 

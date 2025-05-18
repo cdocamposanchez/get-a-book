@@ -1,6 +1,6 @@
-import type { Address } from './AddressDTO';
-import type { OrderItem } from './OrderItemDTO';
-import type { OrderStatus } from './OrderStatus';
+import type { Address } from './address';
+import type { OrderItem } from './orderItem';
+import type { OrderStatus } from './orderStatus';
 
 export interface Order {
     id: string;
