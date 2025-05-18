@@ -1,10 +1,8 @@
-// src/pages/Favorites.tsx
-import React from "react";
-import "./Favorites.css";
+import "../styles/FavoritesPage.css";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faHeart, faTrashAlt } from "@fortawesome/free-solid-svg-icons";
 
-function Favorites() {
+function FavoritesPage() {
   const favorites = [
     {
       id: "1",
@@ -41,4 +39,4 @@ function Favorites() {
   );
 }
 
-export default Favorites;
+export default FavoritesPage;

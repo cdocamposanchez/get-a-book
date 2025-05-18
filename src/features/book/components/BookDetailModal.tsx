@@ -1,6 +1,5 @@
 import React from "react";
-import "./BookDetailModal.css"; // Asegúrate de que este archivo exista
-import books from "../book"; // Ruta relativa al archivo con los libros
+import "../styles/BookDetailModal.css";
 
 interface Book {
   id: number;

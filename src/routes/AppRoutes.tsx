@@ -1,13 +1,14 @@
 import { Routes, Route, Navigate } from 'react-router-dom';
 import type {JSX} from "react";
-import HomePage from "../pages/HomePage.tsx";
-import LoginPage from "../pages/LoginPage.tsx";
-import RegisterPage from "../pages/RegisterPage.tsx";
-import ProfilePage from "../pages/ProfilePage.tsx";
-import Tracking from "../pages/Tracking.tsx";
+import CatalogPage from "../features/book/pages/CatalogPage.tsx";
+import LoginPage from "../features/user/pages/LoginPage.tsx";
+import RegisterPage from "../features/user/pages/RegisterPage.tsx";
+import ProfilePage from "../features/user/pages/ProfilePage.tsx";
+import TrackingPage from "../features/order/pages/TrackingPage.tsx";
 import CartPage from "../features/order/pages/CartPage.tsx";
-import Favorites from "../pages/Favorites.tsx";
-import Returns from "../pages/Returns.tsx";
+import FavoritesPage from "../features/book/pages/FavoritesPage.tsx";
+import Returns from "../features/order/pages/ReturnsPage.tsx";
+import OrderPage from "../features/order/pages/OrderPage.tsx";
 
 
 
@@ -18,14 +19,15 @@ const AppRoutes = (): JSX.Element => {
             <Route path="/" element={<Navigate to="/home" />} />
 
             {/* Rutas normales */}
-            <Route path="/home" element={<HomePage />} />
+            <Route path="/home" element={<CatalogPage />} />
             <Route path="/login" element={<LoginPage />} />
             <Route path="/register" element={<RegisterPage />} />
             <Route path="/profile" element={<ProfilePage />} />
-            <Route path="/tracking" element={<Tracking />} />
+            <Route path="/tracking" element={<TrackingPage />} />
             <Route path="/cart" element={<CartPage />} />
-            <Route path="/favorites" element={<Favorites />} />
+            <Route path="/favorites" element={<FavoritesPage />} />
             <Route path="/returns" element={<Returns />} />
+            <Route path="/orders" element={<OrderPage />} />
 
             {/* Catch-all: redirige a / */}
             <Route path="*" element={<Navigate to="/" />} />

@@ -1,8 +1,7 @@
-import React from 'react';
-import './Tracking.css';
+import '../styles/TrackingPage.css';
 import { FaBox, FaShippingFast, FaCheckCircle } from 'react-icons/fa';
 
-function Tracking() {
+function TrackingPage() {
   const etapas = [
     { nombre: 'Confirmado', icono: <FaBox />, activo: true },
     { nombre: 'Enviado', icono: <FaShippingFast />, activo: true },
@@ -24,5 +23,5 @@ function Tracking() {
   );
 }
 
-export default Tracking;
+export default TrackingPage;
 
