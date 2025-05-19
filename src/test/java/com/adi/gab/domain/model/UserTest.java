@@ -14,12 +14,11 @@ import static org.junit.jupiter.api.Assertions.*;
 
 class UserTest {
 
-    private UserId validId;
     private User baseUser;
 
     @BeforeEach
     void setUp() {
-        validId = UserId.of(UUID.randomUUID());
+        UserId validId = UserId.of(UUID.randomUUID());
 
         baseUser = User.builder()
                 .id(validId)
@@ -27,7 +26,7 @@ class UserTest {
                 .lastNames("Doe Smith")
                 .email("alice@example.com")
                 .password("securePass123")
-                .role(UserRole.USER)
+                .role(UserRole.CLIENT)
                 .favorites(List.of(BookId.of(UUID.randomUUID())))
                 .build();
     }
@@ -52,42 +51,42 @@ class UserTest {
     @Test
     void shouldThrowWhenFirstNameIsNull() {
         Exception ex = assertThrows(UserExceptions.NullUserArgumentException.class, () ->
-                User.create(null, "Last", "email@example.com", "pass", UserRole.USER));
+                User.create(null, "Last", "email@example.com", "pass", UserRole.CLIENT));
         assertEquals("Argument: FirstName Cannot be null.", ex.getMessage());
     }
 
     @Test
     void shouldThrowWhenFirstNameIsEmpty() {
         Exception ex = assertThrows(UserExceptions.NullUserArgumentException.class, () ->
-                User.create("", "Last", "email@example.com", "pass", UserRole.USER));
+                User.create("", "Last", "email@example.com", "pass", UserRole.CLIENT));
         assertEquals("Argument: FirstName Cannot be null.", ex.getMessage());
     }
 
     @Test
     void shouldThrowWhenLastNameIsNull() {
         Exception ex = assertThrows(UserExceptions.NullUserArgumentException.class, () ->
-                User.create("First", null, "email@example.com", "pass", UserRole.USER));
+                User.create("First", null, "email@example.com", "pass", UserRole.CLIENT));
         assertEquals("Argument: LastName Cannot be null.", ex.getMessage());
     }
 
     @Test
     void shouldThrowWhenLastNameIsEmpty() {
         Exception ex = assertThrows(UserExceptions.NullUserArgumentException.class, () ->
-                User.create("First", "", "email@example.com", "pass", UserRole.USER));
+                User.create("First", "", "email@example.com", "pass", UserRole.CLIENT));
         assertEquals("Argument: LastName Cannot be null.", ex.getMessage());
     }
 
     @Test
     void shouldThrowWhenEmailIsNull() {
         Exception ex = assertThrows(UserExceptions.NullUserArgumentException.class, () ->
-                User.create("First", "Last", null, "pass", UserRole.USER));
+                User.create("First", "Last", null, "pass", UserRole.CLIENT));
         assertEquals("Argument: Email Cannot be null.", ex.getMessage());
     }
 
     @Test
     void shouldThrowWhenEmailIsEmpty() {
         Exception ex = assertThrows(UserExceptions.NullUserArgumentException.class, () ->
-                User.create("First", "Last", "", "pass", UserRole.USER));
+                User.create("First", "Last", "", "pass", UserRole.CLIENT));
         assertEquals("Argument: Email Cannot be null.", ex.getMessage());
     }
 
