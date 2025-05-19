@@ -2,7 +2,7 @@ import { BrowserRouter } from 'react-router-dom';
 
 import './App.css';
 
-import Navbar from './components/navbar/Navbar.tsx';
+import Navbar from './components/Navbar.tsx';
 import AppRoutes from "./routes/AppRoutes.tsx";
 
 function App() {

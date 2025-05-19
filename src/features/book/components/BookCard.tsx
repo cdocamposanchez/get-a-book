@@ -1,11 +1,15 @@
-import {useState} from "react";
-import books from "../../../book.ts";
+import { useState } from "react";
 import BookDetailModal from "./BookDetailModal.tsx";
+import type { Book } from "../../../types/book";
 
-const BookCard = () => {
-    const [selectedBook, setSelectedBook] = useState(null);
+interface BookCardProps {
+    books: Book[];
+}
 
-    const handleOpenModal = (book: any) => {
+const BookCard = ({ books }: BookCardProps) => {
+    const [selectedBook, setSelectedBook] = useState<Book | null>(null);
+
+    const handleOpenModal = (book: Book) => {
         setSelectedBook(book);
     };
 
@@ -14,20 +18,28 @@ const BookCard = () => {
     };
 
     return (
-        <main className="books-area">
-            <div className="books-grid">
-                {books.slice(0, 8).map((book) => (
-                    <div className="book-card" key={book.author} onClick={() => handleOpenModal(book)}>
-                        <img src={book.image} alt={book.title}/>
-                        <h4>{book.title}</h4>
-                        <p>{book.author}</p>
-                        <span>${book.price.toLocaleString()}</span>
+        <main className="flex-1 overflow-y-auto">
+            <div className="grid grid-cols-4 gap-6 justify-items-center">
+                {books.map((book) => (
+                    <div
+                        key={book.id}
+                        onClick={() => handleOpenModal(book)}
+                        className="cursor-pointer bg-gray-100 rounded-md p-3 shadow-md hover:scale-105 transform transition-transform"
+                    >
+                        <img
+                            src={book.imageUrl}
+                            alt={book.title}
+                            className="w-50 h-70 object-cover rounded-md mb-3"
+                        />
+                        <h4 className="text-sm font-semibold mb-1 text-wrap">{book.title}</h4>
+                        <p className="text-xs text-gray-700 mb-1 text-wrap">{book.publisher}</p>
+                        <span className="block font-bold text-sm">${book.price.toLocaleString()}</span>
                     </div>
                 ))}
             </div>
 
             {selectedBook && (
-                <BookDetailModal book={selectedBook} onClose={handleCloseModal}/>
+                <BookDetailModal book={selectedBook} onClose={handleCloseModal} />
             )}
         </main>
     );
