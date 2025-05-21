@@ -1,4 +1,4 @@
-package com.adi.gab.application.usecase.Order;
+package com.adi.gab.application.usecase.order;
 
 import com.adi.gab.application.dto.BookDTO;
 import com.adi.gab.application.dto.OrderDTO;
@@ -6,7 +6,6 @@ import com.adi.gab.application.dto.OrderItemDTO;
 import com.adi.gab.application.exception.ApplicationException;
 import com.adi.gab.application.usecase.book.GetBooksUseCase;
 import com.adi.gab.application.usecase.book.ReduceStockUseCase;
-import com.adi.gab.application.usecase.order.CreateOrderUseCase;
 
 import com.adi.gab.infrastructure.persistance.repository.OrderRepository;
 import com.adi.gab.infrastructure.security.AuthenticatedUserProvider;

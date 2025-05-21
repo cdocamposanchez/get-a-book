@@ -1,7 +1,6 @@
-package com.adi.gab.application.usecase.Book;
+package com.adi.gab.application.usecase.book;
 
 import com.adi.gab.application.exception.ApplicationException;
-import com.adi.gab.application.usecase.book.DeleteBookUseCase;
 import com.adi.gab.domain.valueobject.BookId;
 import com.adi.gab.infrastructure.config.cloudinary.CloudinaryService;
 import com.adi.gab.infrastructure.persistance.entity.BookEntity;

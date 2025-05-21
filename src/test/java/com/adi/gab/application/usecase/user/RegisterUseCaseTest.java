@@ -1,10 +1,9 @@
-package com.adi.gab.application.usertest;
+package com.adi.gab.application.usecase.user;
 
 import com.adi.gab.application.dto.AuthDTO;
 import com.adi.gab.application.dto.request.RegisterRequest;
 import com.adi.gab.application.exception.ApplicationException;
 import com.adi.gab.application.usecase.user.RegisterUseCase;
-import com.adi.gab.domain.model.User;
 import com.adi.gab.domain.types.UserRole;
 import com.adi.gab.infrastructure.persistance.entity.UserEntity;
 import com.adi.gab.infrastructure.persistance.repository.UserRepository;

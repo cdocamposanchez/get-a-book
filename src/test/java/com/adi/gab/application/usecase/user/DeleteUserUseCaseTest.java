@@ -1,4 +1,4 @@
-package com.adi.gab.application.usertest;
+package com.adi.gab.application.usecase.user;
 
 import com.adi.gab.application.exception.NotFoundException;
 import com.adi.gab.application.usecase.user.DeleteUserUseCase;

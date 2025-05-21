@@ -1,10 +1,8 @@
-package com.adi.gab.application.usecase.Order;
+package com.adi.gab.application.usecase.order;
 
 import com.adi.gab.application.dto.OrderDTO;
 import com.adi.gab.application.exception.ApplicationException;
 import com.adi.gab.application.exception.NotFoundException;
-import com.adi.gab.application.mapper.OrderMapper;
-import com.adi.gab.application.usecase.order.UpdateOrderStatusUseCase;
 import com.adi.gab.domain.types.OrderStatus;
 import com.adi.gab.infrastructure.persistance.embeddable.AddressEmbeddable;
 import com.adi.gab.infrastructure.persistance.entity.OrderEntity;

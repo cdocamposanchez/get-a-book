@@ -1,7 +1,6 @@
-package com.adi.gab.application.usecase.Order;
+package com.adi.gab.application.usecase.order;
 
 import com.adi.gab.application.exception.NotFoundException;
-import com.adi.gab.application.usecase.order.DeleteOrderUseCase;
 import com.adi.gab.domain.valueobject.OrderId;
 import com.adi.gab.infrastructure.persistance.repository.OrderRepository;
 import org.junit.jupiter.api.BeforeEach;
