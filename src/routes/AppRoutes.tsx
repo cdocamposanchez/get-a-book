@@ -11,6 +11,8 @@ import Returns from "../features/order/pages/ReturnsPage.tsx";
 import OrderPage from "../features/order/pages/OrderPage.tsx";
 
 import PrivateRoute from "./PrivateRoute.tsx";
+import {Roles} from "../constants/Roles.ts";
+import PublicRoute from "./PublicRoute.tsx";
 
 const AppRoutes = (): JSX.Element => {
     return (
@@ -18,46 +20,57 @@ const AppRoutes = (): JSX.Element => {
             <Route path="/" element={<Navigate to="/home" />} />
 
             {/* Públicas */}
+
+            <Route path="/login" element={
+                <PublicRoute>
+                    <LoginPage />
+                </PublicRoute>
+            } />
+
+            <Route path="/register" element={
+                <PublicRoute>
+                    <RegisterPage />
+                </PublicRoute>
+            } />
+
             <Route path="/home" element={<CatalogPage />} />
-            <Route path="/login" element={<LoginPage />} />
-            <Route path="/register" element={<RegisterPage />} />
             <Route path="/cart" element={<CartPage />} />
 
             {/* Rutas para usuarios autenticados (cliente) */}
             <Route path="/profile" element={
-                <PrivateRoute roles={['client', 'admin']}>
+                <PrivateRoute roles={[Roles.CLIENT,Roles.ADMIN ]}>
                     <ProfilePage />
                 </PrivateRoute>
             } />
             <Route path="/tracking" element={
-                <PrivateRoute roles={['client']}>
+                <PrivateRoute roles={[Roles.CLIENT]}>
                     <TrackingPage />
                 </PrivateRoute>
             } />
             <Route path="/favorites" element={
-                <PrivateRoute roles={['client']}>
+                <PrivateRoute roles={[Roles.CLIENT]}>
                     <FavoritesPage />
                 </PrivateRoute>
             } />
             <Route path="/returns" element={
-                <PrivateRoute roles={['client']}>
+                <PrivateRoute roles={[Roles.CLIENT]}>
                     <Returns />
                 </PrivateRoute>
             } />
             <Route path="/orders" element={
-                <PrivateRoute roles={['client']}>
+                <PrivateRoute roles={[Roles.CLIENT]}>
                     <OrderPage />
                 </PrivateRoute>
             } />
 
             {/* Rutas exclusivas para administradores */}
             {/*<Route path="/admin/dashboard" element={*/}
-            {/*    <PrivateRoute roles={['admin']}>*/}
+            {/*    <PrivateRoute roles={[Roles.ADMIN]}>*/}
             {/*        <AdminDashboard />*/}
             {/*    </PrivateRoute>*/}
             {/*} />*/}
             {/*<Route path="/admin/users" element={*/}
-            {/*    <PrivateRoute roles={['admin']}>*/}
+            {/*    <PrivateRoute roles={[Roles.ADMIN]}>*/}
             {/*        <ManageUsers />*/}
             {/*    </PrivateRoute>*/}
             {/*} />*/}

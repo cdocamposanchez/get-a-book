@@ -46,5 +46,43 @@ export const userService = {
     getUserById: async (id: string): Promise<User> => {
         const response = await axiosInstance.get<Response<User>>(`/users/${id}`);
         return response.data.data;
+    },
+
+    sendRecoveryCode: async (email: string): Promise<string> => {
+        const response = await axiosInstance.post<Response<string>>('/users/recover/send-code', null, {
+            params: { email }
+        });
+        return response.data.message;
+    },
+
+    validateRecoveryCode: async (email: string, recoverCode: string): Promise<boolean> => {
+        const response = await axiosInstance.post<Response<boolean>>('/users/recover/validate-code', {
+            email,
+            recoverCode
+        });
+        return response.data.data;
+    },
+
+    changePassword: async (email: string, recoverCode: string, newPassword: string): Promise<string> => {
+        const response = await axiosInstance.post<Response<string>>('/users/recover/change-password', {
+            email,
+            recoverCode,
+            newPassword
+        });
+        return response.data.message;
+    },
+
+    validateToken: async (token: string): Promise<boolean> => {
+        const response = await axiosInstance.get<Response<boolean>>('/users/token/validate', {
+            params: { token }
+        });
+        return response.data.data;
+    },
+
+    getUserIdFromToken: async (token: string): Promise<string> => {
+        const response = await axiosInstance.get<Response<string>>('/users/token/user-id', {
+            params: { token }
+        });
+        return response.data.data;
     }
 };

@@ -1,4 +1,7 @@
 @import "tailwindcss";
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
 
 .logo {
   height: 6em;
@@ -13,6 +16,13 @@
   filter: drop-shadow(0 0 2em #61dafbaa);
 }
 
+input:-webkit-autofill {
+  background-color: white !important;
+  color: #1F2937 !important; /* text-gray-800 */
+  transition: background-color 5000s ease-in-out 0s;
+}
+
+
 @keyframes logo-spin {
   from {
     transform: rotate(0deg);
@@ -26,12 +36,4 @@
   a:nth-of-type(2) .logo {
     animation: logo-spin infinite 20s linear;
   }
-}
-
-.card {
-  padding: 2em;
-}
-
-.read-the-docs {
-  color: #888;
 }
