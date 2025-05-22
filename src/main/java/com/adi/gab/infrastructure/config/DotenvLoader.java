@@ -24,5 +24,8 @@ public class DotenvLoader {
         System.setProperty("CLOUDINARY_CLOUD_NAME", Objects.requireNonNull(dotenv.get("CLOUDINARY_CLOUD_NAME")));
         System.setProperty("CLOUDINARY_API_KEY", Objects.requireNonNull(dotenv.get("CLOUDINARY_API_KEY")));
         System.setProperty("CLOUDINARY_API_SECRET", Objects.requireNonNull(dotenv.get("CLOUDINARY_API_SECRET")));
+
+        System.setProperty("MAIL_USERNAME", Objects.requireNonNull(dotenv.get("MAIL_USERNAME")));
+        System.setProperty("MAIL_PASSWORD", Objects.requireNonNull(dotenv.get("MAIL_PASSWORD")));
     }
 }

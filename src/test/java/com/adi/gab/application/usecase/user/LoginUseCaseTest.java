@@ -2,7 +2,6 @@ package com.adi.gab.application.usecase.user;
 
 import com.adi.gab.application.dto.AuthDTO;
 import com.adi.gab.application.dto.request.LoginRequest;
-import com.adi.gab.application.usecase.user.LoginUseCase;
 import com.adi.gab.domain.types.UserRole;
 import com.adi.gab.infrastructure.persistance.entity.UserEntity;
 import com.adi.gab.infrastructure.security.CustomUserDetails;
