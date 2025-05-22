@@ -1,7 +1,6 @@
 package com.adi.gab.application.usecase.book;
 
 import com.adi.gab.application.dto.BookDTO;
-import com.adi.gab.application.dto.PaginationRequest;
 import com.adi.gab.application.exception.ApplicationException;
 import com.adi.gab.application.mapper.BookMapper;
 import com.adi.gab.domain.valueobject.UserId;

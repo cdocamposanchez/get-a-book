@@ -1,7 +1,7 @@
 package com.adi.gab.application.usecase.order;
 
 import com.adi.gab.application.dto.OrderDTO;
-import com.adi.gab.application.dto.PaginationRequest;
+import com.adi.gab.application.dto.request.PaginationRequest;
 import com.adi.gab.application.mapper.OrderMapper;
 import com.adi.gab.domain.model.Order;
 import com.adi.gab.infrastructure.persistance.entity.OrderEntity;

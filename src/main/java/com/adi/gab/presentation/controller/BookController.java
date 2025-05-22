@@ -1,6 +1,6 @@
 package com.adi.gab.presentation.controller;
 
-import com.adi.gab.application.dto.PaginationRequest;
+import com.adi.gab.application.dto.request.BookFilterRequest;
 import com.adi.gab.application.usecase.book.CreateBookUseCase;
 import com.adi.gab.application.usecase.book.DeleteBookUseCase;
 import com.adi.gab.application.usecase.book.GetBooksUseCase;
@@ -15,7 +15,6 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -88,107 +87,31 @@ public class BookController {
         return new ResponseEntity<>(response, HttpStatus.CREATED);
     }
 
-    @GetMapping("/list")
-    public ResponseEntity<ResponseDTO<List<BookDTO>>> getAll(
+    @GetMapping()
+    public ResponseEntity<ResponseDTO<List<BookDTO>>> getFilteredBooks(
+            @RequestParam(required = false) String category,
+            @RequestParam(required = false) String publisher,
+            @RequestParam(required = false) Integer year,
+            @RequestParam(required = false) String titleRegex,
+            @RequestParam(required = false) Double minPrice,
+            @RequestParam(required = false) Double maxPrice,
+            @RequestParam(required = false) String sortOrder,
             @RequestParam(defaultValue = "0") int page,
             @RequestParam(defaultValue = "10") int size
     ) {
-        PaginationRequest pagination = new PaginationRequest(page, size);
-        List<BookDTO> books = getBooksUseCase.execute(pagination);
+        BookFilterRequest filter = new BookFilterRequest(page, size);
+        filter.setCategory(category);
+        filter.setPublisher(publisher);
+        filter.setYear(year);
+        filter.setTitleRegex(titleRegex);
+        filter.setMinPrice(minPrice);
+        filter.setMaxPrice(maxPrice);
+        filter.setSortOrder(sortOrder);
 
+        List<BookDTO> books = getBooksUseCase.execute(filter);
         ResponseDTO<List<BookDTO>> response = new ResponseDTO<>(
-                "Books retrieved successfully",
+                "Books retrieved with filters successfully",
                 books,
-                HttpStatus.OK
-        );
-
-        return new ResponseEntity<>(response, HttpStatus.OK);
-    }
-
-    // Buscar libros por categoría con paginación
-    @GetMapping("/category")
-    public ResponseEntity<ResponseDTO<List<BookDTO>>> getByCategory(
-            @RequestParam String category,
-            @RequestParam(defaultValue = "0") int page,
-            @RequestParam(defaultValue = "10") int size
-    ) {
-        PaginationRequest pagination = new PaginationRequest(page, size);
-        List<BookDTO> books = getBooksUseCase.getByCategory(category, pagination);
-
-        ResponseDTO<List<BookDTO>> response = new ResponseDTO<>(
-                "Books retrieved by category successfully",
-                books,
-                HttpStatus.OK
-        );
-
-        return new ResponseEntity<>(response, HttpStatus.OK);
-    }
-
-    // Buscar libros por publisher con paginación
-    @GetMapping("/publisher")
-    public ResponseEntity<ResponseDTO<List<BookDTO>>> getByPublisher(
-            @RequestParam String publisher,
-            @RequestParam(defaultValue = "0") int page,
-            @RequestParam(defaultValue = "10") int size
-    ) {
-        PaginationRequest pagination = new PaginationRequest(page, size);
-        List<BookDTO> books = getBooksUseCase.getByPublisher(publisher, pagination);
-
-        ResponseDTO<List<BookDTO>> response = new ResponseDTO<>(
-                "Books retrieved by publisher successfully",
-                books,
-                HttpStatus.OK
-        );
-
-        return new ResponseEntity<>(response, HttpStatus.OK);
-    }
-
-    // Buscar libros por año con paginación
-    @GetMapping("/year")
-    public ResponseEntity<ResponseDTO<List<BookDTO>>> getByYear(
-            @RequestParam Integer year,
-            @RequestParam(defaultValue = "0") int page,
-            @RequestParam(defaultValue = "10") int size
-    ) {
-        PaginationRequest pagination = new PaginationRequest(page, size);
-        List<BookDTO> books = getBooksUseCase.getByYear(year, pagination);
-
-        ResponseDTO<List<BookDTO>> response = new ResponseDTO<>(
-                "Books retrieved by year successfully",
-                books,
-                HttpStatus.OK
-        );
-
-        return new ResponseEntity<>(response, HttpStatus.OK);
-    }
-
-    // Buscar libros por regex en título o descripción con paginación
-    @GetMapping("/search")
-    public ResponseEntity<ResponseDTO<List<BookDTO>>> searchBooks(
-            @RequestParam String titleRegex,
-            @RequestParam(defaultValue = "0") int page,
-            @RequestParam(defaultValue = "10") int size
-    ) {
-        PaginationRequest pagination = new PaginationRequest(page, size);
-        List<BookDTO> books = getBooksUseCase.getByRegex(titleRegex, pagination);
-
-        ResponseDTO<List<BookDTO>> response = new ResponseDTO<>(
-                "Books retrieved by search successfully",
-                books,
-                HttpStatus.OK
-        );
-
-        return new ResponseEntity<>(response, HttpStatus.OK);
-    }
-
-    // Buscar un libro por ID
-    @GetMapping("/{id}")
-    public ResponseEntity<ResponseDTO<BookDTO>> getBookById(@PathVariable UUID id) {
-        BookDTO book = getBooksUseCase.getById(BookId.of(id));
-
-        ResponseDTO<BookDTO> response = new ResponseDTO<>(
-                "Book retrieved successfully",
-                book,
                 HttpStatus.OK
         );
         return new ResponseEntity<>(response, HttpStatus.OK);

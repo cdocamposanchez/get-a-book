@@ -1,7 +1,7 @@
 package com.adi.gab.presentation.controller;
 
 import com.adi.gab.application.dto.OrderDTO;
-import com.adi.gab.application.dto.PaginationRequest;
+import com.adi.gab.application.dto.request.PaginationRequest;
 import com.adi.gab.application.dto.ResponseDTO;
 import com.adi.gab.application.usecase.order.CreateOrderUseCase;
 import com.adi.gab.application.usecase.order.DeleteOrderUseCase;

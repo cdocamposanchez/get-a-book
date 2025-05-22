@@ -1,9 +1,8 @@
 package com.adi.gab.application.usecase.user;
 
-import com.adi.gab.application.dto.PaginationRequest;
+import com.adi.gab.application.dto.request.PaginationRequest;
 import com.adi.gab.application.dto.UserDTO;
 import com.adi.gab.application.exception.NotFoundException;
-import com.adi.gab.application.usecase.user.GetUsersUseCase;
 import com.adi.gab.domain.valueobject.UserId;
 import com.adi.gab.infrastructure.persistance.entity.UserEntity;
 import com.adi.gab.infrastructure.persistance.repository.UserRepository;

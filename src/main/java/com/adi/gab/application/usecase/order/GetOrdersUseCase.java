@@ -1,10 +1,9 @@
 package com.adi.gab.application.usecase.order;
 
 import com.adi.gab.application.dto.OrderDTO;
-import com.adi.gab.application.dto.PaginationRequest;
+import com.adi.gab.application.dto.request.PaginationRequest;
 import com.adi.gab.application.exception.NotFoundException;
 import com.adi.gab.application.mapper.OrderMapper;
-import com.adi.gab.domain.model.Order;
 import com.adi.gab.domain.types.OrderStatus;
 import com.adi.gab.domain.valueobject.OrderId;
 import com.adi.gab.domain.valueobject.UserId;

@@ -1,4 +1,4 @@
-package com.adi.gab.application.dto;
+package com.adi.gab.application.dto.request;
 
 import lombok.Getter;
 import lombok.Setter;

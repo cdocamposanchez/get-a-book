@@ -1,16 +1,19 @@
 package com.adi.gab.application.usecase.book;
 
-import com.adi.gab.application.dto.PaginationRequest;
+import com.adi.gab.application.dto.request.BookFilterRequest;
+import com.adi.gab.application.dto.request.PaginationRequest;
 import com.adi.gab.application.dto.BookDTO;
 import com.adi.gab.application.exception.NotFoundException;
 import com.adi.gab.application.mapper.BookMapper;
+import com.adi.gab.domain.types.SortOrder;
 import com.adi.gab.domain.valueobject.BookId;
 import com.adi.gab.infrastructure.persistance.repository.BookRepository;
+import com.adi.gab.infrastructure.persistance.specification.BookSpecification;
 import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
-import java.util.UUID;
 
 @Service
 public class GetBooksUseCase {
@@ -21,40 +24,13 @@ public class GetBooksUseCase {
         this.bookRepository = bookRepository;
     }
 
-    public List<BookDTO> execute(PaginationRequest pagination) {
-        return bookRepository.findAll(PageRequest.of(pagination.getPage(), pagination.getSize()))
-                .stream()
-                .map(BookMapper::toDomain)
-                .map(BookMapper::toDto)
-                .toList();
-    }
+    public List<BookDTO> execute(BookFilterRequest request) {
+        SortOrder order = SortOrder.fromString(request.getSortOrder());
+        Sort sort = order == SortOrder.DESC ? Sort.by("title").descending() : Sort.by("title").ascending();
 
-    public List<BookDTO> getByCategory(String category, PaginationRequest pagination) {
-        return bookRepository.findByCategoriesContainingIgnoreCase(category, PageRequest.of(pagination.getPage(), pagination.getSize()))
-                .stream()
-                .map(BookMapper::toDomain)
-                .map(BookMapper::toDto)
-                .toList();
-    }
 
-    public List<BookDTO> getByPublisher(String publisher, PaginationRequest pagination) {
-        return bookRepository.findByPublisherContainingIgnoreCase(publisher, PageRequest.of(pagination.getPage(), pagination.getSize()))
-                .stream()
-                .map(BookMapper::toDomain)
-                .map(BookMapper::toDto)
-                .toList();
-    }
-
-    public List<BookDTO> getByYear(Integer year, PaginationRequest pagination) {
-        return bookRepository.findByYear(year, PageRequest.of(pagination.getPage(), pagination.getSize()))
-                .stream()
-                .map(BookMapper::toDomain)
-                .map(BookMapper::toDto)
-                .toList();
-    }
-
-    public List<BookDTO> getByRegex(String titleRegex, PaginationRequest pagination) {
-        return bookRepository.findByTitleContainingIgnoreCase(titleRegex, PageRequest.of(pagination.getPage(), pagination.getSize()))
+        PageRequest pageRequest = PageRequest.of(request.getPage(), request.getSize(), sort);
+        return bookRepository.findAll(BookSpecification.withFilters(request), pageRequest)
                 .stream()
                 .map(BookMapper::toDomain)
                 .map(BookMapper::toDto)
