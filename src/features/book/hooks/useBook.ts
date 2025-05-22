@@ -1,45 +1,31 @@
-import { useEffect, useState } from "react";
-import { getAllBooks } from "../BookService.ts";
+import { useState } from "react";
+import { bookService } from "../BookService.ts";
 import type { Book } from "../../../types/book";
-
-interface Filters {
-    category?: string | null;
-    sortOrder?: "asc" | "desc" | null;
-    maxPrice?: number;
-}
+import type { BookFilter } from "../../../types/bookFilter";
+import {useDeepCompareEffect} from "react-use";
 
 export const useBooks = (
-    filters: Filters = {},
+    filters: BookFilter = {},
     initialPage = 0,
-    pageSize = 12
+    pageSize = 20
 ) => {
     const [books, setBooks] = useState<Book[]>([]);
     const [loading, setLoading] = useState<boolean>(false);
     const [error, setError] = useState<string | null>(null);
     const [page, setPage] = useState<number>(initialPage);
 
-    useEffect(() => {
+    useDeepCompareEffect(() => {
         const fetchBooks = async () => {
             setLoading(true);
             setError(null);
             try {
-                let data = await getAllBooks(page, pageSize);
+                const response = await bookService.getBooks({
+                    ...filters,
+                    page,
+                    size: pageSize
+                });
 
-                if (filters.category) {
-                    data = data.filter((book) => book.categories === filters.category);
-                }
-
-                if (filters.category) {
-                    data = data.filter((book) => book.categories === filters.category);
-                }
-
-                if (filters.sortOrder === "asc") {
-                    data = data.sort((a, b) => a.price - b.price);
-                } else if (filters.sortOrder === "desc") {
-                    data = data.sort((a, b) => b.price - a.price);
-                }
-
-                setBooks(data);
+                setBooks(response);
             } catch (err: unknown) {
                 setError("Error al cargar los libros: " + err);
             } finally {
@@ -48,7 +34,7 @@ export const useBooks = (
         };
 
         fetchBooks();
-    }, [page, pageSize, filters.category, filters.sortOrder, filters.maxPrice]);
+    }, [filters, page, pageSize]);
 
     const nextPage = () => setPage((prev) => prev + 1);
     const prevPage = () => setPage((prev) => Math.max(prev - 1, 0));

@@ -4,11 +4,14 @@ import './App.css';
 import Navbar from './components/Navbar.tsx';
 import AppRoutes from "./routes/AppRoutes.tsx";
 import { useEffect } from 'react';
+import {SearchProvider} from "./context/SearchContext.tsx";
 
 function AppWrapper() {
     return (
         <BrowserRouter>
-            <App />
+            <SearchProvider>
+                <App />
+            </SearchProvider>
         </BrowserRouter>
     );
 }
