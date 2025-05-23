@@ -1,5 +1,5 @@
 import React, { type FC, useEffect } from "react";
-import {IoReloadOutline} from "react-icons/io5";
+import { IoReloadOutline } from "react-icons/io5";
 
 interface BookFiltersProps {
     category: string | undefined;
@@ -48,7 +48,6 @@ const BookFilters: FC<BookFiltersProps> = ({
 
     const handleYearChange = (e: React.ChangeEvent<HTMLInputElement>) => {
         const rawValue = e.target.value;
-
         if (/^\d{0,4}$/.test(rawValue)) {
             const parsed = parseInt(rawValue, 10);
             setYear(isNaN(parsed) ? undefined : parsed);
@@ -64,82 +63,82 @@ const BookFilters: FC<BookFiltersProps> = ({
     };
 
     return (
-        <div className="text-sm font-sans text-black">
-            <div className="flex justify-between">
-                <h2 className="text-xl font-bold mb-4">Filtros</h2>
+        <div className="text-sm font-sans text-black p-4 rounded-xl shadow-md bg-white space-y-5">
+            <div className="flex items-center justify-between">
+                <h2 className="text-xl font-bold">Filtros</h2>
                 <button
                     onClick={handleReset}
-                    className="mt-1 text-black py-1 px-3 rounded-2xl hover:scale-105 transform transition-transform flex justify-items-center"
+                    className="text-red-700 hover:text-red-800 hover:scale-110 transition-transform"
+                    title="Reiniciar filtros"
                 >
-                    <IoReloadOutline className="text-red-700 w-10" />
+                    <IoReloadOutline size={24} />
                 </button>
             </div>
 
-
-            <div className="mb-4">
-            <h3 className="font-semibold">Categoría</h3>
-                {categories.map(cat => (
-                    <div key={cat} className="ml-2">
-                        <label>
+            {/* Categoría */}
+            <div>
+                <h3 className="font-semibold mb-2">Categoría</h3>
+                <div className="flex flex-wrap gap-3 ml-1">
+                    {categories.map(cat => (
+                        <label key={cat} className="flex items-center gap-1">
                             <input
                                 type="checkbox"
                                 value={cat}
                                 checked={category === cat}
                                 onChange={handleCategoryChange}
-                                className="mr-1"
+                                className="accent-blue-600"
                             />
                             {cat}
                         </label>
-                    </div>
-                ))}
-                <div className="ml-2">
-                    <label>
+                    ))}
+                    <label className="flex items-center gap-1">
                         <input
                             type="checkbox"
                             value=""
                             checked={!category}
                             onChange={() => setCategory(undefined)}
-                            className="mr-1"
-                        />Sin categoría
+                            className="accent-blue-600"
+                        />
+                        Sin categoría
                     </label>
                 </div>
             </div>
 
-            <hr className="my-2 border-gray-400" />
+            <hr className="border-gray-300" />
 
-            <div className="mb-4">
-                <h3 className="font-semibold">Ordenar</h3>
-                <div className="ml-2">
-                    <label>
+            {/* Orden */}
+            <div>
+                <h3 className="font-semibold mb-2">Ordenar</h3>
+                <div className="gap-5 ml-1">
+                    <label className="flex items-center gap-1">
                         <input
                             type="radio"
                             name="sortOrder"
                             value="ASC"
                             checked={sortOrder === "ASC"}
                             onChange={handleSortChange}
-                            className="mr-1"
+                            className="accent-blue-600"
                         />Ascendente
                     </label>
-                </div>
-                <div className="ml-2">
-                    <label>
+                    <label className="flex items-center gap-1">
                         <input
                             type="radio"
                             name="sortOrder"
                             value="DESC"
                             checked={sortOrder === "DESC"}
                             onChange={handleSortChange}
-                            className="mr-1"
+                            className="accent-blue-600"
                         />Descendente
                     </label>
                 </div>
             </div>
 
-            <hr className="my-2 border-gray-400" />
+            <hr className="border-gray-300" />
 
-            <div className="mb-4">
-                <h3 className="font-semibold">Precio</h3>
-                <div className="flex flex-col gap-2 ml-2">
+            {/* Precio */}
+            <div>
+                <h3 className="font-semibold mb-2">Precio</h3>
+                <div className="flex flex-col gap-3">
                     <input
                         type="range"
                         name="min"
@@ -160,25 +159,26 @@ const BookFilters: FC<BookFiltersProps> = ({
                         onChange={handlePriceChange}
                         className="accent-blue-600"
                     />
-                    <span className="text-right text-xs">{`$${minPrice?.toFixed(1)} - $${maxPrice?.toFixed(1)}`}</span>
+                    <div className="text-xs text-right text-gray-600">
+                        ${minPrice?.toFixed(1)} - ${maxPrice?.toFixed(1)}
+                    </div>
                 </div>
             </div>
 
-            <hr className="my-2 border-gray-400" />
+            <hr className="border-gray-300" />
 
-            <div className="mb-4">
-                <h3 className="font-semibold">Año</h3>
-                <div className="ml-2">
-                    <input
-                        type="text"
-                        inputMode="numeric"
-                        pattern="\d*"
-                        value={year?.toString() ?? ""}
-                        onChange={handleYearChange}
-                        placeholder="Ej: 2020"
-                        className="border rounded px-2 py-1 w-full text-sm"
-                    />
-                </div>
+            {/* Año */}
+            <div>
+                <h3 className="font-semibold mb-2">Año</h3>
+                <input
+                    type="text"
+                    inputMode="numeric"
+                    pattern="\d*"
+                    value={year?.toString() ?? ""}
+                    onChange={handleYearChange}
+                    placeholder="Ej: 2020"
+                    className="border border-gray-300 rounded px-3 py-2 w-full text-sm focus:outline-none focus:ring focus:ring-blue-300"
+                />
             </div>
         </div>
     );

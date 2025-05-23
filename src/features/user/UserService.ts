@@ -15,6 +15,7 @@ export const userService = {
 
     register: async (user: Register): Promise<Auth> => {
         const response = await axiosInstance.post<Response<Auth>>('/users/auth/register', user);
+        localStorage.setItem("auth", JSON.stringify(response.data.data));
         return response.data.data;
     },
 

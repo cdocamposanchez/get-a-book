@@ -1,43 +1,58 @@
-import "../styles/FavoritesPage.css";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faHeart, faTrashAlt } from "@fortawesome/free-solid-svg-icons";
+import React, { useEffect, useState } from 'react';
+import type { Book } from '../../../types/book';
+import { bookService } from '../BookService.ts';
+import BookFavoriteCard from '../components/BookFavoriteCard.tsx';
+import Spinner from "../../../components/Spinner.tsx";
+import {userService} from "../../user/UserService.ts";
 
-function FavoritesPage() {
-  const favorites = [
-    {
-      id: "1",
-      title: "Cien años de soledad",
-      author: "Gabriel García Márquez",
-      image: "https://via.placeholder.com/100x140?text=Libro+1",
-    },
-    {
-      id: "2",
-      title: "1984",
-      author: "George Orwell",
-      image: "https://via.placeholder.com/100x140?text=Libro+2",
-    },
-  ];
+const FavoritePage: React.FC = () => {
+    const [books, setBooks] = useState<Book[]>([]);
+    const [loading, setLoading] = useState(false);
+    const userId = JSON.parse(localStorage.getItem("auth") as string).userId;
 
-  return (
-    <div className="favorites-container">
-      <h1><FontAwesomeIcon icon={faHeart} /> Favoritos</h1>
-      <div className="favorites-list">
-        {favorites.map((book) => (
-          <div key={book.id} className="favorite-card">
-            <img src={book.image} alt={book.title} />
-            <div className="book-info">
-              <h3>{book.title}</h3>
-              <p>{book.author}</p>
+    useEffect(() => {
+        const fetchFavorites = async () => {
+            try {
+                setLoading(true);
+                const data = await bookService.getFavoriteBooks(userId);
+                setBooks(data);
+            } catch (error) {
+                console.error('Error al cargar favoritos', error);
+            } finally {
+                setLoading(false);
+            }
+        };
+        fetchFavorites();
+    }, [userId]);
+
+    const handleRemove = async (bookId: string) => {
+        setLoading(true);
+        try {
+            await userService.updateFavorite(bookId);
+            setBooks(prev => prev.filter(book => book.id !== bookId));
+        } catch (error) {
+            console.error('Error al quitar favorito:', error);
+        } finally {
+            setLoading(false);
+        }
+    };
+
+    return (
+        <div className="relative max-h-[90vh]  bg-[#80AFAB] py-10 px-4
+         overflow-y-autooverflow-y-auto transition-all duration-120 ease-in-out">
+            <h1 className="text-3xl font-bold text-white text-center mb-10">Libros favoritos</h1>
+            <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 xl:grid-cols-6 2xl:grid-cols-7 gap-6 justify-items-center">
+                {books.map((book) => (
+                    <BookFavoriteCard key={book.id} book={book} onRemove={handleRemove} />
+                ))}
             </div>
-            <button className="remove-button">
-              <FontAwesomeIcon icon={faTrashAlt} /> Quitar
-            </button>
-          </div>
-        ))}
-      </div>
-    </div>
-  );
-}
+            {loading && (
+                <div >
+                    <Spinner />
+                </div>
+            )}
+        </div>
+    );
+};
 
-export default FavoritesPage;
-
+export default FavoritePage;

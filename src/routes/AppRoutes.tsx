@@ -15,6 +15,7 @@ import {Roles} from "../constants/Roles.ts";
 import PublicRoute from "./PublicRoute.tsx";
 import PaymentSuccess from "../features/order/components/PaymentSuccess.tsx";
 import PaymentCancel from "../features/order/components/PaymentCancel.tsx";
+import Logout from "../features/user/components/Logout.tsx";
 
 const AppRoutes = (): JSX.Element => {
     return (
@@ -33,6 +34,10 @@ const AppRoutes = (): JSX.Element => {
                 <PublicRoute>
                     <RegisterPage />
                 </PublicRoute>
+            } />
+
+            <Route path="/logout" element={
+                <Logout />
             } />
 
             <Route path="/home" element={<CatalogPage />} />

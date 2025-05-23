@@ -36,7 +36,7 @@ const CatalogPage = () => {
             >
                 {/* Sidebar filters */}
                 <aside
-                    className="w-1/5 bg-gray-100 rounded-lg p-4 shadow-md sticky top-8 h-fit min-w-[220px] max-h-[80vh]">
+                    className="w-1/5 bg-gray-100 rounded-lg p-4 shadow-md sticky top-8 h-fit min-w-[250px] max-h-[80vh] border overflow-y-auto transition-all duration-120 ease-in-out">
                     <BookFilters
                         category={category}
                         setCategory={setCategory}
@@ -52,7 +52,7 @@ const CatalogPage = () => {
                 </aside>
 
                 {/* Main content */}
-                <main className="w-full flex flex-col bg-gray-100 rounded-xl shadow-md p-6 max-h-[80vh] overflow-auto">
+                <main className="border w-full flex flex-col bg-gray-100 rounded-xl shadow-md p-6 max-h-[80vh]">
 
                     {loading && (
                         <div className="flex justify-center items-center h-64 w-full">
@@ -72,7 +72,7 @@ const CatalogPage = () => {
                         </p>
                     )}
 
-                    <div className="overflow-auto max-h-[70vh]">
+                    <div className="max-h-[70vh]">
                         {!loading && books.length > 0 && <BookCard books={books}/>}
                     </div>
 

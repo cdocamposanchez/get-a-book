@@ -86,15 +86,26 @@ const Navbar = () => {
                     <FaHeart className="text-black"/>
                 </Link>
 
+                <Link to="/cart" className="relative hover:scale-110 transition-transform">
+                    <FaCartShopping className="text-black"/>
+                    {itemsCount > 0 && (
+                        <span
+                            className="absolute -top-2 -right-3 bg-red-600 text-white text-xs font-bold px-1.5 py-0.5 rounded-full animate-pulse">
+                            {itemsCount}
+                        </span>
+                    )}
+                </Link>
+
                 <div ref={dropdownRef} className="relative bg-transparent">
                     <button
                         onClick={() => setDropdownOpen(!dropdownOpen)}
                         className="hover:scale-110 transition-transform bg-transparent relative"
                     >
-                        <FaUser className="text-black text-xl" />
+                        <FaUser className="text-black text-xl"/>
                     </button>
                     {dropdownOpen && (
-                        <div className="absolute left-1/2 -translate-x-1/2 top-full mt-2 bg-[#B3D4C6] text-black rounded-md shadow border border-gray-300 z-50">
+                        <div
+                            className="absolute left-1/2 -translate-x-1/2 top-full mt-2 bg-[#B3D4C6] text-black rounded-md shadow border border-gray-300 z-50">
                             <Link to="/profile" className="block px-4 py-2 hover:bg-[#a0cabc] transition-colors">
                                 <p className="text-gray-700 text-center text-base">Ajustes</p>
                             </Link>
@@ -110,15 +121,6 @@ const Navbar = () => {
                         </div>
                     )}
                 </div>
-
-                <Link to="/cart" className="relative hover:scale-110 transition-transform">
-                    <FaCartShopping className="text-black" />
-                    {itemsCount > 0 && (
-                        <span className="absolute -top-2 -right-3 bg-red-600 text-white text-xs font-bold px-1.5 py-0.5 rounded-full animate-pulse">
-                            {itemsCount}
-                        </span>
-                    )}
-                </Link>
             </div>
         </div>
     );

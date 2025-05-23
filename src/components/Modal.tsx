@@ -21,7 +21,7 @@ const BaseModal: React.FC<BaseModalProps> = ({ isOpen, onClose, children, classN
                 onClick={(e) => e.stopPropagation()}
             >
                 <button
-                    className="absolute top-3 right-4 text-2xl text-white hover:text-red-500"
+                    className="absolute top-0 right-4 text-2xl text-black hover:text-red-500 hover:scale-120 transform transition-transform"
                     onClick={onClose}
                 >
                     ×

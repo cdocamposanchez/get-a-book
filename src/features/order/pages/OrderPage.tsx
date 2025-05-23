@@ -1,63 +1,64 @@
-const OrderPage = () => {
-  const orders = [
-    {
-      id: '123456',
-      creationDate: '2025-05-10',
-      departureDate: '2025-05-11',
-      deliveryEstimate: '2025-05-13',
-      status: 'En camino',
-    },
-    {
-      id: '654321',
-      creationDate: '2025-04-20',
-      departureDate: '2025-04-21',
-      deliveryEstimate: '2025-04-25',
-      status: 'Entregado',
-    },
-    {
-      id: '987654',
-      creationDate: '2025-05-01',
-      departureDate: '2025-05-02',
-      deliveryEstimate: '2025-05-04',
-      status: 'Pendiente',
-    },
-  ];
+import React, { useEffect, useState } from "react";
+import OrderCard from "../components/OrderCard";
+import OrderDetailsModal from "../components/OrderDetailsModal";
+import type {OrderStatus} from "../../../types/orderStatus";
+import type {Order} from "../../../types/order";
+import orderService from "../OrderService.ts";
 
-  const groupedOrders = {
-    'En camino': orders.filter((o) => o.status === 'En camino'),
-    'Pendiente': orders.filter((o) => o.status === 'Pendiente'),
-    'Entregado': orders.filter((o) => o.status === 'Entregado'),
-  };
+const ORDER_STATUSES: OrderStatus[] = ['PAID', 'SHIPPED', 'COMPLETED', 'RETURNED'];
+
+const OrderPage: React.FC = () => {
+  const [orders, setOrders] = useState<Order[]>([]);
+  const [selectedOrder, setSelectedOrder] = useState<Order | null>(null);
+  const [isModalOpen, setIsModalOpen] = useState(false);
+
+  const auth = JSON.parse(localStorage.getItem("auth") ?? "{}");
+  const customerId = auth?.userId ?? "";
+
+  useEffect(() => {
+    orderService.getOrdersByCustomerId(customerId).then(setOrders);
+  }, [customerId]);
+
+  console.log(orders);
+
+  const groupedOrders = ORDER_STATUSES.reduce((acc, status) => {
+    acc[status] = orders.filter((order) => order.orderStatus === status);
+    return acc;
+  }, {} as Record<OrderStatus, Order[]>);
 
   return (
-      <div className="min-h-screen bg-[#6e9c9f] px-10 py-6 font-sans">
-        <div className="max-w-7xl mx-auto">
-          <h2 className="text-3xl font-bold text-black mb-8">Mis Órdenes</h2>
-          <div className="flex flex-wrap justify-between gap-6">
-            {Object.entries(groupedOrders).map(([status, orders]) => (
-                <div className="flex-1 min-w-[300px] max-w-[48%]" key={status}>
-                  <h3 className="text-xl font-semibold text-black mb-4">{status}</h3>
-                  {orders.map((order) => (
-                      <div
-                          key={order.id}
-                          className="bg-gray-100 rounded-xl p-4 mb-5 flex justify-between items-start shadow"
-                      >
-                        <div className="text-sm text-gray-800 space-y-1">
-                          <p><strong>ORDEN:</strong> #{order.id}</p>
-                          <p><strong>ESTADO:</strong> {order.status}</p>
-                          <p><strong>FECHA DE CREACIÓN:</strong> {order.creationDate}</p>
-                          <p><strong>FECHA DE SALIDA:</strong> {order.departureDate}</p>
-                          <p><strong>ENTREGA ESTIMADA:</strong> {order.deliveryEstimate}</p>
-                        </div>
-                        <button className="ml-4 bg-gray-300 hover:bg-gray-400 text-sm font-bold text-white py-2 px-4 rounded-lg transition">
-                          DETALLES
-                        </button>
-                      </div>
-                  ))}
-                </div>
-            ))}
+      <div className="max-h-[90vh] bg-[#6e9c9f] px-10 py-6 font-sans overflow-y-auto">
+        <div className="min-h-screen bg-[#6e9c9f] px-6 py-4 font-sans text-sm">
+          <div className="max-w-full mx-auto">
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-2">
+              {ORDER_STATUSES.map((status) => (
+                  <div key={status}>
+                    <h3 className="text-base text-center font-semibold text-black mb-3">{status}</h3>
+                    {groupedOrders[status].map((order) => (
+                        <OrderCard
+                            key={order.id}
+                            order={order}
+                            onViewDetails={() => {
+                              setSelectedOrder(order);
+                              setIsModalOpen(true);
+                            }}
+                        />
+                    ))}
+                  </div>
+              ))}
+            </div>
           </div>
         </div>
+
+
+        <OrderDetailsModal
+            order={selectedOrder}
+            isOpen={isModalOpen}
+            onClose={() => {
+              setIsModalOpen(false);
+              setSelectedOrder(null);
+            }}
+        />
       </div>
   );
 };

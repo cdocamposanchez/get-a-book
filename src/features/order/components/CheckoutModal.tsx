@@ -63,7 +63,6 @@ const CheckoutModal: React.FC<CheckoutModalProps> = ({
         const order: Order = {
             id: crypto.randomUUID(),
             customerId,
-            orderName: `Order-${Date.now()}`,
             shippingAddress,
             billingAddress,
             orderStatus: "PENDING",
