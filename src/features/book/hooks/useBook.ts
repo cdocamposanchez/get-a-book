@@ -7,7 +7,7 @@ import {useDeepCompareEffect} from "react-use";
 export const useBooks = (
     filters: BookFilter = {},
     initialPage = 0,
-    pageSize = 20
+    pageSize = 12
 ) => {
     const [books, setBooks] = useState<Book[]>([]);
     const [loading, setLoading] = useState<boolean>(false);

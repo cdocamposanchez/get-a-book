@@ -7,80 +7,93 @@ import Spinner from "../../../components/Spinner.tsx";
 
 const CatalogPage = () => {
     const [category, setCategory] = useState<string | undefined>(undefined);
-    const [sortOrder, setSortOrder] = useState<'ASC' | 'DESC'>('ASC');
+    const [sortOrder, setSortOrder] = useState<"ASC" | "DESC">("ASC");
     const [maxPrice, setMaxPrice] = useState<number | undefined>(400.0);
     const [minPrice, setMinPrice] = useState<number | undefined>(0);
     const [year, setYear] = useState<number | undefined>(undefined);
     const { searchTerm } = useSearch();
     const titleRegex = searchTerm.length > 0 ? searchTerm : undefined;
 
+    const filters = useMemo(
+        () => ({
+            category,
+            sortOrder,
+            minPrice,
+            maxPrice,
+            year,
+            titleRegex,
+        }),
+        [category, sortOrder, minPrice, maxPrice, year, titleRegex]
+    );
 
-    const filters = useMemo(() => ({
-        category,
-        sortOrder,
-        minPrice,
-        maxPrice,
-        year,
-        titleRegex
-    }), [category, sortOrder,minPrice, maxPrice, year, titleRegex]);
-
-    const {
-        books,
-        loading,
-        error,
-        page,
-        nextPage,
-        prevPage,
-    } = useBooks(filters);
-
+    const { books, loading, error, page, nextPage, prevPage } = useBooks(filters);
 
     return (
-        <div className="flex w-full h-full font-sans">
-            <aside className="w-56 bg-green-200 p-5">
-                <BookFilters
-                    category={category}
-                    setCategory={setCategory}
-                    sortOrder={sortOrder}
-                    setSortOrder={setSortOrder}
-                    minPrice={minPrice}
-                    setMinPrice={setMinPrice}
-                    maxPrice={maxPrice}
-                    setMaxPrice={setMaxPrice}
-                    year={year}
-                    setYear={setYear}
-                />
+        <div className="min-h-screen bg-[#80AFAB] font-sans p-2 flex justify-center items-start">
+            <div
+                className="flex gap-6"
+                style={{maxWidth: '80vw', paddingTop: '2rem', height: '90vh', width: '100%'}}
+            >
+                {/* Sidebar filters */}
+                <aside
+                    className="w-1/5 bg-gray-100 rounded-lg p-4 shadow-md sticky top-8 h-fit min-w-[220px] max-h-[80vh]">
+                    <BookFilters
+                        category={category}
+                        setCategory={setCategory}
+                        sortOrder={sortOrder}
+                        setSortOrder={setSortOrder}
+                        minPrice={minPrice}
+                        setMinPrice={setMinPrice}
+                        maxPrice={maxPrice}
+                        setMaxPrice={setMaxPrice}
+                        year={year}
+                        setYear={setYear}
+                    />
+                </aside>
 
-            </aside>
+                {/* Main content */}
+                <main className="w-full flex flex-col bg-gray-100 rounded-xl shadow-md p-6 max-h-[80vh] overflow-auto">
 
-            <div className="flex flex-col flex-1 p-5 relative bg-[#80AFAB]">
-                {loading && <Spinner />}
-                {error && (
-                    <div className="flex justify-center items-center h-full backdrop-blur-xs">
-                        <div className="w-12 h-12 border-4 border-green-600 border-t-transparent rounded-full animate-spin"></div>
+                    {loading && (
+                        <div className="flex justify-center items-center h-64 w-full">
+                            <Spinner/>
+                        </div>
+                    )}
+
+                    {error && (
+                        <div className="flex justify-center items-center h-64 text-red-600 font-semibold">
+                            Ocurrió un error al cargar los libros.
+                        </div>
+                    )}
+
+                    {!loading && !error && books.length === 0 && (
+                        <p className="text-center text-gray-600 text-lg">
+                            No se encontraron libros con esos filtros.
+                        </p>
+                    )}
+
+                    <div className="overflow-auto max-h-[70vh]">
+                        {!loading && books.length > 0 && <BookCard books={books}/>}
                     </div>
-                )}
 
-                <div className="overflow-auto mb-20">
-                    {!loading && <BookCard books={books} />}
-                </div>
 
-                <div
-                    className="fixed bottom-0 left-[224px] right-0 bg-[#80AFAB] p-5 flex justify-center gap-4 shadow-inner border-t border-gray-300"
-                >
-                    <button
-                        onClick={prevPage}
-                        disabled={page === 0}
-                        className="bg-white text-green-700 font-semibold py-2 px-6 rounded-full border border-green-600 disabled:opacity-50 disabled:cursor-not-allowed hover:bg-green-100 transition"
-                    >
-                        Anterior
-                    </button>
-                    <button
-                        onClick={nextPage}
-                        className="bg-white text-green-700 font-semibold py-2 px-6 rounded-full border border-green-600 hover:bg-green-100 transition"
-                    >
-                        Siguiente
-                    </button>
-                </div>
+                    {/* Pagination */}
+                    <div className="mt-4 flex justify-center gap-4 bg-transparent">
+                        <button
+                            onClick={prevPage}
+                            disabled={page === 0}
+                            className="bg-green-600 text-white font-semibold py-1 px-6 rounded-full disabled:opacity-50 disabled:cursor-not-allowed hover:bg-green-700 transition"
+                        >
+                            Anterior
+                        </button>
+                        <button
+                            onClick={nextPage}
+                            className="bg-green-600 text-white font-semibold py-1 px-6 rounded-full hover:bg-green-700 transition"
+                        >
+                            Siguiente
+                        </button>
+                    </div>
+                </main>
             </div>
         </div>
     );

@@ -17,11 +17,14 @@
 }
 
 input:-webkit-autofill {
-  background-color: white !important;
-  color: #1F2937 !important; /* text-gray-800 */
+  -webkit-box-shadow: 0 0 0 1000px rgba(0, 0, 0, 0) inset !important;
+  -webkit-text-fill-color: #000000 !important;
   transition: background-color 5000s ease-in-out 0s;
 }
 
+input:-webkit-autofill::first-line {
+  color: #000000 !important;
+}
 
 @keyframes logo-spin {
   from {

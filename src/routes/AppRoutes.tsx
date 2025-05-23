@@ -13,6 +13,8 @@ import OrderPage from "../features/order/pages/OrderPage.tsx";
 import PrivateRoute from "./PrivateRoute.tsx";
 import {Roles} from "../constants/Roles.ts";
 import PublicRoute from "./PublicRoute.tsx";
+import PaymentSuccess from "../features/order/components/PaymentSuccess.tsx";
+import PaymentCancel from "../features/order/components/PaymentCancel.tsx";
 
 const AppRoutes = (): JSX.Element => {
     return (
@@ -35,6 +37,8 @@ const AppRoutes = (): JSX.Element => {
 
             <Route path="/home" element={<CatalogPage />} />
             <Route path="/cart" element={<CartPage />} />
+            <Route path="/payment/success" element={<PaymentSuccess />} />
+            <Route path="/payment/cancel" element={<PaymentCancel />} />
 
             {/* Rutas para usuarios autenticados (cliente) */}
             <Route path="/profile" element={

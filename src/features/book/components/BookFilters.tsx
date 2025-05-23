@@ -1,4 +1,5 @@
 import React, { type FC, useEffect } from "react";
+import {IoReloadOutline} from "react-icons/io5";
 
 interface BookFiltersProps {
     category: string | undefined;
@@ -64,10 +65,19 @@ const BookFilters: FC<BookFiltersProps> = ({
 
     return (
         <div className="text-sm font-sans text-black">
-            <h2 className="text-xl font-bold mb-4">Filtros</h2>
+            <div className="flex justify-between">
+                <h2 className="text-xl font-bold mb-4">Filtros</h2>
+                <button
+                    onClick={handleReset}
+                    className="mt-1 text-black py-1 px-3 rounded-2xl hover:scale-105 transform transition-transform flex justify-items-center"
+                >
+                    <IoReloadOutline className="text-red-700 w-10" />
+                </button>
+            </div>
+
 
             <div className="mb-4">
-                <h3 className="font-semibold">Categoría</h3>
+            <h3 className="font-semibold">Categoría</h3>
                 {categories.map(cat => (
                     <div key={cat} className="ml-2">
                         <label>
@@ -170,13 +180,6 @@ const BookFilters: FC<BookFiltersProps> = ({
                     />
                 </div>
             </div>
-
-            <button
-                onClick={handleReset}
-                className="mt-4 bg-gray-200 hover:bg-gray-300 text-black py-1 px-3 rounded"
-            >
-                Reiniciar filtros
-            </button>
         </div>
     );
 };

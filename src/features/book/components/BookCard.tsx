@@ -5,44 +5,50 @@ import type { Book } from "../../../types/book";
 interface BookCardProps {
     books: Book[];
 }
-
 const BookCard = ({ books }: BookCardProps) => {
     const [selectedBook, setSelectedBook] = useState<Book | null>(null);
 
-    const handleOpenModal = (book: Book) => {
-        setSelectedBook(book);
-    };
-
-    const handleCloseModal = () => {
-        setSelectedBook(null);
-    };
+    const handleOpenModal = (book: Book) => setSelectedBook(book);
+    const handleCloseModal = () => setSelectedBook(null);
 
     return (
-        <main className="flex-1 overflow-y-auto">
-            <div className="grid grid-cols-4 gap-6 justify-items-center">
+        <div className="overflow-y-auto max-h-[65vh] w-full">
+            <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6 justify-items-center">
                 {books.map((book) => (
-                    <div
+                    <button
                         key={book.id}
                         onClick={() => handleOpenModal(book)}
-                        className="cursor-pointer bg-gray-100 rounded-md p-3 shadow-md hover:scale-105 transform transition-transform"
+                        className="cursor-pointer bg-white rounded-md p-3 shadow-md hover:scale-105 transform transition-transform text-left w-45 h-70 flex flex-col"
                     >
                         <img
                             src={book.imageUrl}
                             alt={book.title}
-                            className="w-50 h-70 object-cover rounded-md mb-3"
+                            className="w-30 h-40 object-cover rounded-md mb-3 self-center flex-shrink-0"
                         />
-                        <h4 className="text-sm font-semibold mb-1 text-wrap">{book.title}</h4>
-                        <p className="text-xs text-gray-700 mb-1 text-wrap">{book.publisher}</p>
-                        <span className="block font-bold text-sm">${book.price.toLocaleString()}</span>
-                    </div>
+                        <div className="flex-grow">
+                            <p
+                                className="text-sm font-semibold mb-1 overflow-hidden text-ellipsis line-clamp-2"
+                                style={{display: '-webkit-box', WebkitLineClamp: 2, WebkitBoxOrient: 'vertical'}}
+                            >
+                                {book.title}
+                            </p>
+                            <p
+                                className="text-xs text-gray-700 mb-2 overflow-hidden text-ellipsis whitespace-nowrap"
+                            >
+                                {book.publisher}
+                            </p>
+                        </div>
+                        <span className="block font-bold text-sm mt-auto">${book.price.toLocaleString()}</span>
+                    </button>
                 ))}
             </div>
 
             {selectedBook && (
-                <BookDetailModal book={selectedBook} onClose={handleCloseModal} />
+                <BookDetailModal book={selectedBook} onClose={handleCloseModal}/>
             )}
-        </main>
+        </div>
     );
 };
+
 
 export default BookCard;
