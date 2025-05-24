@@ -7,6 +7,7 @@ import com.adi.gab.application.dto.request.RecoverRequest;
 import com.adi.gab.application.dto.request.RegisterRequest;
 import com.adi.gab.application.usecase.user.LoginUseCase;
 import com.adi.gab.application.usecase.user.RecoverPasswordUseCase;
+import com.adi.gab.application.usecase.user.RecoveryCodeUseCase;
 import com.adi.gab.application.usecase.user.RegisterUseCase;
 import com.adi.gab.application.usecase.user.ValidateTokenUseCase;
 import com.adi.gab.domain.valueobject.UserId;
@@ -27,12 +28,14 @@ public class AuthController {
     private final RegisterUseCase registerUseCase;
     private final ValidateTokenUseCase validateTokenUseCase;
     private final RecoverPasswordUseCase recoverPasswordUseCase;
+    private final RecoveryCodeUseCase recoveryCodeUseCase;
 
-    public AuthController(LoginUseCase loginUseCase, RegisterUseCase registerUseCase, ValidateTokenUseCase validateTokenUseCase, RecoverPasswordUseCase recoverPasswordUseCase) {
+    public AuthController(LoginUseCase loginUseCase, RegisterUseCase registerUseCase, ValidateTokenUseCase validateTokenUseCase, RecoverPasswordUseCase recoverPasswordUseCase, RecoveryCodeUseCase recoveryCodeUseCase) {
         this.loginUseCase = loginUseCase;
         this.registerUseCase = registerUseCase;
         this.validateTokenUseCase = validateTokenUseCase;
         this.recoverPasswordUseCase = recoverPasswordUseCase;
+        this.recoveryCodeUseCase = recoveryCodeUseCase;
     }
 
     @PostMapping("/auth/login")
@@ -87,7 +90,7 @@ public class AuthController {
 
     @PostMapping("/recover/send-code")
     public ResponseEntity<ResponseDTO<String>> sendRecoveryCode(@RequestParam String email) {
-        recoverPasswordUseCase.sendRecoveryCode(email);
+        recoveryCodeUseCase.sendRecoveryCode(email);
 
         ResponseDTO<String> response = new ResponseDTO<>(
                 "Recovery code sent successfully to " + email,
@@ -101,7 +104,7 @@ public class AuthController {
 
     @PostMapping("/recover/validate-code")
     public ResponseEntity<ResponseDTO<Boolean>> validateRecoveryCode(@RequestBody RecoverRequest request) {
-        boolean isValid = recoverPasswordUseCase.validateRecoveryCode(request.getEmail(), request.getRecoverCode());
+        boolean isValid = recoveryCodeUseCase.validateRecoveryCode(request.getEmail(), request.getRecoverCode());
 
         ResponseDTO<Boolean> response = new ResponseDTO<>(
                 isValid ? "Recovery code is valid" : "Invalid recovery code",

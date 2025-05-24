@@ -15,7 +15,7 @@ import java.util.List;
 public class User {
     private UserId id;
     private String firstName;
-    private String lastNames;
+    private String lastName;
     private String email;
     private String password;
     private UserRole role;
@@ -29,7 +29,7 @@ public class User {
         return User.builder()
                 .id(UserId.generate())
                 .firstName(firstName)
-                .lastNames(lastName)
+                .lastName(lastName)
                 .email(email)
                 .password(password)
                 .role(role)
@@ -46,11 +46,11 @@ public class User {
                                 ? newUser.getFirstName()
                                 : oldUser.getFirstName()
                 )
-                .lastNames(
-                        (newUser.getLastNames() != null && !newUser.getLastNames().isEmpty() &&
-                                !newUser.getLastNames().equals(oldUser.getLastNames()))
-                                ? newUser.getLastNames()
-                                : oldUser.getLastNames()
+                .lastName(
+                        (newUser.getLastName() != null && !newUser.getLastName().isEmpty() &&
+                                !newUser.getLastName().equals(oldUser.getLastName()))
+                                ? newUser.getLastName()
+                                : oldUser.getLastName()
                 )
                 .email(
                         (newUser.getEmail() != null && !newUser.getEmail().isEmpty() &&

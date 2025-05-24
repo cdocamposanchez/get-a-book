@@ -20,6 +20,7 @@ import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.time.LocalDateTime;
 import java.util.Date;
 import java.util.UUID;
 
@@ -63,7 +64,6 @@ public class CreateOrderUseCase {
 
                 Order order = OrderMapper.toDomain(orderDTO, orderId, customerId);
                 order.setOrderStatus(OrderStatus.PAID);
-                order.setCreationDate(new Date(System.currentTimeMillis()).toString());
                 return saveOrder(order);
 
             } catch (DataIntegrityViolationException _) {
@@ -76,8 +76,10 @@ public class CreateOrderUseCase {
 
     private OrderDTO saveOrder(Order order) {
         try {
-            OrderEntity savedEntity = orderRepository.save(OrderMapper.toEntity(order));
-            Order domain = OrderMapper.toDomain(savedEntity);
+            OrderEntity toSaveEntity = OrderMapper.toEntity(order);
+            toSaveEntity.setCreationDate(LocalDateTime.now());
+
+            Order domain = OrderMapper.toDomain(orderRepository.save(toSaveEntity));
 
             domain.getOrderItems().forEach(item -> reduceStockUseCase.execute(item.getBookId(), item.getQuantity()));
 

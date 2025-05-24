@@ -3,6 +3,8 @@ package com.adi.gab.presentation.controller;
 import com.adi.gab.application.dto.request.PaginationRequest;
 import com.adi.gab.application.dto.UserDTO;
 import com.adi.gab.application.dto.ResponseDTO;
+import com.adi.gab.application.dto.request.RecoverRequest;
+import com.adi.gab.application.dto.request.UpdateEmailRequest;
 import com.adi.gab.application.usecase.user.DeleteUserUseCase;
 import com.adi.gab.application.usecase.user.GetUsersUseCase;
 import com.adi.gab.application.usecase.user.UpdateFavoriteUseCase;
@@ -14,6 +16,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -103,6 +106,19 @@ public class UserController {
                 user,
                 HttpStatus.OK
         );
+        return new ResponseEntity<>(response, HttpStatus.OK);
+    }
+
+    @PostMapping("/change-password")
+    public ResponseEntity<ResponseDTO<String>> changePassword(@RequestBody UpdateEmailRequest request) {
+        updateUserUseCase.updateEmail(request);
+
+        ResponseDTO<String> response = new ResponseDTO<>(
+                "Email changed successfully",
+                null,
+                HttpStatus.OK
+        );
+
         return new ResponseEntity<>(response, HttpStatus.OK);
     }
 }

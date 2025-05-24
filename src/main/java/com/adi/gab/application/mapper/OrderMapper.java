@@ -12,6 +12,10 @@ import com.adi.gab.domain.valueobject.UserId;
 import com.adi.gab.infrastructure.persistance.entity.OrderEntity;
 import com.adi.gab.infrastructure.persistance.embeddable.AddressEmbeddable;
 
+import java.time.LocalDateTime;
+
+import static com.adi.gab.domain.utils.Functions.DATE_FORMATTER;
+
 public class OrderMapper {
     private OrderMapper(){}
 
@@ -39,7 +43,7 @@ public class OrderMapper {
                         .country(order.getBillingAddress().getCountry())
                         .zipCode(order.getBillingAddress().getZipCode())
                         .build())
-                .creationDate(order.getCreationDate())
+                .creationDate(order.getCreationDate() != null ? LocalDateTime.parse(order.getCreationDate(), DATE_FORMATTER) : null)
                 .build();
 
         order.getOrderItems().forEach(orderItem ->
@@ -57,7 +61,7 @@ public class OrderMapper {
 
         Order order = createOrderBase(OrderId.of(entity.getId()), UserId.of(entity.getCustomerId()), shipping, billing);
         order.setOrderStatus(OrderStatus.fromStringIgnoreCase(entity.getOrderStatus()));
-        order.setCreationDate(entity.getCreationDate());
+        order.setCreationDate(entity.getCreationDate() != null ? entity.getCreationDate().format(DATE_FORMATTER) : null);
 
         entity.getItems().forEach(itemEntity ->
                 order.addItem(OrderItemId.of(itemEntity.getId()), BookId.of(itemEntity.getBookId()), itemEntity.getTitle(), itemEntity.getQuantity(), itemEntity.getPrice()));
@@ -117,7 +121,7 @@ public class OrderMapper {
                                 .price(item.getPrice())
                                 .build())
                         .toList())
-                .creationDate(orderEntity.getCreationDate())
+                .creationDate(orderEntity.getCreationDate() != null ? orderEntity.getCreationDate().format(DATE_FORMATTER) : null)
                 .build();
     }
 

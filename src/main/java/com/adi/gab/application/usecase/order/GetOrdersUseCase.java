@@ -9,6 +9,7 @@ import com.adi.gab.domain.valueobject.OrderId;
 import com.adi.gab.domain.valueobject.UserId;
 import com.adi.gab.infrastructure.persistance.repository.OrderRepository;
 import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -39,7 +40,10 @@ public class GetOrdersUseCase {
     }
 
     public List<OrderDTO> getByCustomerId(UserId customerId, PaginationRequest pagination) {
-        return orderRepository.findByCustomerId(customerId.value(), PageRequest.of(pagination.getPage(), pagination.getSize()))
+        return orderRepository.findByCustomerId(
+                        customerId.value(),
+                        PageRequest.of(pagination.getPage(), pagination.getSize(), Sort.by(Sort.Direction.DESC, "creationDate"))
+                )
                 .stream()
                 .map(OrderMapper::toDomain)
                 .map(OrderMapper::toDto)
