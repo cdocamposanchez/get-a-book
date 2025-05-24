@@ -7,7 +7,7 @@ interface OrderItemCardProps {
 
 const OrderItemCard: React.FC<OrderItemCardProps> = ({ item }) => {
     return (
-        <div className="relative flex items-start bg-white rounded-lg shadow-lg border-1 p-3 mb-2 min-h-[100px]">
+        <div className="relative flex items-start bg-white rounded-lg shadow-lg border-1 p-3 mb-2 min-h-[100px] hover:scale-102 transition-transform">
             <div className="text-sm text-gray-800 space-y-1 pr-24">
                 <h3 className="font-extrabold">{item.title}</h3>
                 <p>Cantidad: {item.quantity}</p>

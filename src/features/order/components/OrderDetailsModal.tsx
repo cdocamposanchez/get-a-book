@@ -19,11 +19,12 @@ const OrderDetailsModal: React.FC<OrderDetailsModalProps> = ({ order, isOpen, on
                 <p><strong>Estado:</strong> {order.orderStatus}</p>
                 <p><strong>Fecha:</strong> {order.creationDate}</p>
                 <p><strong>Productos:</strong></p>
-                <div className="mt-2 space-y-2 overflow-y-auto">
+                <div className="mt-2 space-y-2 p-2 max-h-[50vh] overflow-y-auto">
                     {order.orderItems.map((item) => (
                         <OrderItemCard key={item.id} item={item}/>
                     ))}
                 </div>
+                <strong>Total:</strong> ${order.orderItems.reduce((sum, item) => sum + item.price * item.quantity, 0).toFixed(2)}
             </div>
         </BaseModal>
     );

@@ -34,7 +34,7 @@ const AdminNavbar = () => {
             <Link
                 to="/admin"
                 onClick={handleLogoClick}
-                className="flex items-center cursor-pointer"
+                className="flex items-center cursor-pointer hover:scale-105 transition-transform"
                 aria-label="Ir a inicio"
             >
                 <img

@@ -8,22 +8,22 @@ import {userService} from "../../user/UserService.ts";
 const FavoritePage: React.FC = () => {
     const [books, setBooks] = useState<Book[]>([]);
     const [loading, setLoading] = useState(false);
-    const userId = JSON.parse(localStorage.getItem("auth") as string).userId;
 
     useEffect(() => {
+
         const fetchFavorites = async () => {
             try {
                 setLoading(true);
                 const data = await bookService.getFavoriteBooks();
                 setBooks(data);
             } catch (error) {
-                console.error('Error al cargar favoritos', error);
+                console.error('FavoritesPage: Error al cargar favoritos', error);
             } finally {
                 setLoading(false);
             }
         };
         fetchFavorites();
-    }, [userId]);
+    }, []);
 
     const handleRemove = async (bookId: string) => {
         setLoading(true);

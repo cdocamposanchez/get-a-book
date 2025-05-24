@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
-import BookForm from "../components/BookForm";
-import { bookService } from "../../book/BookService";
+import BookForm from "../components/BookForm.tsx";
+import { bookService } from "../BookService.ts";
 import type { Book } from "../../../types/book";
 
 const CreateBookPage = () => {

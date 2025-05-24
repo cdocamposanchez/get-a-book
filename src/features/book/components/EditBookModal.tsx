@@ -1,5 +1,5 @@
 import React from "react";
-import BookForm from "./BookForm";
+import BookForm from "./BookForm.tsx";
 import type { Book } from "../../../types/book";
 import BaseModal from "../../../components/Modal.tsx";
 
@@ -19,7 +19,7 @@ const EditBookModal: React.FC<EditBookModalProps> = ({ isOpen, book, onClose, on
     };
 
     return (
-        <BaseModal isOpen={isOpen} onClose={onClose} className="bg-white max-h-[95vh] overflow-y-auto">
+        <BaseModal isOpen={isOpen} onClose={onClose} className="bg-white max-h-[95vh] overflow-y-auto border">
             <h2 className="text-xl font-bold mb-4">Editar Libro</h2>
             <BookForm book={book} onSubmit={handleSubmit} onCancel={onClose} formError={formError} />
         </BaseModal>

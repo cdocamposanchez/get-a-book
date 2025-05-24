@@ -4,10 +4,15 @@ import CartItemCard from "../components/CartItemCard";
 import type {Order} from "../../../types/order";
 import CheckoutModal from "../components/CheckoutModal.tsx";
 import orderService from "../OrderService.ts";
+import {useNavigate} from "react-router-dom";
+import {useAuth} from "../../user/hooks/useAuth.ts";
 
 const CartPage = () => {
   const [cartItems, setCartItems] = useState<CartItem[]>([]);
   const [isModalOpen, setIsModalOpen] = useState(false);
+
+  const navigate = useNavigate();
+  const { token } = useAuth();
 
   useEffect(() => {
     const stored = localStorage.getItem("cart");
@@ -15,6 +20,14 @@ const CartPage = () => {
       setCartItems(JSON.parse(stored));
     }
   }, []);
+
+    const handleProceedToCheckout = () => {
+        if (!token) {
+            navigate("/login?redirect=/cart");
+            return;
+        }
+        setIsModalOpen(true);
+    };
 
   const total = cartItems.reduce(
       (sum, item) => sum + item.price * item.quantity,
@@ -56,12 +69,14 @@ const CartPage = () => {
                     />
                 ))}
 
-                <div className="mt-8 bg-white rounded-lg shadow p-6 text-right">
+                <div className="mt-8 bg-white rounded-lg shadow p-6 text-right border">
                   <h2 className="text-xl font-bold text-gray-800">
                     Total: ${total.toFixed(2)}
                   </h2>
-                  <button className="mt-4 px-6 py-2 bg-green-600 text-white rounded hover:bg-green-700 transition font-semibold cursor-pointer"
-                          onClick={() => setIsModalOpen(true)}>
+                  <button
+                      className="mt-4 px-6 py-2 bg-green-600 text-black rounded hover:bg-green-700
+                      font-semibold cursor-pointer hover:scale-105 transition-transform border border-black"
+                          onClick={() => handleProceedToCheckout()}>
                     Proceder al Pago
                   </button>
                 </div>

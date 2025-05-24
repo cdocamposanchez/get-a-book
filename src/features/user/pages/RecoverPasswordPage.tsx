@@ -80,7 +80,7 @@ const RecoverPasswordPage = () => {
     return (
         <div className="grid grid-cols-1 md:grid-cols-2 h-screen">
             <div className="bg-[#80AFAB] flex items-center justify-center p-8 border-r-2 border-gray-300">
-                <Link to="/home">
+                <Link className="hover:scale-105 transition-transform" to="/home">
                     <img src="/assets/logo.png" alt="Logo Get-A-Book" className="w-50 mb-6"/>
                     <h1 className="text-4xl font-extrabold text-gray-900">GET-A-BOOK</h1>
                 </Link>
@@ -101,21 +101,23 @@ const RecoverPasswordPage = () => {
                             <input
                                 type="email"
                                 placeholder="Ingrese su correo"
-                                className="w-full px-4 py-2 mb-4 border rounded-md bg-white text-black"
+                                className="w-full px-4 py-2 mb-4 border rounded-md bg-white text-black hover:scale-105 transition-transform"
                                 value={email}
                                 onChange={(e) => setEmail(e.target.value)}
                             />
                             <div className="space-y-4">
                                 <button
                                     onClick={handleSendCode}
-                                    className="w-full bg-indigo-600 hover:bg-indigo-700 text-white font-semibold py-2 px-4 rounded"
+                                    className="w-full bg-indigo-600 hover:bg-indigo-700 text-white font-semibold py-2 px-4
+                                    rounded hover:scale-105 transition-transform border-black border-1"
                                     disabled={loading}
                                 >
                                     {loading ? "Enviando..." : "Enviar código"}
                                 </button>
                                 <button
                                     onClick={() => navigate('/login')}
-                                    className="w-full bg-amber-100 hover:bg-gray-400 text-gray-800 font-semibold py-2 px-4 rounded border"
+                                    className="w-full bg-amber-100 hover:bg-amber-200 text-gray-800 font-semibold py-2 px-4
+                                    rounded border hover:scale-105 transition-transform"
                                     disabled={loading}
                                 >
                                     Volver atrás
@@ -132,13 +134,14 @@ const RecoverPasswordPage = () => {
                             <input
                                 type="text"
                                 placeholder="Ingrese el código"
-                                className="w-full px-4 py-2 mb-4 border rounded-md bg-amber-100 text-black"
+                                className="w-full px-4 py-2 mb-4 border rounded-md bg-amber-100 text-black hover:scale-105 transition-transform"
                                 value={code}
                                 onChange={(e) => setCode(e.target.value)}
                             />
                             <button
                                 onClick={handleValidateCode}
-                                className="w-full bg-indigo-600 hover:bg-indigo-700 text-white font-semibold py-2 px-4 rounded"
+                                className="w-full bg-indigo-600 hover:bg-indigo-700 text-white font-semibold py-2 px-4
+                                rounded hover:scale-105 transition-transform border-black border-1"
                                 disabled={loading}
                             >
                                 {loading ? "Validando..." : "Validar código"}
@@ -152,7 +155,8 @@ const RecoverPasswordPage = () => {
                             <input
                                 type="password"
                                 placeholder="Ingrese nueva contraseña"
-                                className="w-full px-4 py-2 mb-4 border rounded-md bg-amber-100 text-black"
+                                className="w-full px-4 py-2 mb-4 border rounded-md bg-amber-100 text-black hover:scale-105 transition-transform
+                                border-black border-1"
                                 value={newPassword}
                                 onChange={(e) => setNewPassword(e.target.value)}
                             />
@@ -161,14 +165,16 @@ const RecoverPasswordPage = () => {
                             <input
                                 type="password"
                                 placeholder="Confirme su contraseña"
-                                className="w-full px-4 py-2 mb-4 border rounded-md bg-amber-100 text-black"
+                                className="w-full px-4 py-2 mb-4 border rounded-md bg-amber-100 text-black hover:scale-105 transition-transform
+                                border-black border-1"
                                 value={confirmPassword}
                                 onChange={(e) => setConfirmPassword(e.target.value)}
                             />
 
                             <button
                                 onClick={handleChangePassword}
-                                className="w-full bg-indigo-600 hover:bg-indigo-700 text-white font-semibold py-2 px-4 rounded"
+                                className="w-full bg-indigo-600 hover:bg-indigo-700 text-white font-semibold py-2 px-4
+                                rounded hover:scale-105 transition-transform border-black border-1"
                                 disabled={loading}
                             >
                                 {loading ? "Cambiando..." : "Cambiar contraseña"}

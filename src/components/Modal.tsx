@@ -1,4 +1,3 @@
-// components/BaseModal.tsx
 import React from "react";
 
 interface BaseModalProps {
@@ -13,11 +12,11 @@ const BaseModal: React.FC<BaseModalProps> = ({ isOpen, onClose, children, classN
 
     return (
         <div
-            className="fixed inset-0 bg-black/60 backdrop-blur-sm flex items-center justify-center z-[1000]"
+            className="fixed inset-0 bg-black/60 backdrop-blur-sm flex items-center justify-center z-[1000] border-black border-1"
             onClick={onClose}
         >
             <div
-                className={`relative rounded-lg p-6 ${className ?? "bg-white"} max-w-full`}
+                className={`relative rounded-lg p-6 border ${className ?? "bg-white"} max-w-full`}
                 onClick={(e) => e.stopPropagation()}
             >
                 <button

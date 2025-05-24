@@ -1,17 +1,22 @@
 import React, { useState } from 'react';
 import { VscMail } from 'react-icons/vsc';
-import { Link, useNavigate } from 'react-router-dom';
-import { FaEye } from "react-icons/fa";
+import {Link, useLocation, useNavigate} from 'react-router-dom';
+import { FaEye, FaEyeSlash } from "react-icons/fa";
 import { userService } from '../UserService.ts';
 import type { Login } from "../../../types/auth/login";
 
 const LoginPage = () => {
   const navigate = useNavigate();
+  const location = useLocation();
 
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [error, setError] = useState<string | null>(null);
   const [loading, setLoading] = useState(false);
+  const [showPassword, setShowPassword] = useState(false);
+
+  const queryParams = new URLSearchParams(location.search);
+  const redirectPath = queryParams.get("redirect") || "/home";
 
   const validateEmail = (email: string): boolean => {
     const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
@@ -32,7 +37,7 @@ const LoginPage = () => {
 
     try {
       await userService.login(credentials);
-      navigate('/home');
+      navigate(redirectPath);
     } catch (err: any) {
       const response = err.response?.data;
 
@@ -49,7 +54,7 @@ const LoginPage = () => {
   return (
       <div className="flex h-screen">
         <div className="flex flex-col items-center justify-center w-1/2 bg-[#80AFAB] border-r-2 border-gray-300 p-8">
-          <Link to="/home">
+          <Link className="hover:scale-105 transition-transform" to="/home">
             <img src="/assets/logo.png" alt="Logo Get-A-Book" className="w-50 mb-6"/>
             <h1 className="text-4xl font-extrabold text-gray-900">GET-A-BOOK</h1>
           </Link>
@@ -69,7 +74,8 @@ const LoginPage = () => {
                     required
                     value={email}
                     onChange={(e) => setEmail(e.target.value)}
-                    className="bg-amber-100 text-black w-full px-4 py-2 pr-10 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-teal-500"
+                    className="bg-amber-100 text-black w-full px-4 py-2 pr-10 border border-gray-300 rounded-md
+                    focus:outline-none focus:ring-2 focus:ring-teal-500 focus:border-teal-500"
                 />
                 <span className="absolute inset-y-0 right-3 flex items-center text-gray-400">
                   <VscMail className="text-black" />
@@ -81,17 +87,28 @@ const LoginPage = () => {
               <label className="block text-sm font-medium text-black">Contraseña</label>
               <div className="relative mt-1">
                 <input
-                    type="password"
+                    type={showPassword ? "text" : "password"}
                     placeholder="Ingrese su contraseña"
                     required
                     value={password}
                     onChange={(e) => setPassword(e.target.value)}
-                    className="bg-amber-100 text-black w-full px-4 py-2 pr-10 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-teal-500"
+                    className="bg-amber-100 text-black w-full px-4 py-2 pr-10 border border-gray-300 rounded-md
+                     focus:outline-none focus:ring-2 focus:ring-teal-500 focus:border-teal-500"
                 />
-                <span className="absolute inset-y-0 right-3 flex items-center text-gray-400">
-                  <FaEye className="text-black" />
-                </span>
+                <button
+                    type="button"
+                    onClick={() => setShowPassword(!showPassword)}
+                    className="absolute inset-y-0 right-3 flex items-center text-gray-400 hover:scale-120 transition-transform"
+                    aria-label={showPassword ? "Ocultar contraseña" : "Mostrar contraseña"}
+                >
+                  {showPassword ? (
+                      <FaEye className="text-black"/>
+                  ) : (
+                      <FaEyeSlash className="text-black"/>
+                  )}
+                </button>
               </div>
+
             </div>
 
             {error && (
@@ -109,7 +126,8 @@ const LoginPage = () => {
             <button
                 type="submit"
                 disabled={loading}
-                className="w-full bg-indigo-600 hover:bg-indigo-700 text-white font-semibold py-2 px-4 rounded transition disabled:opacity-50"
+                className="w-full bg-indigo-600 hover:bg-indigo-700 text-white font-semibold py-2 px-4 rounded
+                disabled:opacity-50 hover:scale-105 transition-transform border-black border-1"
             >
               {loading ? 'Cargando...' : 'Inicia sesión'}
             </button>

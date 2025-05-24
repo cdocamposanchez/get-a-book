@@ -4,6 +4,7 @@ import BookDetailModal from "./BookDetailModal.tsx";
 import type { Book } from "../../../types/book";
 import { userService } from "../../user/UserService.ts";
 import { bookService } from "../BookService.ts";
+import {useAuth} from "../../user/hooks/useAuth.ts";
 
 interface BookCardProps {
     books: Book[];
@@ -15,10 +16,12 @@ const BookCard = ({ books }: BookCardProps) => {
     const [favoriteLoading, setFavoriteLoading] = useState<string | null>(null);
     const [favoritesLoaded, setFavoritesLoaded] = useState(false);
 
-    const userId = JSON.parse(localStorage.getItem("auth") as string)?.userId;
+    const { token, userId } = useAuth();
 
     useEffect(() => {
-        if (!userId) return;
+        if (!token || !userId) {
+            return;
+        }
 
         const cachedFavs = localStorage.getItem(`favoriteBooks_${userId}`);
         if (cachedFavs) {
@@ -31,7 +34,8 @@ const BookCard = ({ books }: BookCardProps) => {
             setFavoritesLoaded(true);
             localStorage.setItem(`favoriteBooks_${userId}`, JSON.stringify(favs.map(b => b.id)));
         }).catch(console.error);
-    }, [userId]);
+    }, [token, userId]);
+
 
     const handleOpenModal = (book: Book) => setSelectedBook(book);
     const handleCloseModal = () => setSelectedBook(null);
@@ -79,16 +83,16 @@ const BookCard = ({ books }: BookCardProps) => {
                             key={book.id}
                             className="relative border border-opacity-30 bg-white rounded-md p-3 shadow-md hover:scale-[1.02] transform transition-transform w-45 h-70 flex flex-col"
                         >
-                            {/* Corazón favorito */}
-                            <button
-                                onClick={() => handleFavoriteClick(book.id)}
-                                className="absolute top-2 right-2 text-red-500 hover:scale-110 hover:text-gray-700 transform transition-transform"
-                                title="Agregar o quitar de favoritos"
-                            >
-                                {renderHeartIcon()}
-                            </button>
+                            {token && (
+                                <button
+                                    onClick={() => handleFavoriteClick(book.id)}
+                                    className="absolute top-2 right-2 text-red-500 hover:scale-110 hover:text-gray-700 transform transition-transform"
+                                    title="Agregar o quitar de favoritos"
+                                >
+                                    {renderHeartIcon()}
+                                </button>
+                            )}
 
-                            {/* Tarjeta principal clickeable */}
                             <button
                                 onClick={() => handleOpenModal(book)}
                                 className="text-left w-full h-full flex flex-col"

@@ -63,7 +63,7 @@ const BookFilters: FC<BookFiltersProps> = ({
     };
 
     return (
-        <div className="text-sm font-sans text-black p-4 rounded-xl shadow-md bg-white space-y-5">
+        <div className="text-sm font-sans text-black p-4 rounded shadow-md bg-white space-y-5">
             <div className="flex items-center justify-between">
                 <h2 className="text-xl font-bold">Filtros</h2>
                 <button
@@ -78,9 +78,19 @@ const BookFilters: FC<BookFiltersProps> = ({
             {/* Categoría */}
             <div>
                 <h3 className="font-semibold mb-2">Categoría</h3>
-                <div className="flex flex-wrap gap-3 ml-1">
+                <div className="flex flex-wrap gap-3 ml-1 flex-col">
+                    <label className="flex items-center gap-1 hover:scale-105 transition-transform">
+                        <input
+                            type="checkbox"
+                            value=""
+                            checked={!category}
+                            onChange={() => setCategory(undefined)}
+                            className="accent-blue-600"
+                        />
+                        Sin categoría
+                    </label>
                     {categories.map(cat => (
-                        <label key={cat} className="flex items-center gap-1">
+                        <label key={cat} className="flex items-center gap-1 hover:scale-105 transition-transform">
                             <input
                                 type="checkbox"
                                 value={cat}
@@ -91,26 +101,17 @@ const BookFilters: FC<BookFiltersProps> = ({
                             {cat}
                         </label>
                     ))}
-                    <label className="flex items-center gap-1">
-                        <input
-                            type="checkbox"
-                            value=""
-                            checked={!category}
-                            onChange={() => setCategory(undefined)}
-                            className="accent-blue-600"
-                        />
-                        Sin categoría
-                    </label>
+
                 </div>
             </div>
 
-            <hr className="border-gray-300" />
+            <hr className="border-gray-300"/>
 
             {/* Orden */}
             <div>
                 <h3 className="font-semibold mb-2">Ordenar</h3>
                 <div className="gap-5 ml-1">
-                    <label className="flex items-center gap-1">
+                    <label className="flex items-center gap-1 hover:scale-105 transition-transform">
                         <input
                             type="radio"
                             name="sortOrder"
@@ -120,7 +121,7 @@ const BookFilters: FC<BookFiltersProps> = ({
                             className="accent-blue-600"
                         />Ascendente
                     </label>
-                    <label className="flex items-center gap-1">
+                    <label className="flex items-center gap-1 hover:scale-105 transition-transform">
                         <input
                             type="radio"
                             name="sortOrder"
@@ -147,7 +148,7 @@ const BookFilters: FC<BookFiltersProps> = ({
                         step={1}
                         value={minPrice}
                         onChange={handlePriceChange}
-                        className="accent-blue-600"
+                        className="accent-blue-600 hover:scale-105 transition-transform"
                     />
                     <input
                         type="range"
@@ -157,7 +158,7 @@ const BookFilters: FC<BookFiltersProps> = ({
                         step={1}
                         value={maxPrice}
                         onChange={handlePriceChange}
-                        className="accent-blue-600"
+                        className="accent-blue-600 hover:scale-105 transition-transform"
                     />
                     <div className="text-xs text-right text-gray-600">
                         ${minPrice?.toFixed(1)} - ${maxPrice?.toFixed(1)}
@@ -177,7 +178,7 @@ const BookFilters: FC<BookFiltersProps> = ({
                     value={year?.toString() ?? ""}
                     onChange={handleYearChange}
                     placeholder="Ej: 2020"
-                    className="border border-gray-300 rounded px-3 py-2 w-full text-sm focus:outline-none focus:ring focus:ring-blue-300"
+                    className="border border-gray-300 rounded px-3 py-2 w-full text-sm focus:outline-none focus:ring focus:ring-blue-300 hover:scale-105 transition-transform"
                 />
             </div>
         </div>

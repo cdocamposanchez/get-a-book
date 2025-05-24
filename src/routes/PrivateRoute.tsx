@@ -1,10 +1,7 @@
 import { Navigate } from "react-router-dom";
 import type {ReactNode} from "react";
+import {useAuth} from "../features/user/hooks/useAuth.ts";
 
-const getAuth = () => {
-    const data = localStorage.getItem("auth");
-    return data ? JSON.parse(data) : null;
-};
 
 interface PrivateRouteProps {
     children: ReactNode;
@@ -12,13 +9,13 @@ interface PrivateRouteProps {
 }
 
 const PrivateRoute = ({ children, roles }: PrivateRouteProps) => {
-    const auth = getAuth();
+    const { token, userRole } = useAuth();
 
-    if (!auth?.token) {
+    if (!token) {
         return <Navigate to="/login" />;
     }
 
-    if (roles && !roles.includes(auth.userRole)) {
+    if (roles && !roles.includes(userRole)) {
         return <Navigate to="/home" />;
     }
 

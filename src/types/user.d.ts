@@ -3,7 +3,7 @@ import type {UserRole} from "./userRole";
 export interface User {
     id: string;
     firstName: string;
-    lastNames: string;
+    lastName: string;
     email: string;
     password: string;
     role: UserRole;

@@ -16,8 +16,8 @@ import PaymentSuccess from "../features/order/components/PaymentSuccess.tsx";
 import PaymentCancel from "../features/order/components/PaymentCancel.tsx";
 import Logout from "../features/user/components/Logout.tsx";
 import AdminLayout from "../components/AdminLayout.tsx";
-import BooksPage from "../features/admin/pages/BooksPage.tsx";
-import CreateBookPage from "../features/admin/pages/CreateBookPage.tsx";
+import BooksPage from "../features/book/pages/BooksPage.tsx";
+import CreateBookPage from "../features/book/pages/CreateBookPage.tsx";
 import RecoverPasswordPage from "../features/user/pages/RecoverPasswordPage.tsx";
 import OrderTrackingPage from "../features/order/pages/OrderTrackingPage.tsx";
 

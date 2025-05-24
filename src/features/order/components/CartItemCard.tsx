@@ -1,6 +1,7 @@
 import React from "react";
 import type { CartItem } from "../../../types/cartItem";
 import {FaTrash} from "react-icons/fa";
+import {UseCart} from "../hooks/UseCart.ts";
 
 interface CartItemCardProps {
     item: CartItem;
@@ -13,6 +14,8 @@ const CartItemCard: React.FC<CartItemCardProps> = ({
                                                        onUpdate,
                                                        onRemove,
                                                    }) => {
+    const { updateCart } = UseCart()
+
     const handleIncrease = () => {
         const updatedItem = { ...item, quantity: item.quantity + 1 };
         updateCartItem(updatedItem);
@@ -30,6 +33,7 @@ const CartItemCard: React.FC<CartItemCardProps> = ({
         const updatedCart = cart.filter((i) => i.id !== item.id);
         localStorage.setItem("cart", JSON.stringify(updatedCart));
         onRemove(item.id);
+        updateCart();
     };
 
     const updateCartItem = (updatedItem: CartItem) => {
@@ -45,12 +49,12 @@ const CartItemCard: React.FC<CartItemCardProps> = ({
         JSON.parse(localStorage.getItem("cart") ?? "[]");
 
     return (
-        <div className="flex items-center justify-between bg-white rounded-xl shadow-md p-4 mb-4">
+        <div className="flex items-center justify-between bg-white rounded-xl shadow-md p-4 mb-4 border">
             <div className="flex items-center gap-4">
                 <img
                     src={item.image}
                     alt={item.title}
-                    className="w-24 h-32 object-cover rounded"
+                    className="w-24 h-32 object-cover rounded border"
                 />
                 <div>
                     <h3 className="text-lg font-bold text-gray-800">{item.title}</h3>
@@ -62,23 +66,23 @@ const CartItemCard: React.FC<CartItemCardProps> = ({
                     </p>
                 </div>
             </div>
-            <div className="flex items-center gap-2">
+            <div className="flex items-center gap-5">
                 <button
                     onClick={handleDecrease}
-                    className="px-3 py-1 rounded bg-gray-200 text-gray-800 hover:bg-gray-300 text-lg font-bold"
+                    className="px-3 py-1 rounded bg-gray-200 text-gray-800 hover:bg-gray-300 text-lg font-bold hover:scale-105 transition-transform"
                 >
                     −
                 </button>
                 <span className="text-md font-semibold">{item.quantity}</span>
                 <button
                     onClick={handleIncrease}
-                    className="px-3 py-1 rounded bg-gray-200 text-gray-800 hover:bg-gray-300 text-lg font-bold"
+                    className="px-3 py-1 rounded bg-gray-200 text-gray-800 hover:bg-gray-300 text-lg font-bold hover:scale-105 transition-transform"
                 >
                     +
                 </button>
                 <button
                     onClick={handleRemove}
-                    className="ml-4 px-3 py-1 rounded bg-red-500 text-white hover:bg-red-600 font-semibold"
+                    className="ml-4 px-3 py-1 rounded bg-red-500 text-white hover:bg-red-600 font-semibold hover:scale-110 transition-transform"
                 >
                     <FaTrash className="h-7"/>
                 </button>

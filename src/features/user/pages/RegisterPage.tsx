@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { useNavigate, Link } from 'react-router-dom';
 import { VscMail } from 'react-icons/vsc';
-import { FaEye } from 'react-icons/fa';
+import { FaEye, FaEyeSlash } from 'react-icons/fa';
 import { userService } from '../UserService.ts';
 import type { Register } from '../../../types/auth/register';
 
@@ -17,6 +17,8 @@ const RegisterPage = () => {
   const [confirmPassword, setConfirmPassword] = useState('');
   const [error, setError] = useState<string | null>(null);
   const [loading, setLoading] = useState(false);
+  const [showPassword, setShowPassword] = useState(false);
+  const [showConfirmPassword, setShowConfirmPassword] = useState(false);
 
   const validateEmail = (email: string): boolean => {
     const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
@@ -66,7 +68,7 @@ const RegisterPage = () => {
   return (
       <div className="flex h-screen">
         <div className="flex flex-col items-center justify-center w-1/2 bg-[#80AFAB] border-r-2 border-gray-300 p-8">
-          <Link to="/home">
+          <Link className="hover:scale-105 transition-transform" to="/home">
             <img src="/assets/logo.png" alt="Logo Get-A-Book" className="w-50 mb-6"/>
             <h1 className="text-4xl font-extrabold text-gray-900">GET-A-BOOK</h1>
           </Link>
@@ -98,17 +100,22 @@ const RegisterPage = () => {
               <label className="block text-sm font-medium text-black">Contraseña</label>
               <div className="relative mt-1">
                 <input
-                    type="password"
+                    type={showPassword ? "text" : "password"}
                     name="password"
                     value={form.password}
                     onChange={handleChange}
                     placeholder="Ingrese su contraseña"
                     required
-                    className="bg-amber-100 text-black w-full px-4 py-2 pr-10 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-teal-500"
+                    className="bg-amber-100 text-black w-full px-4 py-2 pr-10 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-teal-500 focus:border-teal-500"
                 />
-                <span className="absolute inset-y-0 right-3 flex items-center text-gray-400">
-                <FaEye className="text-black" />
-              </span>
+                <button
+                    type="button"
+                    onClick={() => setShowPassword(!showPassword)}
+                    className="absolute inset-y-0 right-3 flex items-center text-gray-400 hover:scale-120 transition-transform"
+                    aria-label={showPassword ? "Ocultar contraseña" : "Mostrar contraseña"}
+                >
+                  {showPassword ? <FaEye className="text-black"/> : <FaEyeSlash className="text-black"/>}
+                </button>
               </div>
             </div>
 
@@ -116,18 +123,24 @@ const RegisterPage = () => {
               <label className="block text-sm font-medium text-black">Confirmar Contraseña</label>
               <div className="relative mt-1">
                 <input
-                    type="password"
+                    type={showConfirmPassword ? "text" : "password"}
                     value={confirmPassword}
                     onChange={(e) => setConfirmPassword(e.target.value)}
                     placeholder="Confirme su contraseña"
                     required
-                    className="bg-amber-100 text-black w-full px-4 py-2 pr-10 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-teal-500"
+                    className="bg-amber-100 text-black w-full px-4 py-2 pr-10 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-teal-500 focus:border-teal-500"
                 />
-                <span className="absolute inset-y-0 right-3 flex items-center text-gray-400">
-                <FaEye className="text-black" />
-              </span>
+                <button
+                    type="button"
+                    onClick={() => setShowConfirmPassword(!showConfirmPassword)}
+                    className="absolute inset-y-0 right-3 flex items-center text-gray-400 hover:scale-120 transition-transform"
+                    aria-label={showConfirmPassword ? "Ocultar contraseña" : "Mostrar contraseña"}
+                >
+                  {showConfirmPassword ? <FaEye className="text-black"/> : <FaEyeSlash className="text-black"/>}
+                </button>
               </div>
             </div>
+
 
             <div>
               <label className="block text-sm font-medium text-black">Primer Nombre</label>
@@ -138,7 +151,8 @@ const RegisterPage = () => {
                   onChange={handleChange}
                   placeholder="Ingrese su primer nombre"
                   required
-                  className="bg-amber-100 text-black w-full px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-teal-500 mt-1"
+                  className="bg-amber-100 text-black w-full px-4 py-2 border border-gray-300 rounded-md focus:outline-none
+                  focus:ring-2 focus:ring-teal-500 mt-1"
               />
             </div>
 
@@ -151,7 +165,8 @@ const RegisterPage = () => {
                   onChange={handleChange}
                   placeholder="Ingrese su primer apellido"
                   required
-                  className="bg-amber-100 text-black w-full px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-teal-500 mt-1"
+                  className="bg-amber-100 text-black w-full px-4 py-2 border border-gray-300 rounded-md focus:outline-none
+                  focus:ring-2 focus:ring-teal-500 mt-1"
               />
             </div>
 
@@ -164,7 +179,8 @@ const RegisterPage = () => {
             <button
                 type="submit"
                 disabled={loading}
-                className="w-full bg-indigo-600 hover:bg-indigo-700 text-white font-semibold py-2 px-4 rounded transition disabled:opacity-50"
+                className="w-full bg-indigo-600 hover:bg-indigo-700 text-white font-semibold py-2 px-4 rounded
+                disabled:opacity-50 hover:scale-105 transition-transform border-black border-1"
             >
               {loading ? 'Registrando...' : 'Regístrate'}
             </button>

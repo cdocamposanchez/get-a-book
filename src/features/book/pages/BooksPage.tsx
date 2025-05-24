@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import ReactPaginate from "react-paginate";
-import { bookService } from "../../book/BookService.ts";
+import { bookService } from "../BookService.ts";
 import type { Book } from "../../../types/book";
 import BooksTable from "../components/BooksTable.tsx";
 import EditBookModal from "../components/EditBookModal.tsx";
@@ -132,20 +132,24 @@ const BooksPage = () => {
                     onPageChange={(e) => setPage(e.selected)}
                     forcePage={page}
                     containerClassName="flex gap-1"
-                    pageClassName="w-8 h-8 rounded-md font-medium text-sm text-gray-700 border hover:bg-gray-200 flex items-center justify-center cursor-pointer"
-                    pageLinkClassName="w-full h-full flex items-center justify-center"
-                    activeClassName="bg-white text-gray-700"
-                    activeLinkClassName="w-full h-full flex items-center justify-center"
-                    previousClassName="w-8 h-8 rounded-md bg-white text-gray-700 font-medium text-sm flex items-center justify-center cursor-pointer border"
+                    pageClassName="w-8 h-8 rounded-md font-medium text-sm text-gray-700 border hover:bg-gray-200 flex
+                    items-center justify-center cursor-pointer hover:scale-105 transition-transform"
+                    pageLinkClassName="w-full h-full flex items-center justify-center hover:scale-105 transition-transform"
+                    activeClassName="bg-white text-gray-700 hover:scale-105 transition-transform"
+                    activeLinkClassName="w-full h-full flex items-center justify-center hover:scale-105 transition-transform"
+                    previousClassName="w-8 h-8 rounded-md bg-white text-gray-700 font-medium text-sm flex items-center
+                    justify-center cursor-pointer border hover:bg-gray-200 hover:scale-105 transition-transform"
                     previousLinkClassName="w-full h-full flex items-center justify-center"
-                    nextClassName="w-8 h-8 rounded-md bg-white text-gray-700 font-medium text-sm flex items-center justify-center cursor-pointer border"
+                    nextClassName="w-8 h-8 rounded-md bg-white text-gray-700 font-medium text-sm flex items-center
+                    justify-center cursor-pointer border hover:bg-gray-200 hover:scale-105 transition-transform"
                     nextLinkClassName="w-full h-full flex items-center justify-center"
                     disabledClassName="opacity-50 cursor-not-allowed"
-                    breakClassName="w-8 text-center text-gray-700 select-none flex items-center justify-center"
+                    breakClassName="w-8 text-center text-gray-700 select-none flex items-center justify-center
+                    hover:scale-105 transition-transform"
                     breakLinkClassName="w-full h-full flex items-center justify-center"
                 />
 
-                <div className="flex items-center gap-2">
+                <div className="flex items-center gap-2 hover:scale-105 transition-transform">
                     <label htmlFor="size-select" className="text-sm text-gray-600"></label>
                     <select
                         id="size-select"

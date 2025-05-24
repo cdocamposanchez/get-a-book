@@ -36,7 +36,8 @@ const CatalogPage = () => {
                 style={{ maxWidth: "80vw", paddingTop: "2rem", height: "90vh", width: "100%" }}
             >
                 <aside
-                    className="w-1/5 bg-gray-100 rounded-lg p-4 shadow-md sticky top-8 h-fit min-w-[250px] max-h-[80vh] border overflow-y-auto transition-all duration-120 ease-in-out"
+                    className="w-1/5 bg-transparent rounded-lg sticky top-8 h-fit min-w-[250px] max-h-[80vh]
+                    overflow-y-auto transition-all duration-120 ease-in-out border"
                 >
                     <BookFilters
                         category={category}
@@ -54,7 +55,7 @@ const CatalogPage = () => {
 
                 <main className="border w-full flex flex-col bg-gray-100 rounded-xl shadow-md p-6 max-h-[80vh]">
                     {loading && (
-                        <div className="flex justify-center items-center h-64 w-full min-h-[100vh]">
+                        <div className="flex justify-center items-center h-64 w-full min-h-[80vh]">
                             <Spinner />
                         </div>
                     )}
@@ -71,7 +72,7 @@ const CatalogPage = () => {
                         </p>
                     )}
 
-                    <div className="max-h-[70vh] overflow-y-auto min-h-[50]">
+                    <div className="max-h-[70vh] min-h-[50]">
                         {!loading && books.length > 0 && <BookCard books={books} />}
                     </div>
 
@@ -88,16 +89,30 @@ const CatalogPage = () => {
                             }}
                             forcePage={page}
                             containerClassName="flex gap-1"
-                            pageClassName="w-8 h-8 rounded-md font-semibold text-black flex items-center justify-center cursor-pointer"
-                            pageLinkClassName="w-full h-full flex items-center justify-center"
+
+                            pageClassName="w-8 h-8 rounded-md font-semibold text-black flex items-center justify-center
+                            cursor-pointer hover:scale-110 transition-transform hover:bg-[#72a7a2]"
+
+                            pageLinkClassName="w-full h-full flex items-center justify-center hover:scale-110 transition-transform"
+
                             activeClassName="bg-[#80AFAB] text-black"
-                            activeLinkClassName="w-full h-full flex items-center justify-center"
-                            previousClassName="w-8 h-8 rounded-md bg-[#80AFAB] text-black font-semibold flex items-center justify-center cursor-pointer"
+
+                            activeLinkClassName="w-full h-full flex items-center justify-center hover:scale-110 transition-transform"
+
+                            previousClassName="w-8 h-8 rounded-md bg-[#80AFAB] text-black font-semibold flex items-center
+                            justify-center cursor-pointer hover:scale-110 transition-transform hover:bg-[#72a7a2]"
+
                             previousLinkClassName="w-full h-full flex items-center justify-center"
-                            nextClassName="w-8 h-8 rounded-md bg-[#80AFAB] text-black font-semibold flex items-center justify-center cursor-pointer"
+
+                            nextClassName="w-8 h-8 rounded-md bg-[#80AFAB] text-black font-semibold flex items-center
+                            justify-center cursor-pointer hover:scale-110 transition-transform hover:bg-[#72a7a2]"
+
                             nextLinkClassName="w-full h-full flex items-center justify-center"
+
                             disabledClassName="opacity-50 cursor-not-allowed"
+
                             breakClassName="w-8 text-center text-black select-none flex items-center justify-center"
+
                             breakLinkClassName="w-full h-full flex items-center justify-center"
                         />
                     </div>

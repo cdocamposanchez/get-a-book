@@ -38,14 +38,14 @@ const BooksTable: React.FC<BooksTableProps> = ({ books, page, size, onEdit, onDe
                 <td className="px-6 py-3 text-center">{book.quantity}</td>
                 <td className="px-6 py-3 flex gap-2 justify-center">
                     <button
-                        className="p-1 rounded hover:bg-blue-100 text-blue-600"
+                        className="p-1 rounded text-blue-600 hover:scale-120 transition-transform"
                         onClick={() => onEdit(book)}
                         aria-label="Editar libro"
                         >
                         <FaEdit size={16} />
                     </button>
                     <button
-                        className="p-1 rounded hover:bg-red-100 text-red-600"
+                        className="p-1 rounded text-red-600 hover:scale-120 transition-transform"
                         onClick={() => onDelete(book)}
                         aria-label="Eliminar libro"
                         >

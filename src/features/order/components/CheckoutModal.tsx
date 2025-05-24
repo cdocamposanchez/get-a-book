@@ -85,7 +85,7 @@ const CheckoutModal: React.FC<CheckoutModalProps> = ({
         data: Address,
         title: string
     ) => (
-        <div className="bg-gray-50 p-4 rounded-lg shadow">
+        <div className="bg-gray-50 p-4 rounded-lg shadow border">
             <h3 className="text-lg font-semibold mb-4">{title}</h3>
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
                 {Object.keys(emptyAddress).map((field) => {
@@ -123,7 +123,7 @@ const CheckoutModal: React.FC<CheckoutModalProps> = ({
             <div className="text-right mt-6">
                 <button
                     onClick={handleSubmit}
-                    className="px-6 py-2 bg-green-600 text-white rounded hover:bg-green-700 transition"
+                    className="px-6 py-2 bg-green-600 text-black rounded hover:bg-green-700 hover:scale-105 transition-transform border border-black"
                 >
                     Confirmar Pedido
                 </button>

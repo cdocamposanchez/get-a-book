@@ -66,7 +66,7 @@ const BookForm: React.FC<BookFormProps> = ({ book, onSubmit, onCancel, formError
                     value={title}
                     onChange={e => setTitle(e.target.value)}
                     required
-                    className="w-full border rounded px-2 py-1 text-sm"
+                    className="w-full border rounded px-2 py-1 text-sm hover:scale-105 transition-transform"
                 />
             </div>
 
@@ -78,7 +78,7 @@ const BookForm: React.FC<BookFormProps> = ({ book, onSubmit, onCancel, formError
                     value={publisher}
                     onChange={e => setPublisher(e.target.value)}
                     required
-                    className="w-full border rounded px-2 py-1 text-sm"
+                    className="w-full border rounded px-2 py-1 text-sm hover:scale-105 transition-transform"
                 />
             </div>
 
@@ -90,7 +90,7 @@ const BookForm: React.FC<BookFormProps> = ({ book, onSubmit, onCancel, formError
                     value={description}
                     onChange={e => setDescription(e.target.value)}
                     rows={2}
-                    className="w-full border rounded px-2 py-1 text-sm resize-none"
+                    className="w-full border rounded px-2 py-1 text-sm resize-none hover:scale-105 transition-transform"
                     required
                 />
             </div>
@@ -104,7 +104,7 @@ const BookForm: React.FC<BookFormProps> = ({ book, onSubmit, onCancel, formError
                         value={year}
                         onChange={e => setYear(Number(e.target.value))}
                         min={0}
-                        className="w-full border rounded px-2 py-1 text-sm"
+                        className="w-full border rounded px-2 py-1 text-sm hover:scale-105 transition-transform"
                         required
                     />
                 </div>
@@ -117,7 +117,7 @@ const BookForm: React.FC<BookFormProps> = ({ book, onSubmit, onCancel, formError
                         value={quantity}
                         onChange={e => setQuantity(Number(e.target.value))}
                         min={0}
-                        className="w-full border rounded px-2 py-1 text-sm"
+                        className="w-full border rounded px-2 py-1 text-sm hover:scale-105 transition-transform"
                         required
                     />
                 </div>
@@ -133,7 +133,7 @@ const BookForm: React.FC<BookFormProps> = ({ book, onSubmit, onCancel, formError
                         onChange={e => setPrice(Number(e.target.value))}
                         min={0}
                         step={0.01}
-                        className="w-full border rounded px-2 py-1 text-sm"
+                        className="w-full border rounded px-2 py-1 text-sm hover:scale-105 transition-transform"
                         required
                     />
                 </div>
@@ -147,7 +147,7 @@ const BookForm: React.FC<BookFormProps> = ({ book, onSubmit, onCancel, formError
                     type="text"
                     value={categories}
                     onChange={e => setCategories(e.target.value)}
-                    className="w-full border rounded px-2 py-1 text-sm"
+                    className="w-full border rounded px-2 py-1 text-sm hover:scale-105 transition-transform"
                     required
                 />
             </div>
@@ -179,7 +179,7 @@ const BookForm: React.FC<BookFormProps> = ({ book, onSubmit, onCancel, formError
             <div className="flex gap-2">
                 <button
                     type="submit"
-                    className="px-3 py-1.5 bg-blue-600 text-white rounded hover:bg-blue-700 text-sm"
+                    className="px-3 py-1.5 bg-blue-600 text-white rounded hover:bg-blue-700 text-sm hover:scale-105 transition-transform"
                 >
                     Guardar
                 </button>
@@ -187,7 +187,7 @@ const BookForm: React.FC<BookFormProps> = ({ book, onSubmit, onCancel, formError
                     <button
                         type="button"
                         onClick={onCancel}
-                        className="px-3 py-1.5 bg-gray-300 rounded hover:bg-gray-400 text-sm"
+                        className="px-3 py-1.5 bg-gray-300 rounded hover:bg-gray-400 text-sm hover:scale-105 transition-transform"
                     >
                         Cancelar
                     </button>

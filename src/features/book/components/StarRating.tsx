@@ -15,7 +15,7 @@ const StarRating: React.FC<StarRatingProps> = ({ rating }) => {
                 emptySymbol={<span className="text-gray-400 text-xl">★</span>}
                 fullSymbol={<span className="text-yellow-400 text-xl">★</span>}
             />
-            <span className="ml-2 text-white font-semibold text-lg">
+            <span className="ml-2 text-black font-semibold text-md">
         ({rating.toFixed(1)})
       </span>
         </div>

@@ -23,14 +23,16 @@ const OrderCard: React.FC<OrderCardProps> = ({ order, onViewDetails }) => {
             <div className="flex flex-col items-center h-full mt-2 space-y-2">
                 <button
                     onClick={onViewDetails}
-                    className="bg-[#4a7074] hover:bg-[#3b5d60] text-white font-medium text-xs px-3 py-1.5 rounded-md transition-all"
+                    className="bg-[#4a7074] hover:bg-[#3b5d60] text-white font-medium text-xs
+                    px-3 py-1.5 rounded-md hover:scale-105 transition-transform border-black border-1"
                 >
                     DETALLES
                 </button>
                 {showTrackingButton && (
                     <button
                         onClick={() => navigate(`/tracking/${order.id}`)}
-                        className="bg-purple-600 hover:bg-purple-700 text-white font-medium text-xs px-3 py-1.5 rounded-md transition-all"
+                        className="bg-purple-600 hover:bg-purple-700 text-white font-medium text-xs
+                        px-3 py-1.5 rounded-md hover:scale-105 transition-transform border-black border-1"
                     >
                         SEGUIMIENTO
                     </button>
