@@ -33,9 +33,6 @@ public class OrderEntity {
 
     private UUID customerId;
 
-    @Column(name = "order_name")
-    private String orderName;
-
     private String orderStatus;
 
     @SuppressWarnings("squid:S1710")
@@ -67,6 +64,8 @@ public class OrderEntity {
     @Builder.Default
     @OneToMany(mappedBy = "order", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<OrderItemEntity> items = new ArrayList<>();
+
+    private String creationDate;
 
     public void addItem(OrderItemEntity item) {
         item.setOrder(this);

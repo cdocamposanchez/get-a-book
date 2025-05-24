@@ -5,6 +5,9 @@ import com.adi.gab.domain.model.User;
 import com.adi.gab.domain.valueobject.UserId;
 import com.adi.gab.infrastructure.persistance.entity.UserEntity;
 
+import java.util.ArrayList;
+import java.util.HashSet;
+
 public class UserMapper {
 
     public static UserEntity toEntity(User user) {
@@ -15,7 +18,7 @@ public class UserMapper {
                 .email(user.getEmail())
                 .password(user.getPassword())
                 .role(user.getRole())
-                .favorites(UserFavoritesMapper.toEntity(user.getFavorites()))
+                .favorites(new HashSet<>(UserFavoritesMapper.toEntity(user.getFavorites())))
                 .build();
     }
 
@@ -27,7 +30,7 @@ public class UserMapper {
                 .email(entity.getEmail())
                 .password(entity.getPassword())
                 .role(entity.getRole())
-                .favorites(UserFavoritesMapper.toDomain(entity.getFavorites()))
+                .favorites(UserFavoritesMapper.toDomain(new ArrayList<>(entity.getFavorites())))
                 .build();
     }
 

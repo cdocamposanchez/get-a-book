@@ -147,20 +147,4 @@ public class OrderController {
         );
         return new ResponseEntity<>(response, HttpStatus.OK);
     }
-
-    @GetMapping("/name")
-    public ResponseEntity<ResponseDTO<List<OrderDTO>>> getByOrderName(
-            @RequestParam String orderName,
-            @RequestParam(defaultValue = "0") int page,
-            @RequestParam(defaultValue = "10") int size
-    ) {
-        PaginationRequest pagination = new PaginationRequest(page, size);
-        List<OrderDTO> orders = getOrdersUseCase.getByOrderName(orderName, pagination);
-        ResponseDTO<List<OrderDTO>> response = new ResponseDTO<>(
-                "Orders retrieved by name: "+ orderName +" successfully",
-                orders,
-                HttpStatus.OK
-        );
-        return new ResponseEntity<>(response, HttpStatus.OK);
-    }
 }

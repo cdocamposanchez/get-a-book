@@ -46,14 +46,6 @@ public class GetOrdersUseCase {
                 .toList();
     }
 
-    public List<OrderDTO> getByOrderName(String orderName, PaginationRequest pagination) {
-        return orderRepository.findByOrderNameContainingIgnoreCase(orderName, PageRequest.of(pagination.getPage(), pagination.getSize()))
-                .stream()
-                .map(OrderMapper::toDomain)
-                .map(OrderMapper::toDto)
-                .toList();
-    }
-
     @Transactional
     public List<OrderDTO> getByOrderStatus(OrderStatus status, PaginationRequest pagination) {
         return orderRepository.findByOrderStatus(status.toString(), PageRequest.of(pagination.getPage(), pagination.getSize()))

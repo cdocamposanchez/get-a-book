@@ -79,6 +79,11 @@ public class Book {
                                 ? newBook.getImageUrl()
                                 : oldBook.getImageUrl()
                 )
+                .quantity(
+                        (newBook.getQuantity() != null && !newBook.getQuantity().equals(oldBook.getQuantity()))
+                                ? newBook.getQuantity()
+                                : oldBook.getQuantity()
+                )
                 .year(
                         (newBook.getYear() != null && !newBook.getYear().equals(oldBook.getYear()))
                                 ? newBook.getYear()

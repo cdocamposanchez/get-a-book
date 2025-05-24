@@ -42,7 +42,7 @@ public class UpdateFavoriteUseCase {
         }
 
         try {
-            userRepository.save(newUserEntity);
+            userRepository.saveAndFlush(newUserEntity);
         } catch (Exception e) {
             throw new ApplicationException("Error during saving: " + e.getMessage(), this.getClass().getSimpleName());
         }

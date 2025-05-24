@@ -20,7 +20,6 @@ public class OrderMapper {
                 .builder()
                 .id(order.getId().value())
                 .customerId(order.getCustomerId().value())
-                .orderName(order.getOrderName())
                 .orderStatus(order.getOrderStatus().toString())
                 .shippingAddress(AddressEmbeddable.builder()
                         .firstName(order.getShippingAddress().getFirstName())
@@ -40,6 +39,7 @@ public class OrderMapper {
                         .country(order.getBillingAddress().getCountry())
                         .zipCode(order.getBillingAddress().getZipCode())
                         .build())
+                .creationDate(order.getCreationDate())
                 .build();
 
         order.getOrderItems().forEach(orderItem ->
@@ -55,8 +55,9 @@ public class OrderMapper {
         Address shipping = AddressMapper.toDomain(entity.getShippingAddress());
         Address billing = AddressMapper.toDomain(entity.getBillingAddress());
 
-        Order order = createOrderBase(OrderId.of(entity.getId()), UserId.of(entity.getCustomerId()), entity.getOrderName(), shipping, billing);
+        Order order = createOrderBase(OrderId.of(entity.getId()), UserId.of(entity.getCustomerId()), shipping, billing);
         order.setOrderStatus(OrderStatus.fromStringIgnoreCase(entity.getOrderStatus()));
+        order.setCreationDate(entity.getCreationDate());
 
         entity.getItems().forEach(itemEntity ->
                 order.addItem(OrderItemId.of(itemEntity.getId()), BookId.of(itemEntity.getBookId()), itemEntity.getTitle(), itemEntity.getQuantity(), itemEntity.getPrice()));
@@ -68,8 +69,9 @@ public class OrderMapper {
         Address shipping = AddressMapper.toDomain(dto.getShippingAddress());
         Address billing = AddressMapper.toDomain(dto.getBillingAddress());
 
-        Order order = createOrderBase(orderId, customerId, dto.getOrderName(), shipping, billing);
+        Order order = createOrderBase(orderId, customerId, shipping, billing);
         order.setOrderStatus(dto.getOrderStatus());
+        order.setCreationDate(dto.getCreationDate());
 
         dto.getOrderItems().forEach(item ->
                 order.addItem(OrderItemId.of(item.getId()), BookId.of(item.getBookId()), item.getTitle(), item.getQuantity(), item.getPrice()));
@@ -81,7 +83,6 @@ public class OrderMapper {
         return OrderDTO.builder()
                 .id(order.getId().value())
                 .customerId(order.getCustomerId().value())
-                .orderName(order.getOrderName())
                 .shippingAddress(AddressMapper.toDTO(order.getShippingAddress()))
                 .billingAddress(AddressMapper.toDTO(order.getBillingAddress()))
                 .orderStatus(order.getOrderStatus())
@@ -90,11 +91,13 @@ public class OrderMapper {
                                 .id(item.getId().value())
                                 .bookId(item.getBookId().value())
                                 .orderId(item.getOrderId().value())
+                                .title(item.getTitle())
                                 .quantity(item.getQuantity())
                                 .price(item.getPrice())
                                 .build())
                         .toList()
                 )
+                .creationDate(order.getCreationDate())
                 .build();
     }
 
@@ -102,7 +105,6 @@ public class OrderMapper {
         return OrderDTO.builder()
                 .id(orderEntity.getId())
                 .customerId(orderEntity.getCustomerId())
-                .orderName(orderEntity.getOrderName())
                 .shippingAddress(AddressMapper.toDto(orderEntity.getShippingAddress()))
                 .billingAddress(AddressMapper.toDto(orderEntity.getBillingAddress()))
                 .orderStatus(OrderStatus.fromStringIgnoreCase(orderEntity.getOrderStatus()))
@@ -115,15 +117,15 @@ public class OrderMapper {
                                 .price(item.getPrice())
                                 .build())
                         .toList())
+                .creationDate(orderEntity.getCreationDate())
                 .build();
     }
 
-    private static Order createOrderBase(OrderId id, UserId customerId, String orderName,
+    private static Order createOrderBase(OrderId id, UserId customerId,
                                          Address shippingAddress, Address billingAddress) {
         return Order.create(
                 id,
                 customerId,
-                orderName,
                 shippingAddress,
                 billingAddress
         );

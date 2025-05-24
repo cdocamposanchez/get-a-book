@@ -11,7 +11,5 @@ import java.util.UUID;
 public interface OrderRepository extends JpaRepository<OrderEntity, UUID> {
     List<OrderEntity> findByCustomerId(UUID customerId, Pageable pageable);
 
-    Page<OrderEntity> findByOrderNameContainingIgnoreCase(String orderName, Pageable pageable);
-
     Page<OrderEntity> findByOrderStatus(String status, Pageable pageable);
 }

@@ -35,7 +35,7 @@ class OrderTest {
                 "Jane", "Smith", "jane@example.com", "456 Avenue", "USA", "Los Angeles", "90001"
         );
 
-        order = Order.create(validOrderId, validCustomerId, "Order #1", shippingAddress, billingAddress);
+        order = Order.create(validOrderId, validCustomerId, shippingAddress, billingAddress);
     }
 
     // ---------- TESTS create() ----------
@@ -45,7 +45,6 @@ class OrderTest {
         assertNotNull(order);
         assertEquals(validOrderId, order.getId());
         assertEquals(validCustomerId, order.getCustomerId());
-        assertEquals("Order #1", order.getOrderName());
         assertEquals(shippingAddress, order.getShippingAddress());
         assertEquals(billingAddress, order.getBillingAddress());
         assertTrue(order.getOrderItems().isEmpty());
@@ -54,14 +53,14 @@ class OrderTest {
     @Test
     void shouldThrowWhenOrderIdIsNull() {
         Exception ex = assertThrows(OrderExceptions.NullOrderArgumentException.class, () ->
-                Order.create(null, validCustomerId, "Order", shippingAddress, billingAddress));
+                Order.create(null, validCustomerId,  shippingAddress, billingAddress));
         assertEquals("Argument: OrderId Cannot be null.", ex.getMessage());
     }
 
     @Test
     void shouldThrowWhenCustomerIdIsNull() {
         Exception ex = assertThrows(OrderExceptions.NullOrderArgumentException.class, () ->
-                Order.create(validOrderId, null, "Order", shippingAddress, billingAddress));
+                Order.create(validOrderId, null, shippingAddress, billingAddress));
         assertEquals("Argument: CustomerId Cannot be null.", ex.getMessage());
     }
 

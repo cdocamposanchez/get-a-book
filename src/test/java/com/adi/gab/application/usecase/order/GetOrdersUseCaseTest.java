@@ -35,7 +35,6 @@ class GetOrdersUseCaseTest {
         // Arrange
         OrderEntity orderEntity = OrderEntity.builder()
                 .id(UUID.randomUUID())
-                .orderName("Test Order")
                 .orderStatus("CREATED")
                 .build();
 

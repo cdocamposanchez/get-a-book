@@ -15,9 +15,9 @@ import java.util.UUID;
 public class OrderDTO {
     private UUID id;
     private UUID customerId;
-    private String orderName;
     private AddressDTO shippingAddress;
     private AddressDTO billingAddress;
     private OrderStatus orderStatus;
     private List<OrderItemDTO> orderItems;
+    private String creationDate;
 }

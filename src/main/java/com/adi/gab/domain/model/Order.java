@@ -23,24 +23,24 @@ public class Order {
 
     private OrderId id;
     private UserId customerId;
-    private String orderName;
     private Address shippingAddress;
     private Address billingAddress;
     private OrderStatus orderStatus;
+    private String creationDate;
 
     private final List<OrderItem> orderItems = new ArrayList<>();
 
-    public static Order create(OrderId id, UserId customerId, String orderName,
+    public static Order create(OrderId id, UserId customerId,
                                Address shippingAddress, Address billingAddress) {
 
         if (id == null) throw new OrderExceptions.NullOrderArgumentException("OrderId");
         if (customerId == null) throw new OrderExceptions.NullOrderArgumentException("CustomerId");
 
+
         return Order
                 .builder()
                 .id(id)
                 .customerId(customerId)
-                .orderName(orderName)
                 .shippingAddress(shippingAddress)
                 .billingAddress(billingAddress)
                 .build();
