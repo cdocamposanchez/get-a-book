@@ -4,7 +4,6 @@ import CatalogPage from "../features/book/pages/CatalogPage.tsx";
 import LoginPage from "../features/user/pages/LoginPage.tsx";
 import RegisterPage from "../features/user/pages/RegisterPage.tsx";
 import ProfilePage from "../features/user/pages/ProfilePage.tsx";
-import TrackingPage from "../features/order/pages/TrackingPage.tsx";
 import CartPage from "../features/order/pages/CartPage.tsx";
 import FavoritesPage from "../features/book/pages/FavoritesPage.tsx";
 import Returns from "../features/order/pages/ReturnsPage.tsx";
@@ -16,6 +15,11 @@ import PublicRoute from "./PublicRoute.tsx";
 import PaymentSuccess from "../features/order/components/PaymentSuccess.tsx";
 import PaymentCancel from "../features/order/components/PaymentCancel.tsx";
 import Logout from "../features/user/components/Logout.tsx";
+import AdminLayout from "../components/AdminLayout.tsx";
+import BooksPage from "../features/admin/pages/BooksPage.tsx";
+import CreateBookPage from "../features/admin/pages/CreateBookPage.tsx";
+import RecoverPasswordPage from "../features/user/pages/RecoverPasswordPage.tsx";
+import OrderTrackingPage from "../features/order/pages/OrderTrackingPage.tsx";
 
 const AppRoutes = (): JSX.Element => {
     return (
@@ -36,6 +40,12 @@ const AppRoutes = (): JSX.Element => {
                 </PublicRoute>
             } />
 
+            <Route path="/recover-password" element={
+                <PublicRoute>
+                    <RecoverPasswordPage />
+                </PublicRoute>
+            } />
+
             <Route path="/logout" element={
                 <Logout />
             } />
@@ -51,38 +61,38 @@ const AppRoutes = (): JSX.Element => {
                     <ProfilePage />
                 </PrivateRoute>
             } />
-            <Route path="/tracking" element={
-                <PrivateRoute roles={[Roles.CLIENT]}>
-                    <TrackingPage />
+            <Route path="/tracking/:orderId" element={
+                <PrivateRoute roles={[Roles.CLIENT,Roles.ADMIN]}>
+                    <OrderTrackingPage />
                 </PrivateRoute>
             } />
             <Route path="/favorites" element={
-                <PrivateRoute roles={[Roles.CLIENT]}>
+                <PrivateRoute roles={[Roles.CLIENT,Roles.ADMIN]}>
                     <FavoritesPage />
                 </PrivateRoute>
             } />
             <Route path="/returns" element={
-                <PrivateRoute roles={[Roles.CLIENT]}>
+                <PrivateRoute roles={[Roles.CLIENT,Roles.ADMIN]}>
                     <Returns />
                 </PrivateRoute>
             } />
             <Route path="/orders" element={
-                <PrivateRoute roles={[Roles.CLIENT]}>
+                <PrivateRoute roles={[Roles.CLIENT,Roles.ADMIN]}>
                     <OrderPage />
                 </PrivateRoute>
             } />
 
-            {/* Rutas exclusivas para administradores */}
-            {/*<Route path="/admin/dashboard" element={*/}
-            {/*    <PrivateRoute roles={[Roles.ADMIN]}>*/}
-            {/*        <AdminDashboard />*/}
-            {/*    </PrivateRoute>*/}
-            {/*} />*/}
-            {/*<Route path="/admin/users" element={*/}
-            {/*    <PrivateRoute roles={[Roles.ADMIN]}>*/}
-            {/*        <ManageUsers />*/}
-            {/*    </PrivateRoute>*/}
-            {/*} />*/}
+            <Route path="/admin" element={
+                <PrivateRoute roles={[Roles.ADMIN]}>
+                    <AdminLayout />
+                </PrivateRoute>
+            }>
+                <Route path="" element={<BooksPage />} />
+                <Route path="create-book" element={<CreateBookPage/>} />
+
+                <Route path="*" element={<Navigate to="/admin" replace />} />
+            </Route>
+
 
             {/* Fallback */}
             <Route path="*" element={<Navigate to="/" />} />

@@ -8,12 +8,26 @@ import { useSearch } from '../context/SearchContext';
 const Navbar = () => {
     const { itemsCount } = useCart();
     const [dropdownOpen, setDropdownOpen] = useState(false);
+    const [isAdmin, setIsAdmin] = useState(false);
+
     const { searchTerm, setSearchTerm } = useSearch();
     const dropdownRef = useRef<HTMLDivElement>(null);
-
     const location = useLocation();
     const navigate = useNavigate();
 
+    useEffect(() => {
+        const auth = localStorage.getItem("auth");
+        if (auth) {
+            try {
+                const parsedAuth = JSON.parse(auth);
+                if (parsedAuth.userRole === "ADMIN") {
+                    setIsAdmin(true);
+                }
+            } catch (e) {
+                console.error("Error parsing auth from localStorage", e);
+            }
+        }
+    }, []);
 
     const handleSearchChange = (e: React.ChangeEvent<HTMLInputElement>) => {
         setSearchTerm(e.target.value);
@@ -105,17 +119,24 @@ const Navbar = () => {
                     </button>
                     {dropdownOpen && (
                         <div
-                            className="absolute left-1/2 -translate-x-1/2 top-full mt-2 bg-[#B3D4C6] text-black rounded-md shadow border border-gray-300 z-50">
-                            <Link to="/profile" className="block px-4 py-2 hover:bg-[#a0cabc] transition-colors">
+                            className="absolute left-1/2 -translate-x-1/2 top-full mt-2 bg-white text-black rounded shadow border z-50 p-1">
+
+                            {isAdmin && (
+                                <Link to="/admin" className="block p-2 hover:bg-gray-100 transition-colors">
+                                    <p className="text-gray-700 text-center text-base">Admin</p>
+                                </Link>
+                            )}
+
+                            <Link to="/profile" className="block p-2 hover:bg-gray-100 transition-colors">
                                 <p className="text-gray-700 text-center text-base">Ajustes</p>
                             </Link>
-                            <Link to="/orders" className="block px-4 py-2 hover:bg-[#a0cabc] transition-colors">
+                            <Link to="/orders" className="block p-2 hover:bg-gray-100 transition-colors">
                                 <p className="text-gray-700 text-center text-base">Ordenes</p>
                             </Link>
-                            <Link to="/returns" className="block px-4 py-2 hover:bg-[#a0cabc] transition-colors">
+                            <Link to="/returns" className="block p-2 hover:bg-gray-100 transition-colors">
                                 <p className="text-gray-700 text-center text-base">Devoluciones</p>
                             </Link>
-                            <Link to="/logout" className="block px-4 py-2 hover:bg-[#a0cabc] transition-colors">
+                            <Link to="/logout" className="block p-2 hover:bg-gray-100 transition-colors">
                                 <p className="text-gray-700 text-center text-base">Cerrar Sesión</p>
                             </Link>
                         </div>

@@ -19,8 +19,6 @@ const OrderPage: React.FC = () => {
     orderService.getOrdersByCustomerId(customerId).then(setOrders);
   }, [customerId]);
 
-  console.log(orders);
-
   const groupedOrders = ORDER_STATUSES.reduce((acc, status) => {
     acc[status] = orders.filter((order) => order.orderStatus === status);
     return acc;

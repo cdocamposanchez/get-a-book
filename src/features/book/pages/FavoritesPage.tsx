@@ -14,7 +14,7 @@ const FavoritePage: React.FC = () => {
         const fetchFavorites = async () => {
             try {
                 setLoading(true);
-                const data = await bookService.getFavoriteBooks(userId);
+                const data = await bookService.getFavoriteBooks();
                 setBooks(data);
             } catch (error) {
                 console.error('Error al cargar favoritos', error);

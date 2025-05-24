@@ -101,7 +101,9 @@ const LoginPage = () => {
             )}
 
             <div className="text-right text-sm">
-              <a href="#" className="text-indigo-700 hover:underline">Olvidé mi contraseña</a>
+              <Link to="/recover-password" className="text-indigo-700 hover:underline">
+                Olvidé mi contraseña
+              </Link>
             </div>
 
             <button

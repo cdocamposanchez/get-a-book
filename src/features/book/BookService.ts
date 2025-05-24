@@ -2,6 +2,7 @@ import axiosInstance from '../../utils/axiosConfig.ts';
 import type { Book } from '../../types/book';
 import type { Response } from '../../types/response';
 import type {BookFilter} from "../../types/bookFilter";
+import type {PageResponse} from "../../types/pageResponse";
 
 const BOOK_BASE = '/books';
 
@@ -23,7 +24,23 @@ export const bookService = {
     },
 
     updateBook: async (book: Book): Promise<Book> => {
-        const response = await axiosInstance.put<Response<Book>>(BOOK_BASE, book);
+        const formData = new FormData();
+
+        Object.entries(book).forEach(([key, value]) => {
+            if (value !== null && value !== undefined) {
+                const val = typeof value === 'object' && value instanceof File
+                    ? value
+                    : String(value);
+                formData.append(key, val);
+            }
+        });
+
+        const response = await axiosInstance.put<Response<Book>>(BOOK_BASE, formData, {
+            headers: {
+                'Content-Type': 'multipart/form-data'
+            }
+        });
+
         return response.data.data;
     },
 
@@ -36,7 +53,7 @@ export const bookService = {
 
     getBooks: async (
         filters: BookFilter
-    ): Promise<Book[]> => {
+    ): Promise<PageResponse<Book>> => {
         const {
             category,
             publisher,
@@ -60,11 +77,12 @@ export const bookService = {
 
         console.log(params);
 
-        const response = await axiosInstance.get<Response<Book[]>>(BOOK_BASE, {
+        const response = await axiosInstance.get<Response<PageResponse<Book>>>(BOOK_BASE, {
             params,
         });
         return response.data.data;
     },
+
 
     getBookById: async (id: string): Promise<Book> => {
         const response = await axiosInstance.get<Response<Book>>(`${BOOK_BASE}/${id}`);
@@ -72,10 +90,8 @@ export const bookService = {
     },
 
 
-    getFavoriteBooks: async (userId: string, page = 0, size = 10): Promise<Book[]> => {
-        const response = await axiosInstance.get<Response<Book[]>>(`${BOOK_BASE}/favorites`, {
-            params: { userId, page, size }
-        });
+    getFavoriteBooks: async (): Promise<Book[]> => {
+        const response = await axiosInstance.get<Response<Book[]>>(`${BOOK_BASE}/favorites`, {});
         return response.data.data;
     }
 };

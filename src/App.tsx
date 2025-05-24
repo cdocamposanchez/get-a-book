@@ -18,9 +18,9 @@ function AppWrapper() {
 
 function App() {
     const location = useLocation();
-    const noNavbarRoutes = ['/login', '/register'];
-
-    const shouldShowNavbar = !noNavbarRoutes.includes(location.pathname);
+    const noNavbarRoutes = ['/login', '/register', "/recover-password"];
+    const shouldShowNavbar = !noNavbarRoutes.some(path => location.pathname.startsWith(path)) &&
+        !location.pathname.startsWith('/admin');
 
     useEffect(() => {
         window.scrollTo(0, 0);

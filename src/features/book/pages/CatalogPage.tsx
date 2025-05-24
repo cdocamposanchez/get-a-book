@@ -1,4 +1,5 @@
 import { useMemo, useState } from "react";
+import ReactPaginate from "react-paginate";
 import BookCard from "../components/BookCard.tsx";
 import BookFilters from "../components/BookFilters.tsx";
 import { useBooks } from "../hooks/useBook.ts";
@@ -26,17 +27,17 @@ const CatalogPage = () => {
         [category, sortOrder, minPrice, maxPrice, year, titleRegex]
     );
 
-    const { books, loading, error, page, nextPage, prevPage } = useBooks(filters);
+    const { books, loading, error, page, totalPages, setPage } = useBooks(filters);
 
     return (
         <div className="min-h-screen bg-[#80AFAB] font-sans p-2 flex justify-center items-start">
             <div
                 className="flex gap-6"
-                style={{maxWidth: '80vw', paddingTop: '2rem', height: '90vh', width: '100%'}}
+                style={{ maxWidth: "80vw", paddingTop: "2rem", height: "90vh", width: "100%" }}
             >
-                {/* Sidebar filters */}
                 <aside
-                    className="w-1/5 bg-gray-100 rounded-lg p-4 shadow-md sticky top-8 h-fit min-w-[250px] max-h-[80vh] border overflow-y-auto transition-all duration-120 ease-in-out">
+                    className="w-1/5 bg-gray-100 rounded-lg p-4 shadow-md sticky top-8 h-fit min-w-[250px] max-h-[80vh] border overflow-y-auto transition-all duration-120 ease-in-out"
+                >
                     <BookFilters
                         category={category}
                         setCategory={setCategory}
@@ -51,12 +52,10 @@ const CatalogPage = () => {
                     />
                 </aside>
 
-                {/* Main content */}
                 <main className="border w-full flex flex-col bg-gray-100 rounded-xl shadow-md p-6 max-h-[80vh]">
-
                     {loading && (
-                        <div className="flex justify-center items-center h-64 w-full">
-                            <Spinner/>
+                        <div className="flex justify-center items-center h-64 w-full min-h-[100vh]">
+                            <Spinner />
                         </div>
                     )}
 
@@ -72,26 +71,35 @@ const CatalogPage = () => {
                         </p>
                     )}
 
-                    <div className="max-h-[70vh]">
-                        {!loading && books.length > 0 && <BookCard books={books}/>}
+                    <div className="max-h-[70vh] overflow-y-auto min-h-[50]">
+                        {!loading && books.length > 0 && <BookCard books={books} />}
                     </div>
 
-
-                    {/* Pagination */}
-                    <div className="mt-4 flex justify-center gap-4 bg-transparent">
-                        <button
-                            onClick={prevPage}
-                            disabled={page === 0}
-                            className="bg-green-600 text-white font-semibold py-1 px-6 rounded-full disabled:opacity-50 disabled:cursor-not-allowed hover:bg-green-700 transition"
-                        >
-                            Anterior
-                        </button>
-                        <button
-                            onClick={nextPage}
-                            className="bg-green-600 text-white font-semibold py-1 px-6 rounded-full hover:bg-green-700 transition"
-                        >
-                            Siguiente
-                        </button>
+                    <div className="mt-4 flex justify-center">
+                        <ReactPaginate
+                            previousLabel={"<"}
+                            nextLabel={">"}
+                            breakLabel={"..."}
+                            pageCount={totalPages}
+                            marginPagesDisplayed={3}
+                            pageRangeDisplayed={3}
+                            onPageChange={(event) => {
+                                setPage(event.selected);
+                            }}
+                            forcePage={page}
+                            containerClassName="flex gap-1"
+                            pageClassName="w-8 h-8 rounded-md font-semibold text-black flex items-center justify-center cursor-pointer"
+                            pageLinkClassName="w-full h-full flex items-center justify-center"
+                            activeClassName="bg-[#80AFAB] text-black"
+                            activeLinkClassName="w-full h-full flex items-center justify-center"
+                            previousClassName="w-8 h-8 rounded-md bg-[#80AFAB] text-black font-semibold flex items-center justify-center cursor-pointer"
+                            previousLinkClassName="w-full h-full flex items-center justify-center"
+                            nextClassName="w-8 h-8 rounded-md bg-[#80AFAB] text-black font-semibold flex items-center justify-center cursor-pointer"
+                            nextLinkClassName="w-full h-full flex items-center justify-center"
+                            disabledClassName="opacity-50 cursor-not-allowed"
+                            breakClassName="w-8 text-center text-black select-none flex items-center justify-center"
+                            breakLinkClassName="w-full h-full flex items-center justify-center"
+                        />
                     </div>
                 </main>
             </div>

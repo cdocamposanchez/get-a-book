@@ -26,7 +26,7 @@ const BookCard = ({ books }: BookCardProps) => {
             setFavoritesLoaded(true);
         }
 
-        bookService.getFavoriteBooks(userId).then(favs => {
+        bookService.getFavoriteBooks().then(favs => {
             setFavoriteBooksIds(favs.map(b => b.id));
             setFavoritesLoaded(true);
             localStorage.setItem(`favoriteBooks_${userId}`, JSON.stringify(favs.map(b => b.id)));
@@ -59,7 +59,7 @@ const BookCard = ({ books }: BookCardProps) => {
 
     return (
         <div className="max-h-[65vh] w-full p-2 overflow-y-auto transition-all duration-120 ease-in-out">
-            <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6 justify-items-center">
+            <div className="grid grid-cols-1 sm:grid-cols-4 md:grid-cols-4 lg:grid-cols-4 gap-6 justify-items-center">
                 {books.map((book) => {
                     const isFavorite = favoriteBooksIds.includes(book.id);
 
