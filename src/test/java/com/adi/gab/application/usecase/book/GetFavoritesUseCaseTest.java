@@ -15,8 +15,7 @@ import org.junit.jupiter.api.Test;
 import java.math.BigDecimal;
 import java.util.List;
 import java.util.Optional;
-import java.util.Set; // Importar Set
-import java.util.HashSet; // Importar HashSet para crear un Set mutable
+import java.util.Set;
 import java.util.UUID;
 
 import static org.junit.jupiter.api.Assertions.*;
@@ -57,16 +56,10 @@ class GetFavoritesUseCaseTest {
                 .categories("Fiction")
                 .build();
 
-        // **CAMBIO AQUÍ: Usar Set.of() o crear un HashSet si el builder espera un Set**
-        // Si tu UserEntity.favorites es un Set, usa Set.of().
-        // Si el setter de UserEntity.favorites espera un tipo mutable (ej. HashSet),
-        // o si List.of() no funciona directamente para el setter,
-        // puedes crear un HashSet a partir de la lista.
+
         UserEntity userEntity = UserEntity.builder()
                 .id(userIdValue)
-                .favorites(Set.of(favoriteBookId)) // Suponiendo que UserEntity.favorites es Set<UUID>
-                // O si necesitas un Set mutable para el builder:
-                // .favorites(new HashSet<>(List.of(favoriteBookId)))
+                .favorites(Set.of(favoriteBookId))
                 .build();
 
         when(authenticatedUserProvider.getAuthenticatedUserId()).thenReturn(userId);
@@ -114,12 +107,9 @@ class GetFavoritesUseCaseTest {
         UserId userId = new UserId(userIdValue);
         UUID missingBookId = UUID.randomUUID();
 
-        // **CAMBIO AQUÍ: Usar Set.of() o crear un HashSet**
         UserEntity userEntity = UserEntity.builder()
                 .id(userIdValue)
-                .favorites(Set.of(missingBookId)) // Suponiendo que UserEntity.favorites es Set<UUID>
-                // O si necesitas un Set mutable para el builder:
-                // .favorites(new HashSet<>(List.of(missingBookId)))
+                .favorites(Set.of(missingBookId))
                 .build();
 
         when(authenticatedUserProvider.getAuthenticatedUserId()).thenReturn(userId);
